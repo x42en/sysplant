@@ -1,8 +1,11 @@
-# SysPlant - "your Syscall Factory" *(feat. Canterlot's Gate)*
+# SysPlant
+"Your Syscall Factory" *(feat. Canterlot's Gate)*
 
 ![Canterlot's Gate](pictures/canterlot.jpeg)
 
-SysPlant is a small implementation in NIM of the currently known syscall hooking methods. It supports Heaven / Hell / Halos / Tartarus methods and publish an idea from [MDSEC](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/) that was missing a pony name... So here it is: **Canterlot's Gate** ! :unicorn: :rainbow:  
+SysPlant is a small implementation in NIM of the currently known syscall hooking methods. It supports Heaven / Hell / Halos / Tartarus methods and publish an idea from [MDSEC](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/) that was missing a pony name...  
+
+So here it is: **Canterlot's Gate** ! :unicorn: :rainbow:  
 *Note: You can further more generate your own combinations using the proper options...*
 
 ## Installation
