@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "sysplant"
+version = "0.1.0"
+description = "Your syscall factory"
+authors = ["Ben Mz <x42en@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

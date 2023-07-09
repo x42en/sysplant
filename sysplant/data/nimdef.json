@@ -1,0 +1,1610 @@
+{
+    "MEM_EXTENDED_PARAMETER_TYPE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "MemExtendedParameterInvalidType",
+            "MemExtendedParameterAddressRequirements",
+            "MemExtendedParameterNumaNode",
+            "MemExtendedParameterPartitionHandle",
+            "MemExtendedParameterUserPhysicalHandle",
+            "MemExtendedParameterAttributeFlags",
+            "MemExtendedParameterMax"
+        ]
+    },
+    "IO_STATUS_BLOCK": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": []
+    },
+    "KEY_VALUE_ENTRY": {
+        "dependencies": [
+            "PUNICODE_STRING"
+        ],
+        "type": "struct",
+        "definition": [
+            [
+                "PUNICODE_STRING",
+                "ValueName"
+            ],
+            [
+                "ULONG",
+                "DataLength"
+            ],
+            [
+                "ULONG",
+                "DataOffset"
+            ],
+            [
+                "ULONG",
+                "Type"
+            ]
+        ]
+    },
+    "KEY_SET_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "KeyWriteTimeInformation",
+            "KeyWow64FlagsInformation",
+            "KeyControlFlagsInformation",
+            "KeySetVirtualizationInformation",
+            "KeySetDebugInformation",
+            "KeySetHandleTagsInformation",
+            "MaxKeySetInfoClass"
+        ]
+    },
+    "SYSTEM_HANDLE": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "ProcessId"
+            ],
+            [
+                "BYTE",
+                "ObjectTypeNumber"
+            ],
+            [
+                "BYTE",
+                "Flags"
+            ],
+            [
+                "USHORT",
+                "Handle"
+            ],
+            [
+                "PVOID",
+                "Object"
+            ],
+            [
+                "ACCESS_MASK",
+                "GrantedAccess"
+            ]
+        ]
+    },
+    "SYSTEM_HANDLE_INFORMATION": {
+        "dependencies": [
+            "SYSTEM_HANDLE"
+        ],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "HandleCount"
+            ],
+            [
+                "SYSTEM_HANDLE",
+                "Handles"
+            ]
+        ]
+    },
+    "SYSTEM_INFORMATION_CLASS": {
+        "dependencies": [
+            "SYSTEM_HANDLE_INFORMATION"
+        ],
+        "type": "enum",
+        "definition": [
+            "SystemBasicInformation = 0",
+            "SystemPerformanceInformation = 2",
+            "SystemTimeOfDayInformation = 3",
+            "SystemProcessInformation = 5",
+            "SystemProcessorPerformanceInformation = 8",
+            "SystemHandleInformation = 16",
+            "SystemInterruptInformation = 23",
+            "SystemExceptionInformation = 33",
+            "SystemRegistryQuotaInformation = 37",
+            "SystemLookasideInformation = 45",
+            "SystemCodeIntegrityInformation = 103",
+            "SystemPolicyInformation = 134"
+        ]
+    },
+    "PROCESSINFOCLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "ProcessBasicInformation = 0",
+            "ProcessDebugPort = 7",
+            "ProcessWow64Information = 26",
+            "ProcessImageFileName = 27",
+            "ProcessBreakOnTermination = 29"
+        ]
+    },
+    "MEMORY_RANGE_ENTRY": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "PVOID",
+                "VirtualAddress"
+            ],
+            [
+                "SIZE_T",
+                "NumberOfBytes"
+            ]
+        ]
+    },
+    "T2_SET_PARAMETERS": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Version"
+            ],
+            [
+                "ULONG",
+                "Reserved"
+            ],
+            [
+                "LONGLONG",
+                "NoWakeTolerance"
+            ]
+        ]
+    },
+    "FILE_PATH": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Version"
+            ],
+            [
+                "ULONG",
+                "Length"
+            ],
+            [
+                "ULONG",
+                "Type"
+            ],
+            [
+                "CHAR",
+                "FilePath"
+            ]
+        ]
+    },
+    "FILE_USER_QUOTA_INFORMATION": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "NextEntryOffset"
+            ],
+            [
+                "ULONG",
+                "SidLength"
+            ],
+            [
+                "LARGE_INTEGER",
+                "ChangeTime"
+            ],
+            [
+                "LARGE_INTEGER",
+                "QuotaUsed"
+            ],
+            [
+                "LARGE_INTEGER",
+                "QuotaThreshold"
+            ],
+            [
+                "LARGE_INTEGER",
+                "QuotaLimit"
+            ],
+            [
+                "SID",
+                "Sid"
+            ]
+        ]
+    },
+    "FILE_QUOTA_LIST_INFORMATION": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "NextEntryOffset"
+            ],
+            [
+                "ULONG",
+                "SidLength"
+            ],
+            [
+                "SID",
+                "Sid"
+            ]
+        ]
+    },
+    "FILE_NETWORK_OPEN_INFORMATION": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "LARGE_INTEGER",
+                "CreationTime"
+            ],
+            [
+                "LARGE_INTEGER",
+                "LastAccessTime"
+            ],
+            [
+                "LARGE_INTEGER",
+                "LastWriteTime"
+            ],
+            [
+                "LARGE_INTEGER",
+                "ChangeTime"
+            ],
+            [
+                "LARGE_INTEGER",
+                "AllocationSize"
+            ],
+            [
+                "LARGE_INTEGER",
+                "EndOfFile"
+            ],
+            [
+                "ULONG",
+                "FileAttributes"
+            ],
+            [
+                "ULONG",
+                "Unknown"
+            ]
+        ]
+    },
+    "FILTER_BOOT_OPTION_OPERATION": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "FilterBootOptionOperationOpenSystemStore",
+            "FilterBootOptionOperationSetElement",
+            "FilterBootOptionOperationDeleteElement",
+            "FilterBootOptionOperationMax"
+        ]
+    },
+    "EVENT_TYPE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "NotificationEvent = 0",
+            "SynchronizationEvent = 1"
+        ]
+    },
+    "FILE_FULL_EA_INFORMATION": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "NextEntryOffset"
+            ],
+            [
+                "UCHAR",
+                "Flags"
+            ],
+            [
+                "UCHAR",
+                "EaNameLength"
+            ],
+            [
+                "USHORT",
+                "EaValueLength"
+            ],
+            [
+                "CHAR",
+                "EaName"
+            ]
+        ]
+    },
+    "FILE_GET_EA_INFORMATION": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "NextEntryOffset"
+            ],
+            [
+                "BYTE",
+                "EaNameLength"
+            ],
+            [
+                "CHAR",
+                "EaName"
+            ]
+        ]
+    },
+    "BOOT_OPTIONS": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Version"
+            ],
+            [
+                "ULONG",
+                "Length"
+            ],
+            [
+                "ULONG",
+                "Timeout"
+            ],
+            [
+                "ULONG",
+                "CurrentBootEntryId"
+            ],
+            [
+                "ULONG",
+                "NextBootEntryId"
+            ],
+            [
+                "WCHAR",
+                "HeadlessRedirection"
+            ]
+        ]
+    },
+    "WNF_CHANGE_STAMP": {
+        "dependencies": []
+    },
+    "WNF_DATA_SCOPE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "WnfDataScopeSystem = 0",
+            "WnfDataScopeSession = 1",
+            "WnfDataScopeUser = 2",
+            "WnfDataScopeProcess = 3",
+            "WnfDataScopeMachine = 4"
+        ]
+    },
+    "WNF_STATE_NAME_LIFETIME": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "WnfWellKnownStateName = 0",
+            "WnfPermanentStateName = 1",
+            "WnfPersistentStateName = 2",
+            "WnfTemporaryStateName = 3"
+        ]
+    },
+    "VIRTUAL_MEMORY_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "VmPrefetchInformation",
+            "VmPagePriorityInformation",
+            "VmCfgCallTargetInformation"
+        ]
+    },
+    "IO_SESSION_EVENT": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "IoSessionEventIgnore",
+            "IoSessionEventCreated",
+            "IoSessionEventTerminated",
+            "IoSessionEventConnected",
+            "IoSessionEventDisconnected",
+            "IoSessionEventLogon",
+            "IoSessionEventLogoff",
+            "IoSessionEventMax"
+        ]
+    },
+    "PORT_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "PortBasicInformation",
+            "#if DEVL",
+            "PortDumpInformation",
+            "#endif"
+        ]
+    },
+    "PLUGPLAY_CONTROL_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "PlugPlayControlEnumerateDevice",
+            "PlugPlayControlRegisterNewDevice",
+            "PlugPlayControlDeregisterDevice",
+            "PlugPlayControlInitializeDevice",
+            "PlugPlayControlStartDevice",
+            "PlugPlayControlUnlockDevice",
+            "PlugPlayControlQueryAndRemoveDevice",
+            "PlugPlayControlUserResponse",
+            "PlugPlayControlGenerateLegacyDevice",
+            "PlugPlayControlGetInterfaceDeviceList",
+            "PlugPlayControlProperty",
+            "PlugPlayControlDeviceClassAssociation",
+            "PlugPlayControlGetRelatedDevice",
+            "PlugPlayControlGetInterfaceDeviceAlias",
+            "PlugPlayControlDeviceStatus",
+            "PlugPlayControlGetDeviceDepth",
+            "PlugPlayControlQueryDeviceRelations",
+            "PlugPlayControlTargetDeviceRelation",
+            "PlugPlayControlQueryConflictList",
+            "PlugPlayControlRetrieveDock",
+            "PlugPlayControlResetDevice",
+            "PlugPlayControlHaltDevice",
+            "PlugPlayControlGetBlockedDriverList",
+            "MaxPlugPlayControl"
+        ]
+    },
+    "IO_COMPLETION_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "IoCompletionBasicInformation"
+        ]
+    },
+    "SECTION_INHERIT": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "ViewShare = 1",
+            "ViewUnmap = 2"
+        ]
+    },
+    "PS_ATTRIBUTE": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": []
+    },
+    "DEBUGOBJECTINFOCLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "DebugObjectFlags = 1",
+            "MaxDebugObjectInfoClass"
+        ]
+    },
+    "SEMAPHORE_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "SemaphoreBasicInformation"
+        ]
+    },
+    "PS_ATTRIBUTE_LIST": {
+        "dependencies": [
+            "PS_ATTRIBUTE"
+        ],
+        "type": "struct",
+        "definition": [
+            [
+                "SIZE_T",
+                "TotalLength"
+            ],
+            [
+                "PS_ATTRIBUTE",
+                "Attributes"
+            ]
+        ]
+    },
+    "VDMSERVICECLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "VdmStartExecution",
+            "VdmQueueInterrupt",
+            "VdmDelayInterrupt",
+            "VdmInitialize",
+            "VdmFeatures",
+            "VdmSetInt21Handler",
+            "VdmQueryDir",
+            "VdmPrinterDirectIoOpen",
+            "VdmPrinterDirectIoClose",
+            "VdmPrinterInitialize",
+            "VdmSetLdtEntries",
+            "VdmSetProcessLdtInfo",
+            "VdmAdlibEmulation",
+            "VdmPMCliControl",
+            "VdmQueryVdmProcess"
+        ]
+    },
+    "PS_CREATE_STATE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "PsCreateInitialState",
+            "PsCreateFailOnFileOpen",
+            "PsCreateFailOnSectionCreate",
+            "PsCreateFailExeFormat",
+            "PsCreateFailMachineMismatch",
+            "PsCreateFailExeName",
+            "PsCreateSuccess",
+            "PsCreateMaximumStates"
+        ]
+    },
+    "PS_CREATE_INFO": {
+        "dependencies": [
+            "PS_CREATE_STATE"
+        ],
+        "type": "struct",
+        "definition": []
+    },
+    "MEMORY_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "MemoryBasicInformation",
+            "MemoryWorkingSetInformation",
+            "MemoryMappedFilenameInformation",
+            "MemoryRegionInformation",
+            "MemoryWorkingSetExInformation",
+            "MemorySharedCommitInformation",
+            "MemoryImageInformation",
+            "MemoryRegionInformationEx",
+            "MemoryPrivilegedBasicInformation",
+            "MemoryEnclaveImageInformation",
+            "MemoryBasicInformationCapped"
+        ]
+    },
+    "MEMORY_RESERVE_TYPE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "MemoryReserveUserApc",
+            "MemoryReserveIoCompletion",
+            "MemoryReserveTypeMax"
+        ]
+    },
+    "ALPC_PORT_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "AlpcBasicInformation",
+            "AlpcPortInformation",
+            "AlpcAssociateCompletionPortInformation",
+            "AlpcConnectedSIDInformation",
+            "AlpcServerInformation",
+            "AlpcMessageZoneInformation",
+            "AlpcRegisterCompletionListInformation",
+            "AlpcUnregisterCompletionListInformation",
+            "AlpcAdjustCompletionListConcurrencyCountInformation",
+            "AlpcRegisterCallbackInformation",
+            "AlpcCompletionListRundownInformation"
+        ]
+    },
+    "ALPC_CONTEXT_ATTR": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "PVOID",
+                "PortContext"
+            ],
+            [
+                "PVOID",
+                "MessageContext"
+            ],
+            [
+                "ULONG",
+                "SequenceNumber"
+            ],
+            [
+                "ULONG",
+                "MessageID"
+            ],
+            [
+                "ULONG",
+                "CallbackID"
+            ]
+        ]
+    },
+    "ALPC_DATA_VIEW_ATTR": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Flags"
+            ],
+            [
+                "HANDLE",
+                "SectionHandle"
+            ],
+            [
+                "PVOID",
+                "ViewBase"
+            ],
+            [
+                "SIZE_T",
+                "ViewSize"
+            ]
+        ]
+    },
+    "ALPC_SECURITY_ATTR": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Flags"
+            ],
+            [
+                "PSECURITY_QUALITY_OF_SERVICE",
+                "SecurityQos"
+            ],
+            [
+                "HANDLE",
+                "ContextHandle"
+            ],
+            [
+                "ULONG",
+                "Reserved1"
+            ],
+            [
+                "ULONG",
+                "Reserved2"
+            ]
+        ]
+    },
+    "PPVOID": {
+        "dependencies": []
+    },
+    "KPROFILE_SOURCE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "ProfileTime = 0",
+            "ProfileAlignmentFixup = 1",
+            "ProfileTotalIssues = 2",
+            "ProfilePipelineDry = 3",
+            "ProfileLoadInstructions = 4",
+            "ProfilePipelineFrozen = 5",
+            "ProfileBranchInstructions = 6",
+            "ProfileTotalNonissues = 7",
+            "ProfileDcacheMisses = 8",
+            "ProfileIcacheMisses = 9",
+            "ProfileCacheMisses = 10",
+            "ProfileBranchMispredictions = 11",
+            "ProfileStoreInstructions = 12",
+            "ProfileFpInstructions = 13",
+            "ProfileIntegerInstructions = 14",
+            "Profile2Issue = 15",
+            "Profile3Issue = 16",
+            "Profile4Issue = 17",
+            "ProfileSpecialInstructions = 18",
+            "ProfileTotalCycles = 19",
+            "ProfileIcacheIssues = 20",
+            "ProfileDcacheAccesses = 21",
+            "ProfileMemoryBarrierCycles = 22",
+            "ProfileLoadLinkedIssues = 23",
+            "ProfileMaximum = 24"
+        ]
+    },
+    "ALPC_MESSAGE_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "AlpcMessageSidInformation",
+            "AlpcMessageTokenModifiedIdInformation"
+        ]
+    },
+    "WORKERFACTORYINFOCLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "WorkerFactoryTimeout",
+            "WorkerFactoryRetryTimeout",
+            "WorkerFactoryIdleTimeout",
+            "WorkerFactoryBindingCount",
+            "WorkerFactoryThreadMinimum",
+            "WorkerFactoryThreadMaximum",
+            "WorkerFactoryPaused",
+            "WorkerFactoryBasicInformation",
+            "WorkerFactoryAdjustThreadGoal",
+            "WorkerFactoryCallbackType",
+            "WorkerFactoryStackInformation",
+            "MaxWorkerFactoryInfoClass"
+        ]
+    },
+    "MEMORY_PARTITION_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "SystemMemoryPartitionInformation",
+            "SystemMemoryPartitionMoveMemory",
+            "SystemMemoryPartitionAddPagefile",
+            "SystemMemoryPartitionCombineMemory",
+            "SystemMemoryPartitionInitialAddMemory",
+            "SystemMemoryPartitionGetMemoryEvents",
+            "SystemMemoryPartitionMax"
+        ]
+    },
+    "MUTANT_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "MutantBasicInformation",
+            "MutantOwnerInformation"
+        ]
+    },
+    "ATOM_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "AtomBasicInformation",
+            "AtomTableInformation"
+        ]
+    },
+    "SHUTDOWN_ACTION": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "ShutdownNoReboot",
+            "ShutdownReboot",
+            "ShutdownPowerOff"
+        ]
+    },
+    "PTIMER_APC_ROUTINE": {
+        "dependencies": []
+    },
+    "KEY_VALUE_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "KeyValueBasicInformation = 0",
+            "KeyValueFullInformation",
+            "KeyValuePartialInformation",
+            "KeyValueFullInformationAlign64",
+            "KeyValuePartialInformationAlign64",
+            "MaxKeyValueInfoClass"
+        ]
+    },
+    "PLANGID": {
+        "dependencies": []
+    },
+    "PLUGPLAY_EVENT_CATEGORY": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "HardwareProfileChangeEvent",
+            "TargetDeviceChangeEvent",
+            "DeviceClassChangeEvent",
+            "CustomDeviceEvent",
+            "DeviceInstallEvent",
+            "DeviceArrivalEvent",
+            "PowerEvent",
+            "VetoEvent",
+            "BlockedDriverEvent",
+            "InvalidIDEvent",
+            "MaxPlugEventCategory"
+        ]
+    },
+    "PNP_VETO_TYPE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "PNP_VetoTypeUnknown",
+            "PNP_VetoLegacyDevice",
+            "PNP_VetoPendingClose",
+            "PNP_VetoWindowsApp",
+            "PNP_VetoWindowsService",
+            "PNP_VetoOutstandingOpen",
+            "PNP_VetoDevice",
+            "PNP_VetoDriver",
+            "PNP_VetoIllegalDeviceRequest",
+            "PNP_VetoInsufficientPower",
+            "PNP_VetoNonDisableable",
+            "PNP_VetoLegacyDriver",
+            "PNP_VetoInsufficientRights"
+        ]
+    },
+    "PLUGPLAY_EVENT_BLOCK": {
+        "dependencies": [
+            "PLUGPLAY_EVENT_CATEGORY",
+            "PNP_VETO_TYPE"
+        ],
+        "type": "struct",
+        "definition": []
+    },
+    "PIO_APC_ROUTINE": {
+        "dependencies": [
+            "PIO_STATUS_BLOCK"
+        ]
+    },
+    "KNORMAL_ROUTINE": {
+        "dependencies": []
+    },
+    "DIRECTORY_NOTIFY_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "DirectoryNotifyInformation = 1",
+            "DirectoryNotifyExtendedInformation = 2"
+        ]
+    },
+    "EVENT_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "EventBasicInformation"
+        ]
+    },
+    "ALPC_MESSAGE_ATTRIBUTES": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "unsigned",
+                "long AllocatedAttributes"
+            ],
+            [
+                "unsigned",
+                "long ValidAttributes"
+            ]
+        ]
+    },
+    "ALPC_PORT_ATTRIBUTES": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Flags"
+            ],
+            [
+                "SECURITY_QUALITY_OF_SERVICE",
+                "SecurityQos"
+            ],
+            [
+                "SIZE_T",
+                "MaxMessageLength"
+            ],
+            [
+                "SIZE_T",
+                "MemoryBandwidth"
+            ],
+            [
+                "SIZE_T",
+                "MaxPoolUsage"
+            ],
+            [
+                "SIZE_T",
+                "MaxSectionSize"
+            ],
+            [
+                "SIZE_T",
+                "MaxViewSize"
+            ],
+            [
+                "SIZE_T",
+                "MaxTotalSectionSize"
+            ],
+            [
+                "ULONG",
+                "DupObjectTypes"
+            ],
+            [
+                "ULONG",
+                "Reserved"
+            ]
+        ]
+    },
+    "IO_SESSION_STATE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "IoSessionStateCreated = 1",
+            "IoSessionStateInitialized = 2",
+            "IoSessionStateConnected = 3",
+            "IoSessionStateDisconnected = 4",
+            "IoSessionStateDisconnectedLoggedOn = 5",
+            "IoSessionStateLoggedOn = 6",
+            "IoSessionStateLoggedOff = 7",
+            "IoSessionStateTerminated = 8",
+            "IoSessionStateMax = 9"
+        ]
+    },
+    "WNF_STATE_NAME": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Data"
+            ]
+        ]
+    },
+    "PCWNF_STATE_NAME": {
+        "dependencies": [
+            "WNF_STATE_NAME"
+        ]
+    },
+    "WNF_TYPE_ID": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "GUID",
+                "TypeId"
+            ]
+        ]
+    },
+    "PCWNF_TYPE_ID": {
+        "dependencies": [
+            "WNF_TYPE_ID"
+        ]
+    },
+    "WNF_DELIVERY_DESCRIPTOR": {
+        "dependencies": [
+            "WNF_STATE_NAME",
+            "WNF_TYPE_ID"
+        ],
+        "type": "struct",
+        "definition": [
+            [
+                "unsigned",
+                "__int64 SubscriptionId"
+            ],
+            [
+                "WNF_STATE_NAME",
+                "StateName"
+            ],
+            [
+                "unsigned",
+                "long ChangeStamp"
+            ],
+            [
+                "unsigned",
+                "long StateDataSize"
+            ],
+            [
+                "unsigned",
+                "long EventMask"
+            ],
+            [
+                "WNF_TYPE_ID",
+                "TypeId"
+            ],
+            [
+                "unsigned",
+                "long StateDataOffset"
+            ]
+        ]
+    },
+    "DEBUG_CONTROL_CODE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "SysDbgQueryModuleInformation = 0",
+            "SysDbgQueryTraceInformation = 1",
+            "SysDbgSetTracePoint = 2",
+            "SysDbgSetSpecialCall = 3",
+            "SysDbgClearSpecialCalls = 4",
+            "SysDbgQuerySpecialCalls = 5",
+            "SysDbgBreakPoint = 6",
+            "SysDbgQueryVersion = 7",
+            "SysDbgReadVirtual = 8",
+            "SysDbgWriteVirtual = 9",
+            "SysDbgReadPhysical = 10",
+            "SysDbgWritePhysical = 11",
+            "SysDbgReadControlSpace = 12",
+            "SysDbgWriteControlSpace = 13",
+            "SysDbgReadIoSpace = 14",
+            "SysDbgWriteIoSpace = 15",
+            "SysDbgReadMsr = 16",
+            "SysDbgWriteMsr = 17",
+            "SysDbgReadBusData = 18",
+            "SysDbgWriteBusData = 19",
+            "SysDbgCheckLowMemory = 20",
+            "SysDbgEnableKernelDebugger = 21",
+            "SysDbgDisableKernelDebugger = 22",
+            "SysDbgGetAutoKdEnable = 23",
+            "SysDbgSetAutoKdEnable = 24",
+            "SysDbgGetPrintBufferSize = 25",
+            "SysDbgSetPrintBufferSize = 26",
+            "SysDbgGetKdUmExceptionEnable = 27",
+            "SysDbgSetKdUmExceptionEnable = 28",
+            "SysDbgGetTriageDump = 29",
+            "SysDbgGetKdBlockEnable = 30",
+            "SysDbgSetKdBlockEnable = 31"
+        ]
+    },
+    "PPDEBUG_CONTROL_CODE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "SysDbgQueryModuleInformation = 0",
+            "SysDbgQueryTraceInformation = 1",
+            "SysDbgSetTracePoint = 2",
+            "SysDbgSetSpecialCall = 3",
+            "SysDbgClearSpecialCalls = 4",
+            "SysDbgQuerySpecialCalls = 5",
+            "SysDbgBreakPoint = 6",
+            "SysDbgQueryVersion = 7",
+            "SysDbgReadVirtual = 8",
+            "SysDbgWriteVirtual = 9",
+            "SysDbgReadPhysical = 10",
+            "SysDbgWritePhysical = 11",
+            "SysDbgReadControlSpace = 12",
+            "SysDbgWriteControlSpace = 13",
+            "SysDbgReadIoSpace = 14",
+            "SysDbgWriteIoSpace = 15",
+            "SysDbgReadMsr = 16",
+            "SysDbgWriteMsr = 17",
+            "SysDbgReadBusData = 18",
+            "SysDbgWriteBusData = 19",
+            "SysDbgCheckLowMemory = 20",
+            "SysDbgEnableKernelDebugger = 21",
+            "SysDbgDisableKernelDebugger = 22",
+            "SysDbgGetAutoKdEnable = 23",
+            "SysDbgSetAutoKdEnable = 24",
+            "SysDbgGetPrintBufferSize = 25",
+            "SysDbgSetPrintBufferSize = 26",
+            "SysDbgGetKdUmExceptionEnable = 27",
+            "SysDbgSetKdUmExceptionEnable = 28",
+            "SysDbgGetTriageDump = 29",
+            "SysDbgGetKdBlockEnable = 30",
+            "SysDbgSetKdBlockEnable = 31"
+        ]
+    },
+    "CLIENT_ID": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "HANDLE",
+                "UniqueProcess"
+            ],
+            [
+                "HANDLE",
+                "UniqueThread"
+            ]
+        ]
+    },
+    "PORT_MESSAGE": {
+        "dependencies": [
+            "CLIENT_ID"
+        ],
+        "type": "struct",
+        "definition": []
+    },
+    "FILE_BASIC_INFORMATION": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "LARGE_INTEGER",
+                "CreationTime"
+            ],
+            [
+                "LARGE_INTEGER",
+                "LastAccessTime"
+            ],
+            [
+                "LARGE_INTEGER",
+                "LastWriteTime"
+            ],
+            [
+                "LARGE_INTEGER",
+                "ChangeTime"
+            ],
+            [
+                "ULONG",
+                "FileAttributes"
+            ]
+        ]
+    },
+    "PORT_SECTION_READ": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Length"
+            ],
+            [
+                "ULONG",
+                "ViewSize"
+            ],
+            [
+                "ULONG",
+                "ViewBase"
+            ]
+        ]
+    },
+    "PORT_SECTION_WRITE": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Length"
+            ],
+            [
+                "HANDLE",
+                "SectionHandle"
+            ],
+            [
+                "ULONG",
+                "SectionOffset"
+            ],
+            [
+                "ULONG",
+                "ViewSize"
+            ],
+            [
+                "PVOID",
+                "ViewBase"
+            ],
+            [
+                "PVOID",
+                "TargetViewBase"
+            ]
+        ]
+    },
+    "TIMER_TYPE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "NotificationTimer",
+            "SynchronizationTimer"
+        ]
+    },
+    "BOOT_ENTRY": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Version"
+            ],
+            [
+                "ULONG",
+                "Length"
+            ],
+            [
+                "ULONG",
+                "Id"
+            ],
+            [
+                "ULONG",
+                "Attributes"
+            ],
+            [
+                "ULONG",
+                "FriendlyNameOffset"
+            ],
+            [
+                "ULONG",
+                "BootFilePathOffset"
+            ],
+            [
+                "ULONG",
+                "OsOptionsLength"
+            ],
+            [
+                "UCHAR",
+                "OsOptions[ANYSIZE_ARRAY]"
+            ]
+        ]
+    },
+    "EFI_DRIVER_ENTRY": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Version"
+            ],
+            [
+                "ULONG",
+                "Length"
+            ],
+            [
+                "ULONG",
+                "Id"
+            ],
+            [
+                "ULONG",
+                "Attributes"
+            ],
+            [
+                "ULONG",
+                "FriendlyNameOffset"
+            ],
+            [
+                "ULONG",
+                "DriverFilePathOffset"
+            ]
+        ]
+    },
+    "RTL_ATOM": {
+        "dependencies": []
+    },
+    "TIMER_SET_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "TimerSetCoalescableTimer",
+            "MaxTimerInfoClass"
+        ]
+    },
+    "FSINFOCLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "FileFsVolumeInformation = 1",
+            "FileFsLabelInformation = 2",
+            "FileFsSizeInformation = 3",
+            "FileFsDeviceInformation = 4",
+            "FileFsAttributeInformation = 5",
+            "FileFsControlInformation = 6",
+            "FileFsFullSizeInformation = 7",
+            "FileFsObjectIdInformation = 8",
+            "FileFsDriverPathInformation = 9",
+            "FileFsVolumeFlagsInformation = 10",
+            "FileFsSectorSizeInformation = 11",
+            "FileFsDataCopyInformation = 12",
+            "FileFsMetadataSizeInformation = 13",
+            "FileFsFullSizeInformationEx = 14",
+            "FileFsMaximumInformation = 15"
+        ]
+    },
+    "WAIT_TYPE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "WaitAll = 0",
+            "WaitAny = 1"
+        ]
+    },
+    "USER_STACK": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "PVOID",
+                "FixedStackBase"
+            ],
+            [
+                "PVOID",
+                "FixedStackLimit"
+            ],
+            [
+                "PVOID",
+                "ExpandableStackBase"
+            ],
+            [
+                "PVOID",
+                "ExpandableStackLimit"
+            ],
+            [
+                "PVOID",
+                "ExpandableStackBottom"
+            ]
+        ]
+    },
+    "SECTION_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "SectionBasicInformation",
+            "SectionImageInformation"
+        ]
+    },
+    "APPHELPCACHESERVICECLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "ApphelpCacheServiceLookup = 0",
+            "ApphelpCacheServiceRemove = 1",
+            "ApphelpCacheServiceUpdate = 2",
+            "ApphelpCacheServiceFlush = 3",
+            "ApphelpCacheServiceDump = 4",
+            "ApphelpDBGReadRegistry = 0x100",
+            "ApphelpDBGWriteRegistry = 0x101"
+        ]
+    },
+    "TOKEN_SECURITY_ATTRIBUTE_FQBN_VALUE": {
+        "dependencies": [
+            "UNICODE_STRING"
+        ],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG64",
+                "Version"
+            ],
+            [
+                "UNICODE_STRING",
+                "Name"
+            ]
+        ]
+    },
+    "TOKEN_SECURITY_ATTRIBUTE_OCTET_STRING_VALUE": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "PVOID",
+                "pValue"
+            ],
+            [
+                "ULONG",
+                "ValueLength"
+            ]
+        ]
+    },
+    "TOKEN_SECURITY_ATTRIBUTE_V1": {
+        "dependencies": [
+            "PUNICODE_STRING",
+            "PTOKEN_SECURITY_ATTRIBUTE_FQBN_VALUE",
+            "PTOKEN_SECURITY_ATTRIBUTE_OCTET_STRING_VALUE"
+        ],
+        "type": "struct",
+        "definition": []
+    },
+    "TOKEN_SECURITY_ATTRIBUTES_INFORMATION": {
+        "dependencies": [
+            "PTOKEN_SECURITY_ATTRIBUTE_V1"
+        ],
+        "type": "struct",
+        "definition": []
+    },
+    "FILE_IO_COMPLETION_INFORMATION": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "PVOID",
+                "KeyContext"
+            ],
+            [
+                "PVOID",
+                "ApcContext"
+            ],
+            [
+                "IO_STATUS_BLOCK",
+                "IoStatusBlock"
+            ]
+        ]
+    },
+    "PT2_CANCEL_PARAMETERS": {
+        "dependencies": []
+    },
+    "THREADINFOCLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "ThreadBasicInformation",
+            "ThreadTimes",
+            "ThreadPriority",
+            "ThreadBasePriority",
+            "ThreadAffinityMask",
+            "ThreadImpersonationToken",
+            "ThreadDescriptorTableEntry",
+            "ThreadEnableAlignmentFaultFixup",
+            "ThreadEventPair_Reusable",
+            "ThreadQuerySetWin32StartAddress",
+            "ThreadZeroTlsCell",
+            "ThreadPerformanceCount",
+            "ThreadAmILastThread",
+            "ThreadIdealProcessor",
+            "ThreadPriorityBoost",
+            "ThreadSetTlsArrayAddress",
+            "ThreadIsIoPending",
+            "ThreadHideFromDebugger",
+            "ThreadBreakOnTermination",
+            "MaxThreadInfoClass"
+        ]
+    },
+    "OBJECT_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "ObjectBasicInformation",
+            "ObjectNameInformation",
+            "ObjectTypeInformation",
+            "ObjectAllTypesInformation",
+            "ObjectHandleInformation"
+        ]
+    },
+    "FILE_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "FileDirectoryInformation = 1",
+            "FileFullDirectoryInformation = 2",
+            "FileBothDirectoryInformation = 3",
+            "FileBasicInformation = 4",
+            "FileStandardInformation = 5",
+            "FileInternalInformation = 6",
+            "FileEaInformation = 7",
+            "FileAccessInformation = 8",
+            "FileNameInformation = 9",
+            "FileRenameInformation = 10",
+            "FileLinkInformation = 11",
+            "FileNamesInformation = 12",
+            "FileDispositionInformation = 13",
+            "FilePositionInformation = 14",
+            "FileFullEaInformation = 15",
+            "FileModeInformation = 16",
+            "FileAlignmentInformation = 17",
+            "FileAllInformation = 18",
+            "FileAllocationInformation = 19",
+            "FileEndOfFileInformation = 20",
+            "FileAlternateNameInformation = 21",
+            "FileStreamInformation = 22",
+            "FilePipeInformation = 23",
+            "FilePipeLocalInformation = 24",
+            "FilePipeRemoteInformation = 25",
+            "FileMailslotQueryInformation = 26",
+            "FileMailslotSetInformation = 27",
+            "FileCompressionInformation = 28",
+            "FileObjectIdInformation = 29",
+            "FileCompletionInformation = 30",
+            "FileMoveClusterInformation = 31",
+            "FileQuotaInformation = 32",
+            "FileReparsePointInformation = 33",
+            "FileNetworkOpenInformation = 34",
+            "FileAttributeTagInformation = 35",
+            "FileTrackingInformation = 36",
+            "FileIdBothDirectoryInformation = 37",
+            "FileIdFullDirectoryInformation = 38",
+            "FileValidDataLengthInformation = 39",
+            "FileShortNameInformation = 40",
+            "FileIoCompletionNotificationInformation = 41",
+            "FileIoStatusBlockRangeInformation = 42",
+            "FileIoPriorityHintInformation = 43",
+            "FileSfioReserveInformation = 44",
+            "FileSfioVolumeInformation = 45",
+            "FileHardLinkInformation = 46",
+            "FileProcessIdsUsingFileInformation = 47",
+            "FileNormalizedNameInformation = 48",
+            "FileNetworkPhysicalNameInformation = 49",
+            "FileIdGlobalTxDirectoryInformation = 50",
+            "FileIsRemoteDeviceInformation = 51",
+            "FileUnusedInformation = 52",
+            "FileNumaNodeInformation = 53",
+            "FileStandardLinkInformation = 54",
+            "FileRemoteProtocolInformation = 55",
+            "FileRenameInformationBypassAccessCheck = 56",
+            "FileLinkInformationBypassAccessCheck = 57",
+            "FileVolumeNameInformation = 58",
+            "FileIdInformation = 59",
+            "FileIdExtdDirectoryInformation = 60",
+            "FileReplaceCompletionInformation = 61",
+            "FileHardLinkFullIdInformation = 62",
+            "FileIdExtdBothDirectoryInformation = 63",
+            "FileDispositionInformationEx = 64",
+            "FileRenameInformationEx = 65",
+            "FileRenameInformationExBypassAccessCheck = 66",
+            "FileMaximumInformation = 67"
+        ]
+    },
+    "KEY_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "KeyBasicInformation = 0",
+            "KeyNodeInformation = 1",
+            "KeyFullInformation = 2",
+            "KeyNameInformation = 3",
+            "KeyCachedInformation = 4",
+            "KeyFlagsInformation = 5",
+            "KeyVirtualizationInformation = 6",
+            "KeyHandleTagsInformation = 7",
+            "MaxKeyInfoClass = 8"
+        ]
+    },
+    "UNICODE_STRING": {
+        "dependencies": [],
+        "type": "struct",
+        "definition": [
+            [
+                "USHORT",
+                "Length"
+            ],
+            [
+                "USHORT",
+                "MaximumLength"
+            ],
+            [
+                "PWSTR",
+                "Buffer"
+            ]
+        ]
+    },
+    "InitializeObjectAttributes": {
+        "dependencies": []
+    },
+    "OBJECT_ATTRIBUTES": {
+        "dependencies": [
+            "PUNICODE_STRING",
+            "InitializeObjectAttributes"
+        ],
+        "type": "struct",
+        "definition": [
+            [
+                "ULONG",
+                "Length"
+            ],
+            [
+                "HANDLE",
+                "RootDirectory"
+            ],
+            [
+                "PUNICODE_STRING",
+                "ObjectName"
+            ],
+            [
+                "ULONG",
+                "Attributes"
+            ],
+            [
+                "PVOID",
+                "SecurityDescriptor"
+            ],
+            [
+                "PVOID",
+                "SecurityQualityOfService"
+            ]
+        ]
+    },
+    "TIMER_INFORMATION_CLASS": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "TimerBasicInformation"
+        ]
+    },
+    "KCONTINUE_TYPE": {
+        "dependencies": [],
+        "type": "enum",
+        "definition": [
+            "KCONTINUE_UNWIND",
+            "KCONTINUE_RESUME",
+            "KCONTINUE_LONGJUMP",
+            "KCONTINUE_SET",
+            "KCONTINUE_LAST"
+        ]
+    },
+    "KCONTINUE_ARGUMENT": {
+        "dependencies": [
+            "KCONTINUE_TYPE"
+        ],
+        "type": "struct",
+        "definition": [
+            [
+                "KCONTINUE_TYPE",
+                "ContinueType"
+            ],
+            [
+                "ULONG",
+                "ContinueFlags"
+            ],
+            [
+                "ULONGLONG",
+                "Reserved"
+            ]
+        ]
+    }
+}
