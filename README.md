@@ -9,7 +9,7 @@ So here it is: **Canterlot's Gate** ! :unicorn: :rainbow:
 *Note: You can further more generate your own combinations using the proper options...*
 
 ## Installation
-This is a python project that will generate NIM source code (bit weird hu ?! :D). So you can use it inside your project as an external module or directly on your device as a tool.
+This is a python project that will generate NIM source code (bit weird hu ?! :joy:). So you can use it inside your project as an external module or directly on your device as a tool.
 
 ### Python module
 If you are using standard pip3 package manager
