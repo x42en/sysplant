@@ -1,7 +1,5 @@
 # -*- coding:utf-8 -*-
 
-import os
-
 
 class SysPlantConstants:
     """
@@ -13,6 +11,14 @@ class SysPlantConstants:
     NIM_TAB = "    "
     TAG_START = "##__"
     TAG_END = "__##"
+    INTERNAL_FUNCTIONS = [
+        "hashSyscallName",
+        "SPT_SEED",
+        "SPT_GetSyscallNumber",
+        "SPT_PopulateSyscalls",
+        "SPT_GetSyscallAddress",
+        "SPT_GetRandomSyscallAddress",
+    ]
     DONUT_SYSCALLS = [
         "NtCreateSection",
         "NtMapViewOfSection",

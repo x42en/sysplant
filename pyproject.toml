@@ -1,17 +1,32 @@
 [tool.poetry]
 name = "sysplant"
 version = "0.1.0"
-description = "Your syscall factory"
+description = "SysPlant - Your syscall factory"
 authors = ["Ben Mz <x42en@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-beautifulsoup4 = "^4.12.2"
-requests = "^2.31.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[[tool.poetry_bumpversion.replacements]]
+files = ["__metadata.py"]
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
+
+[[tool.poetry_bumpversion.replacements]]
+files = ["README.md", "docs/index.md"]
+search = 'Version: {current_version}'
+replace = 'Version: {new_version}'
+
+[tool.coverage.run]
+omit = [".*", "*/sysplant/*"]
+
+[tool.coverage.report]
+fail_under = 50

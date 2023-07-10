@@ -37,7 +37,7 @@ if __name__ == "__main__":
         "-i",
         "--iterator",
         help="Select syscall iterator (Default: canterlot)",
-        choices=["syswhisper", "freshy", "hell", "halos", "canterlot"],
+        choices=["syswhisper", "freshy", "hell", "halo", "canterlot"],
         default="canterlot",
     )
     parser.add_argument(
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     syscalls.add_argument(
         "-p",
         "--preset",
-        help='Preset functions to generate ["all", "donut", "common"] (Default: common)',
+        help="Preset functions to generate (Default: common)",
         choices=["all", "donut", "common"],
         required=False,
         default="common",
@@ -72,6 +72,13 @@ if __name__ == "__main__":
         "--output",
         help="Output path for NIM generated file",
         required=True,
+    )
+
+    parser.add_argument(
+        "-x",
+        "--scramble",
+        help="Randomize internal function names to evade static analysis",
+        action="store_true",
     )
 
     args = parser.parse_args()
@@ -102,6 +109,7 @@ if __name__ == "__main__":
             resolver=args.resolver,
             stub=args.stub,
             syscalls=args.syscalls,
+            scramble=args.scramble,
             output=args.output,
         )
     except Exception as err:
