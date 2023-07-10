@@ -12,10 +12,10 @@ SysPlant is a small implementation in NIM of the currently known syscall hooking
   
 It then allows you to generate direct or indirect syscall stubs.  
 
-*Note: You can further more generate your own combinations using the proper options...*
+*Note: You can also generate your own combinations using the proper options...*
 
 ## Introduction
-This personal project aims to be a simple tool to generate different syscall retrieval methods, and being able to play with direct / indirect syscall stub. The first goal was to get my hands into NIM and then it overflow :wink: ...
+This personal project aims to be a simple tool to better understand & generate different syscall retrieval methods, and being able to play with direct / indirect syscall stub. The first goal was to get my hands into NIM and then it overflow :wink: ...
 
 ## Installation
 This is a python project that will generate NIM source code (bit weird hu ?! :grin:). So you can use it inside your python project as an external module or directly on your device as a tool.
@@ -42,7 +42,7 @@ poetry install
 
 ## Help
 This tool comes with various options that should be self-explanatory using the standard `-h` flag
-```sh
+```bash
 $ ./main.py -h
 usage: main.py [-h] [--debug | --verbose | --quiet] [-i {syswhisper,freshy,hell,halo,canterlot}] [-r {basic,random}] [-s {direct,indirect}] [-p {all,donut,common} | -f FUNCTIONS] -o OUTPUT [-x]
 
@@ -78,7 +78,7 @@ A simple example (launching calc.exe) is accessible using `inject.nim`.
 Happy Hacking :beach: !
 
 ## Credits
-Massive shout-out to these usefull projects that help during this journey, or individuals for their reviews
+Massive shout-out to these useful projects that helps me during this journey, or individuals for their reviews
 - [@alice blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
 - [@redops blogpost about direct vs indirect syscalls](https://redops.at/en/blog/direct-syscalls-a-journey-from-high-to-low)
 - [@Jackson_T & @modexpblog for Syswhispers2](https://github.com/jthuraisamy/SysWhispers2)
