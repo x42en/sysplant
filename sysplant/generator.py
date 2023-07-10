@@ -83,7 +83,7 @@ class Generator(AbstractFactory):
             self.__defined.add(p["type"])
             args.append(f"{p['name']}: {p['type']}")
         header += ", ".join(args)
-        header += ") {.asmNoStackFrame.} =\n"
+        header += ") {.asmNoStackFrame.} ="
         return header
 
     def generate(
@@ -94,24 +94,24 @@ class Generator(AbstractFactory):
         syscalls: Union[str, list],
         output: str,
     ) -> str:
-        self.logger.info("Params used:")
-        self.logger.info(f"Language: {self.__language.upper()}")
+        self.logger.info("Summary of params used")
+        self.logger.info(f"\t. Language: {self.__language.upper()}", stripped=True)
 
         self.set_seed()
 
         # Set iterator
-        self.logger.info(f"Selected iterator: {iterator}")
+        self.logger.info(f"\t. Selected syscall iterator: {iterator}", stripped=True)
         self.set_iterator(iterator)
 
         # Set resolver
-        self.logger.info(f"Selected resolver: {resolver}")
+        self.logger.info(f"\t. Selected syscall resolver: {resolver}", stripped=True)
         self.set_resolver(resolver)
 
         # Resolve all headers for functions to hook
         entries = self.__engine.select_prototypes(syscalls)
 
         # Generate stubs
-        self.logger.info(f"Selected stub: {stub}")
+        self.logger.info(f"\t. Selected syscall stub: {stub}", stripped=True)
         syscall_stub = TemplateManager(self.__language)
         stubs_code = ""
 

@@ -107,16 +107,18 @@ class TemplateManager(AbstractFactory):
 
     def select_prototypes(self, names: Union[str, list]) -> dict:
         if names == "all":
-            self.logger.info("All supported functions selected")
+            self.logger.info("\t. All supported functions selected", stripped=True)
             names = self.__prototypes.keys()
         elif names == "common":
-            self.logger.info("Common supported functions selected")
+            self.logger.info("\t. Common supported functions selected", stripped=True)
             names = SysPlantConstants.COMMON_SYSCALLS
         elif names == "donut":
-            self.logger.info("Donut functions selected")
+            self.logger.info("\t. Donut functions selected", stripped=True)
             names = SysPlantConstants.DONUT_SYSCALLS
         elif type(names) is not list:
             raise ValueError("Unsupported functions type")
+        else:
+            self.logger.info("\t. Custom set of functions selected", stripped=True)
 
         self.logger.debug(f"Hooking selected functions: {','.join(names)}")
         results = dict()
