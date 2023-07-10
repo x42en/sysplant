@@ -32,13 +32,11 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int, int64) =
                 name = $(codeBase{nameRef[]}[LPCSTR])
                 offset = funcRef[ordinal[j][int]]
             
-            var address: int64
             # Check offset with current function, ensure this is a syscall
             if (offset == current) and name.startsWith("Zw"):
                 let hash = hashSyscallName(name)
                 # Calculate jmp address avoiding EDR hooks
-                address = cast[int64](codeBase + offset + 0xb2)
-                yield (hash, ssn, address)
+                yield (hash, ssn, codeBase{offset + 0xb2}[int64])
                 # Increase syscall number
                 ssn += 1
                 break
@@ -82,6 +80,5 @@ proc SPT_PopulateSyscalls =
     for hash, ssn, address in mi.syscalls():
         var entry = Syscall(ssn: ssn, address: address)
         ssdt[hash] = entry
-        clean_ssdt.add(entry)
 
     return
