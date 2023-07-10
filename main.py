@@ -37,31 +37,32 @@ if __name__ == "__main__":
         "-i",
         "--iterator",
         help="Select syscall iterator (Default: canterlot)",
-        choices=["freshy", "heaven", "hell", "halos", "tartarus", "canterlot"],
+        choices=["syswhisper", "freshy", "hell", "halos", "canterlot"],
         default="canterlot",
     )
     parser.add_argument(
         "-r",
         "--resolver",
-        help="Select syscall resolver (Default: random)",
+        help="Select syscall resolver (Default: basic)",
         choices=["basic", "random"],
-        default="random",
+        default="basic",
     )
     parser.add_argument(
         "-s",
         "--stub",
         help="Select syscall stub (Default: indirect)",
         choices=["direct", "indirect"],
-        default="indirect",
+        default="direct",
     )
 
     syscalls = parser.add_mutually_exclusive_group()
     syscalls.add_argument(
         "-p",
         "--preset",
-        help='Preset functions ("all", "donut", "common")',
+        help='Preset functions to generate ["all", "donut", "common"] (Default: common)',
         choices=["all", "donut", "common"],
         required=False,
+        default="common",
     )
     syscalls.add_argument(
         "-f", "--functions", help="Comma-separated functions", required=False
@@ -88,15 +89,12 @@ if __name__ == "__main__":
     logger.info(FANCY_HEADER, stripped=True)
 
     try:
-        # Set syscall to generate
-        if args.preset:
-            args.syscalls = args.preset
-        elif args.functions:
+        # Override default condition (preset: common) if funcitons are set
+        if args.functions:
             args.syscalls = args.functions.split(",")
+        # Set syscall to generate
         else:
-            raise ValueError(
-                "Please specify which function to evade using --preset or --functions"
-            )
+            args.syscalls = args.preset
 
         engine = Generator()
         engine.generate(

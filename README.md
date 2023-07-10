@@ -1,15 +1,17 @@
 # SysPlant
-"Your Syscall Factory" *(feat. Canterlot's Gate)*
+#### "Your Syscall Factory" *(feat. Canterlot's Gate)*
 
 ![Canterlot's Gate](pictures/canterlot.jpeg)
 
 SysPlant is a small implementation in NIM of the currently known syscall hooking methods. It currently supports following gates:
-- Heaven
-- Hell
+- [Hell's gate](https://github.com/am0nsec/HellsGate)
 - Halos
-- Tartarus
+- [FreshyCalls](https://github.com/crummie5/FreshyCalls)
+- [SysWhispers](https://github.com/crummie5/FreshyCalls)
+- **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name*
+  
+It then allows you to generate direct or indirect syscall stubs.  
 
-And publish an idea from [MDSEC](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/) that was missing a pony name...  So here it is: **Canterlot's Gate** ! :unicorn: :rainbow:  
 *Note: You can further more generate your own combinations using the proper options...*
 
 ## Installation
@@ -29,8 +31,7 @@ poetry add sysplant
 ### Single tool
 Install the project as you would do for any GitHub project
 ```sh
-git clone xxxxxxxxxx/sysplant.git
-cd sysplant
+git clone https://github.com/x42en/sysplant && cd sysplant
 poetry shell
 poetry install
 ./main.py -h
@@ -40,7 +41,7 @@ poetry install
 This tool comes with various options that should be self-explanatory using the standard `-h` flag
 ```sh
 $ ./main.py -h
-usage: main.py [-h] [--debug | --verbose] [-i {freshy,heaven,hell,halos,tartarus,exceptions}] [-r {basic,random}] [-s {direct,indirect}] [-p {all,donut,common} | -f FUNCTIONS] [-o OUTPUT]
+usage: main.py [-h] [--debug | --verbose | --quiet] [-i {syswhisper,freshy,hell,halos,canterlot}] [-r {basic,random}] [-s {direct,indirect}] [-p {all,donut,common} | -f FUNCTIONS] -o OUTPUT
 
 ..:: SysPlant - Your Syscall Factory ::..
 
@@ -48,22 +49,41 @@ optional arguments:
   -h, --help            show this help message and exit
   --debug               Display all DEBUG messages upon execution
   --verbose             Display all INFO messages upon execution
-  -i {freshy,heaven,hell,halos,tartarus,exceptions}, --iterator {freshy,heaven,hell,halos,tartarus,exceptions}
-                        Select syscall iterator (Default: exceptions)
+  --quiet               Remove all messages upon execution
+  -i {syswhisper,freshy,hell,halos,canterlot}, --iterator {syswhisper,freshy,hell,halos,canterlot}
+                        Select syscall iterator (Default: canterlot)
   -r {basic,random}, --resolver {basic,random}
-                        Select syscall resolver (Default: random)
+                        Select syscall resolver (Default: basic)
   -s {direct,indirect}, --stub {direct,indirect}
-                        Select syscall stub (Default: indirect)
+                        Select syscall stub (Default: direct)
   -p {all,donut,common}, --preset {all,donut,common}
-                        Preset functions ("all", "donut", "common")
+                        Preset functions to generate ["all", "donut", "common"] (Default: common)
   -f FUNCTIONS, --functions FUNCTIONS
                         Comma-separated functions
   -o OUTPUT, --output OUTPUT
-                        Define where to output file (Default print to cli)
+                        Output path for NIM generated file
 ```
+
+## Example
+A simple example (launching calc.exe) is accessible using `inject.nim`.  
+1. Be sure to install [winim](https://github.com/khchen/winim) library first: `nimble install winim`
+2. Generate the `syscall.nim` file with `./main.py -o example/syscall.nim`
+3. Compile the injection template file with `nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=app.exe example/inject.nim` on Linux (be sure to have mingw installed)
+4. Copy the `app.exe` generated on your Windows device.
+
+Happy Hacking :beach: !
 
 ## ShoutOut
 Massive shoutout to these usefull projects that help during this journey, or individuals for their reviews
-- [@alice blogpost](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
-- [@redops blogpost](https://redops.at/en/blog/direct-syscalls-a-journey-from-high-to-low)
-- [@klezvirus](https://github.com/klezVirus/)
+- [@alice blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
+- [@redops blogpost about direct vs indirect syscalls](https://redops.at/en/blog/direct-syscalls-a-journey-from-high-to-low)
+- [@Jackson_T & @modexpblog for Syswhispers2](https://github.com/jthuraisamy/SysWhispers2)
+- [@klezvirus for syswhispers3](https://github.com/klezVirus/SysWhispers3)
+
+## TODO
+:construction: This project is really in WIP state... Some PR & reviews are more than welcome !
+- [ ] Add internal names randomization
+- [ ] Add x86 support
+- [ ] Add WoW64 support
+- [ ] Add some tests
+- [ ] Setup documentation
