@@ -1,12 +1,14 @@
 {.passC:"-masm=intel".}
 
 # Import internal libs
+import std/md5
+import std/bitops
 import std/tables
 import std/random
 import std/sequtils
 import std/strutils
 import std/strformat
-import std/md5
+import std/algorithm
 
 # Import external libs
 import winim
@@ -28,9 +30,7 @@ type
 ##__TYPE_DEFINITIONS__##
 
 ##__SPT_SEED__##
-var
-    ssdt: Table[DWORD, Syscall]
-    clean_ssdt: seq[Syscall]
+var ssdt: Table[DWORD, Syscall]
 
 ## utils from https://github.com/khchen/memlib/blob/master/memlib.nim
 template `++`[T](p: var ptr T) =
