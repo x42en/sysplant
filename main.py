@@ -17,8 +17,22 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description=DESC_HEADER)
 
-    # Verbose choice
-    shout_level = parser.add_mutually_exclusive_group()
+    ###################### ARCH OPTIONS #######################
+    arch_options = parser.add_argument_group("Output options")
+    arch = arch_options.add_mutually_exclusive_group()
+    arch.add_argument(
+        "-x86", action="store_true", help="Set mode to 32bits", default=False
+    )
+    arch.add_argument(
+        "-x64",
+        action="store_true",
+        help="Set mode to 64bits (Default True)",
+        default=True,
+    )
+
+    ##################### VERBOSITY OPTIONS #####################
+    output_options = parser.add_argument_group("Output options")
+    shout_level = output_options.add_mutually_exclusive_group()
     shout_level.add_argument(
         "--debug", action="store_true", help="Display all DEBUG messages upon execution"
     )
@@ -33,21 +47,34 @@ if __name__ == "__main__":
         help="Remove all messages upon execution",
     )
 
-    parser.add_argument(
+    ################## GENERATION METHOD ########################
+    subparsers = parser.add_subparsers(dest="generation")
+    subparsers.required = True
+
+    parser_hell = subparsers.add_parser("hell")
+    parser_halo = subparsers.add_parser("halo")
+    parser_tartarus = subparsers.add_parser("tartarus")
+    parser_freshy = subparsers.add_parser("freshy")
+    parser_syswhispers = subparsers.add_parser("syswhispers")
+    parser_canterlot = subparsers.add_parser("canterlot")
+    parser_custom = subparsers.add_parser("custom")
+
+    ##################### CUSTOM OPTIONS #####################
+    parser_custom.add_argument(
         "-i",
         "--iterator",
         help="Select syscall iterator (Default: canterlot)",
-        choices=["syswhisper", "freshy", "hell", "halo", "canterlot"],
+        choices=["hell", "halo", "tartarus", "freshy", "syswhispers", "canterlot"],
         default="canterlot",
     )
-    parser.add_argument(
+    parser_custom.add_argument(
         "-r",
         "--resolver",
         help="Select syscall resolver (Default: basic)",
         choices=["basic", "random"],
         default="basic",
     )
-    parser.add_argument(
+    parser_custom.add_argument(
         "-s",
         "--stub",
         help="Select syscall stub (Default: indirect)",
@@ -55,7 +82,9 @@ if __name__ == "__main__":
         default="direct",
     )
 
-    syscalls = parser.add_mutually_exclusive_group()
+    ##################### SYSCALL OPTIONS #####################
+    syscalls_options = parser.add_argument_group("Syscall options")
+    syscalls = syscalls_options.add_mutually_exclusive_group()
     syscalls.add_argument(
         "-p",
         "--preset",
@@ -67,13 +96,8 @@ if __name__ == "__main__":
     syscalls.add_argument(
         "-f", "--functions", help="Comma-separated functions", required=False
     )
-    parser.add_argument(
-        "-o",
-        "--output",
-        help="Output path for NIM generated file",
-        required=True,
-    )
 
+    ##################### GLOBAL OPTIONS #####################
     parser.add_argument(
         "-x",
         "--scramble",
@@ -81,7 +105,17 @@ if __name__ == "__main__":
         action="store_true",
     )
 
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="Output path for NIM generated file",
+        required=True,
+    )
+
     args = parser.parse_args()
+
+    # Set architecture
+    arch = "x86" if args.x86 else "x64"
 
     if args.verbose:
         log_level = logging.INFO
@@ -92,6 +126,36 @@ if __name__ == "__main__":
 
     # Update log level if necessary
     logger.log_level = log_level
+
+    # Preset infos when necessary
+    if args.generation == "hell":
+        iterator = "hell"
+        resolver = "basic"
+        stub = "direct"
+    elif args.generation == "halo":
+        iterator = "halo"
+        resolver = "basic"
+        stub = "direct"
+    elif args.generation == "tartarus":
+        iterator = "tartarus"
+        resolver = "basic"
+        stub = "direct"
+    elif args.generation == "freshy":
+        iterator = "freshy"
+        resolver = "basic"
+        stub = "direct"
+    elif args.generation == "syswhispers":
+        iterator = "syswhispers"
+        resolver = "basic"
+        stub = "direct"
+    elif args.generation == "canterlot":
+        iterator = "canterlot"
+        resolver = "random"
+        stub = "indirect"
+    elif args.generation == "custom":
+        iterator = args.iterator
+        resolver = args.resolver
+        stub = args.stub
 
     logger.info(FANCY_HEADER, stripped=True)
 
@@ -105,9 +169,9 @@ if __name__ == "__main__":
 
         engine = Generator()
         engine.generate(
-            iterator=args.iterator,
-            resolver=args.resolver,
-            stub=args.stub,
+            iterator=iterator,
+            resolver=resolver,
+            stub=stub,
             syscalls=args.syscalls,
             scramble=args.scramble,
             output=args.output,
