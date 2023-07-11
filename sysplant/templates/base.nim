@@ -29,6 +29,7 @@ type
 
 ##__TYPE_DEFINITIONS__##
 
+##__SPT_DEBUG__##
 ##__SPT_SEED__##
 var ssdt: Table[DWORD, Syscall]
 
@@ -36,6 +37,10 @@ var ssdt: Table[DWORD, Syscall]
 template `++`[T](p: var ptr T) =
     ## syntax sugar for pointer increment
     p = cast[ptr T](p[int] +% sizeof(T))
+
+template `--`[T](p: var ptr T) =
+    ## syntax sugar for pointer increment
+    p = cast[ptr T](p[int] -% sizeof(T))
 
 proc `[]`[T](x: T, U: typedesc): U {.inline.} =
     ## syntax sugar for cast
@@ -60,7 +65,13 @@ proc `{}`[T](p: T, x: SomeInteger): T {.inline.} =
     (p[int] +% x{int})[T]
 ##
 
-## Avoid ptr_math dependency
+## Avoid ptr_math dependency from https://github.com/kaushalmodi/ptr_math/blob/main/src/ptr_math.nim
+proc `-`*[T; S: SomeInteger](p: ptr T, offset: S): ptr T =
+    return cast[ptr T](cast[ByteAddress](p) -% (int(offset) * sizeof(T)))
+
+proc `-`*[S: SomeInteger](p: pointer, offset: S): pointer =
+    return cast[pointer](cast[ByteAddress](p) -% int(offset))
+
 proc `+`*[T; S: SomeInteger](p: ptr T, offset: S): ptr T =
     return cast[ptr T](cast[ByteAddress](p) +% (int(offset) * sizeof(T)))
 
@@ -74,6 +85,10 @@ proc `[]`*[T; S: SomeInteger](p: ptr T, offset: S): var T =
     ## Retrieves the value from `p[offset]`.
     return (p + offset)[]
 ##
+
+proc debug_output(line: string) =
+    if SPT_DEBUG:
+        echo line
 
 proc hashSyscallName(name: string): DWORD =
     let hash = getMD5(&"{SPT_SEED}{name[2 .. ^1]}")
