@@ -88,6 +88,11 @@ class TemplateManager(AbstractFactory):
         data = self.__load_template(pkg_resolvers, f"{name}.{self.__lang}")
         self.replace_tag("GET_SYSCALL_ADDR", data)
 
+    def set_debug(self) -> None:
+        # Generate debug constant based on log level condition
+        debug_const = self.__coder.generate_debug(self.logger.isDebug())
+        self.replace_tag("SPT_DEBUG", debug_const)
+
     def set_seed(self, seed: int = 0) -> int:
         if seed <= 0:
             # Generate seed
