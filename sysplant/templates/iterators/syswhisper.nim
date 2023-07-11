@@ -23,8 +23,7 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int64) =
         # Check offset with current function, ensure this is a syscall
         if name.startsWith("Zw"):
             let hash = hashSyscallName(name)
-            # Calculate jmp address avoiding EDR hooks
-            yield (hash, codeBase{offset + 0xb2}[int64])
+            yield (hash, codeBase{offset}[int64])
             
         ++nameRef
 
