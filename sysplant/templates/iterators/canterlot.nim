@@ -17,6 +17,8 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int, int64) =
     let dirExcept = ntHeader.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXCEPTION]
     let rtf = codeBase{dirExcept.VirtualAddress}[PIMAGE_RUNTIME_FUNCTION_ENTRY] 
     
+    var padding = 0x0
+
     # Loop runtime function table
     while rtf[i].BeginAddress:
         let current = rtf[i].BeginAddress
@@ -31,12 +33,18 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int, int64) =
             let
                 name = $(codeBase{nameRef[]}[LPCSTR])
                 offset = funcRef[ordinal[j][int]]
+                address = codeBase{offset}[PBYTE]
             
             # Check offset with current function, ensure this is a syscall
             if (offset == current) and name.startsWith("Zw"):
                 let hash = hashSyscallName(name)
-                # Calculate jmp address avoiding EDR hooks
-                yield (hash, ssn, codeBase{offset + 0xb2}[int64])
+                # All syscall stub are identical for a Windows version
+                if padding == 0x0:
+                    # Calculate jmp address avoiding EDR hooks
+                    while (address{padding}[] != 0x0f) and (address{padding + 1}[] != 0x05):
+                        padding += 1
+                
+                yield (hash, ssn, address{padding}[int64])
                 # Increase syscall number
                 ssn += 1
                 break
