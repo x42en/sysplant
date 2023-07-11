@@ -40,6 +40,9 @@ class Generator(AbstractFactory):
         self.logger.info("Summary of params used")
         self.logger.info(f"\t. Language: {self.__language.upper()}", stripped=True)
 
+        # Set debug flag
+        self.__engine.set_debug()
+
         # Generate random seed
         seed = self.__engine.set_seed()
 
