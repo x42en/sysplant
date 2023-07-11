@@ -27,6 +27,14 @@ class LoggerSingleton(metaclass=Singleton):
         if level >= self.log_level:
             print(f"{message}")
 
+    def isDebug(self) -> bool:
+        """Public method used to detect debug conditions
+
+        Returns:
+            bool: debug state
+        """
+        return self.log_level == logging.DEBUG
+
     def debug(self, message: str, stripped: bool = False) -> None:
         """Public method used to display debug message (Default: cyan and starting with '[*] ')
 
