@@ -95,6 +95,9 @@ class NIMGenerator(AbstractGenerator):
 
         return result
 
+    def generate_debug(self, debug: bool) -> str:
+        return f"const SPT_DEBUG = {str(debug).lower()}"
+
     def generate_seed(self, seed: int) -> str:
         return f"const SPT_SEED = {hex(seed)}"
 
