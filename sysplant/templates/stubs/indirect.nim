@@ -10,9 +10,7 @@
         mov r15, rax
         mov ecx, ##__FUNCTION_HASH__##
         call `##__FUNCTION_RESOLVE__##`
-        xor r15, rax
-        xor rax, r15
-        xor r15, rax
+        xchg r15, rax
         add rsp, 0x28
         mov rcx, [rsp +8]
         mov rdx, [rsp+16]
