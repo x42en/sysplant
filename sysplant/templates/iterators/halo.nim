@@ -1,10 +1,13 @@
-proc isClean(address: PBYTE): bool =
+const MAX_STEPS = 500
+const STEP_SIZE = 32
+
+proc isClean(address: PBYTE, cw: int32, step: int = 0): bool =
     # First opcodes should be :
     #    MOV R10, RCX
     #    MOV RCX, <syscall>
-    return ((address{cw}[] == 0x4c) and (address{cw + 1}[] == 0x8b) and (address{cw + 2}[] == 0xd1) and (address{cw + 3}[] == 0xb8) and (address{cw + 6}[] == 0x00) and (address{cw + 7}[] == 0x00))
+    return ((address{cw + (step * STEP_SIZE)}[] == 0x4c) and (address{cw + 1 + (step * STEP_SIZE)}[] == 0x8b) and (address{cw + 2 + (step * STEP_SIZE)}[] == 0xd1) and (address{cw + 3 + (step * STEP_SIZE)}[] == 0xb8) and (address{cw + 6 + (step * STEP_SIZE)}[] == 0x00) and (address{cw + 7 + (step * STEP_SIZE)}[] == 0x00))
 
-# Parse Export Table and look for opcode scheme: https://github.com/am0nsec/HellsGate/blob/master/HellsGate/main.c
+# Parse Export Table and look for opcodes, check up and down if hooked https://github.com/trickster0/TartarusGate
 iterator syscalls(mi: MODULEINFO): (DWORD, int32, int64) =
     # Extract headers
     let codeBase = mi.lpBaseOfDll
@@ -27,7 +30,11 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int32, int64) =
             offset = funcRef[ordinal[j][int]]
             address = codeBase{offset}[PBYTE]
         
-        var cw: int32 = 0
+        var
+            cw: int32 = 0
+            foundClean = false
+            index = 0
+
         # Check current function, ensure this is a syscall
         while true:
             # check if syscall, in this case we are too far
@@ -37,20 +44,39 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int32, int64) =
             # check if ret, in this case we are also probaly too far
             if address{cw}[] == 0xc3:
                 break
+            
+            let
+                hash = hashSyscallName(name)
+                found = address{cw}[int64]
 
-            # Ensure stub is clean
-            if address.isClean():
-                let
-                    hash = hashSyscallName(name)
-                    found = address{0xb2}[int64]
-                    
+            # Check current syscall is clean (Halo's method: first instruction is a Jump)
+            foundClean = (address{cw}[] != 0xe9)
+            if not foundClean:
+                # Look up & down to next unhook syscall
+                for i in 1 ..< MAX_STEPS:
+                    # Check next syscall is Clean
+                    if address.isClean(cw, i):
+                        index = i
+                        foundClean = true
+                        break
+
+                    # Check previous syscall is Clean
+                    if address.isClean(cw, -i):
+                        index = -i
+                        foundClean = true
+                        break
+            
+            if foundClean:
                 # Retrieve the SSN taking care of the endianess 
                 let
-                    high_b = address{cw + 5}[]
-                    low_b = address{cw + 4}[]
-                    ssn: int32 = (high_b shl 8).bitor(low_b)[int32]
+                    high_b = address{cw + 5 + (index * STEP_SIZE)}[]
+                    low_b = address{cw + 4 + (index * STEP_SIZE)}[]
+                    # substract the index from the current syscall identifier to find the one of our target function
+                    ssn: int32 = (high_b shl 8).bitor(low_b)[int32] - index[int32]
                 
                 yield (hash, ssn, found)
+                # Resolve next syscall
+                break
             
             cw += 1
     
