@@ -11,6 +11,7 @@ class SysPlantConstants:
     NIM_TAB = "    "
     TAG_START = "##__"
     TAG_END = "__##"
+    RANDOM_WORD_SIZE = 8
     INTERNAL_FUNCTIONS = [
         "SPT_SEED",
         "SPT_Iterator",
