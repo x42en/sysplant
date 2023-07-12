@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+import re
 import string
 import random
 import hashlib
@@ -30,14 +31,28 @@ class AbstractFactory(ABC):
             name (str): the tag name to replace
             content (str): the content value to replace tag with
         """
-        self.__replace_pattern(name, content)
+        self.__replace_pattern(
+            f"{SysPlantConstants.TAG_START}{name}{SysPlantConstants.TAG_END}", content
+        )
+
+    def remove_tag(self, name: str) -> None:
+        """Public method used to remove a TAG pattern in data var (dropping the line for clean code at the same time)
+
+        Args:
+            name (str): the tag name to remove
+        """
+        self.data = re.sub(
+            f"\s*{SysPlantConstants.TAG_START}{name}{SysPlantConstants.TAG_END}",
+            "",
+            self.data,
+        )
 
     def __replace_pattern(
         self, pattern: str, content: Union[str, int], count: int = -1
     ) -> None:
         # Replace tag with content in template data
         self.data = self.data.replace(
-            f"{SysPlantConstants.TAG_START}{pattern}{SysPlantConstants.TAG_END}",
+            pattern,
             str(content),
             count,
         )
