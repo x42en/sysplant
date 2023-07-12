@@ -1,13 +1,31 @@
-const MAX_STEPS = 500
+# I reduce the number of step on purpose because Tartarus' Gate requires
+# to first register the Syscall you want to hook in your code...
+# I don't like that ;)
+# Windows has around 473 syscall, so 200 is more than enough to find a clean call
+# and searching over 200 crash the code...
+const MAX_STEPS = 200
 const STEP_SIZE = 32
 
 # Check if stub is modified
-proc isClean(address: PBYTE, cw: int32, step: int = 0): bool =
+proc isClean(address: PBYTE, cw: int32, step: int = 0): int32 =
+    let gap = step * STEP_SIZE
     # First opcodes should be :
     #    MOV R10, RCX
     #    MOV RCX, <syscall>
-    return ((address{cw + (step * STEP_SIZE)}[] == 0x4c) and (address{cw + 1 + (step * STEP_SIZE)}[] == 0x8b) and (address{cw + 2 + (step * STEP_SIZE)}[] == 0xd1) and (address{cw + 3 + (step * STEP_SIZE)}[] == 0xb8) and (address{cw + 6 + (step * STEP_SIZE)}[] == 0x00) and (address{cw + 7 + (step * STEP_SIZE)}[] == 0x00))
-
+    for i, value in @[byte 0x4c, 0x8b, 0xd1, 0xb8, 0xff, 0xff, 0x00, 0x00].pairs:
+        # Skip syscall values
+        if value == 0xff:
+            continue
+        if address{cw + i + gap}[] != value:
+            return -1
+    
+    # If syscall is ok retrieve the clean SSN taking care of the endianess 
+    let
+        high_b = address{cw + 5 + gap}[]
+        low_b = address{cw + 4 + gap}[]
+    
+    return (high_b shl 8).bitor(low_b)[int32] - step[int32]
+    
 # Parse Export Directory and look for 1st & 3rd opcodes, check up and down if hooked https://github.com/trickster0/TartarusGate
 iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
     # Extract headers
@@ -33,9 +51,8 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
         
         var
             cw: int32 = 0
-            foundClean = false
-            index = 0
-
+            ssn: int32 = -1
+            
         # Check current function, ensure this is a syscall
         while true:
             # check if syscall, in this case we are too far
@@ -46,38 +63,29 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
             if address{cw}[] == 0xc3:
                 break
             
-            let
-                hash = SPT_HashSyscallName(name)
-                found = address{0xb2}[int64]
+            # First check syscall is ok
+            ssn = address.isClean(cw)
 
-            # Check current syscall is clean (Tartarus's method: JMP set on first or third)
+            # Check current syscall is clean (Tartarus's method: JMP set on first or third instruction)
             if (address{cw}[] == 0xe9) or (address{cw + 3}[] == 0xe9):
                 # Look up & down to next unhook syscall
-                for i in 1 ..< MAX_STEPS:
-                    # Check next syscall is Clean
-                    if address.isClean(cw, i):
-                        index = i
-                        foundClean = true
+                for i in 1 .. MAX_STEPS:
+                    # Check next syscall is Clean (DOWN)
+                    ssn = address.isClean(cw, i)
+                    if ssn > -1:
                         break
 
-                    # Check previous syscall is Clean
-                    if address.isClean(cw, -i):
-                        index = -i
-                        foundClean = true
+                    # Check previous syscall is Clean (UP)
+                    ssn = address.isClean(cw, -i)
+                    if ssn > -1:
                         break
-            else:
-                foundClean = address.isClean()
-            
-            if foundClean:
-                # Retrieve the SSN taking care of the endianess 
+                    
+            if ssn > -1:
                 let
-                    high_b = address{cw + 5 + (index * STEP_SIZE)}[]
-                    low_b = address{cw + 4 + (index * STEP_SIZE)}[]
-                    # substract the index from the current syscall identifier to find the one of our target function
-                    ssn: int32 = (high_b shl 8).bitor(low_b)[int32] - index[int32]
+                    hash = SPT_HashSyscallName(name)
+                    found = address{cw}[int64]
                 
                 yield (hash, ssn, found)
-                # Resolve next syscall
                 break
             
             cw += 1
