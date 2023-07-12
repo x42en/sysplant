@@ -16,16 +16,13 @@ class Generator(AbstractFactory):
         self, arch: str = "x64", syscall: str = "syscall", language: str = "nim"
     ) -> None:
         super().__init__()
-        self.__engine = TemplateManager(language, arch)
+        self.__engine = TemplateManager(arch, language, syscall)
 
         if syscall not in ["syscall", "int 0x2e"]:
             raise NotImplementedError("Unsupported syscall instruction")
 
         # Load base template
         self.__engine.load_base()
-
-        # Init syscall instruction
-        self.__instruction = syscall
 
         # Init language
         self.__language = language
@@ -65,28 +62,6 @@ class Generator(AbstractFactory):
 
             # Generate stub
             stubs_code += self.__engine.generate_stub(name, params, hash_value)
-
-            # # Reset stub
-            # syscall_stub.load_stub(stub)
-
-            # # Generate function declaration
-            # syscall_stub.generate_header(name, params)
-
-            # # Replace resolver functions in stub
-            # func_resolver = (
-            #     "SPT_GetRandomSyscallAddress"
-            #     if resolver == "random"
-            #     else "SPT_GetSyscallAddress"
-            # )
-            # syscall_stub.replace_tag("SPT_RESOLVER", func_resolver)
-
-            # syscall_stub.replace_tag("FUNCTION_HASH", hex(hash_value))
-
-            # # Replace syscall instruction if set in template
-            # syscall_stub.replace_tag("SYSCALL_INST", self.__instruction)
-
-            # # Append stub
-            # stubs_code += str(syscall_stub) + "\n\n"
 
         # Replace syscall stubs
         self.__engine.replace_tag("SPT_STUBS", stubs_code)
