@@ -45,5 +45,9 @@ class AbstractGenerator(ABC):
         raise NotImplementedError("Not implemented yet")
 
     @abstractmethod
-    def generate_header(self, name: str, definition: list) -> str:
+    def generate_stub(self, name: str, params: dict, fhash: int) -> str:
+        raise NotImplementedError("Not implemented yet")
+
+    @abstractmethod
+    def generate_definitions(self) -> str:
         raise NotImplementedError("Not implemented yet")
