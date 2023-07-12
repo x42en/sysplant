@@ -18,7 +18,6 @@ class NIMGenerator(AbstractGenerator):
     def __init__(self) -> None:
         super().__init__()
 
-        self.defined: set = set()
         self.__definitions: dict = {}
         self.__winimdef = ""
 
@@ -105,10 +104,14 @@ class NIMGenerator(AbstractGenerator):
         # Build function param declaration
         stub = f"proc {name}*("
         args = list()
+
+        # Loop function params
         for p in params.get("params", []):
             # Register each type var
-            self.defined.add(p["type"])
+            self.type_defined.add(p["type"])
             args.append(f"{p['name']}: {p['type']}")
+
+        # Generate NIM proc parameters
         stub += ", ".join(args)
         stub += ") {.asmNoStackFrame.} =\n"
 
@@ -127,9 +130,6 @@ class NIMGenerator(AbstractGenerator):
         # Resolve dependencies first
         if len(dependencies) > 0:
             for dep in dependencies:
-                # # Ensure it is not already generated
-                # if dep in self.defined:
-                #     continue
                 # Avoid defining external types
                 if self.__definitions.get(dep) is not None:
                     typedef_code += self.__generate_typedefs(
@@ -153,14 +153,11 @@ class NIMGenerator(AbstractGenerator):
         else:
             raise NotImplementedError("Unsupported definition type")
 
-        # # Store generated to avoid doing it twice
-        # self.defined.add(name)
-
         return typedef_code
 
     def generate_definitions(self) -> str:
         code = ""
-        for name in self.defined:
+        for name in self.type_defined:
             # If Winim already share this structure
             if f"{name}*" in self.__winimdef:
                 continue
@@ -174,10 +171,6 @@ class NIMGenerator(AbstractGenerator):
             # Still nothing... it might be a standard struct then
             if entry is None:
                 continue
-
-            # # Ensure it is not already generated
-            # if name in self.defined:
-            #     continue
 
             code += self.__generate_typedefs(name, entry)
 

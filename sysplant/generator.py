@@ -2,27 +2,22 @@
 
 from typing import Union
 
-from sysplant.abstracts.abstractFactory import AbstractFactory
+from sysplant.utils.loggerSingleton import LoggerSingleton
 from sysplant.managers.templateManager import TemplateManager
-from sysplant.constants.sysplantConstants import SysPlantConstants
 
 
-class Generator(AbstractFactory):
+class Generator:
     """
-    Main Class used to generate and manipulate Nim code
+    Main Class defining the generation algorithm. Nothing should be done to the data in here.
+    Check TemplateManager (self.__engine) for data generation and modifications
     """
 
     def __init__(
         self, arch: str = "x64", syscall: str = "syscall", language: str = "nim"
     ) -> None:
-        super().__init__()
+        # Init default vars
+        self.logger = LoggerSingleton()
         self.__engine = TemplateManager(arch, language, syscall)
-
-        if syscall not in ["syscall", "int 0x2e"]:
-            raise NotImplementedError("Unsupported syscall instruction")
-
-        # Load base template
-        self.__engine.load_base()
 
         # Init language
         self.__language = language
@@ -31,13 +26,16 @@ class Generator(AbstractFactory):
         self, iterator: str, resolver: str, stub: str, syscalls: Union[str, list]
     ) -> str:
         self.logger.info("Summary of params used")
+        self.logger.debug(
+            "\t. NOTE: DEBUG Interruption set in caller stub !", stripped=True
+        )
         self.logger.info(f"\t. Language: {self.__language.upper()}", stripped=True)
 
         # Set debug flag
         self.__engine.set_debug()
 
         # Generate random seed
-        seed = self.__engine.set_seed()
+        self.__engine.set_seed()
 
         # Set iterator
         self.logger.info(f"\t. Selected syscall iterator: {iterator}", stripped=True)
@@ -47,24 +45,25 @@ class Generator(AbstractFactory):
         self.logger.info(f"\t. Selected syscall resolver: {resolver}", stripped=True)
         self.__engine.set_resolver(resolver)
 
-        # Generate caller stub
+        # Generate caller
         self.logger.info(f"\t. Selected syscall caller stub: {stub}", stripped=True)
         self.__engine.set_caller(stub, resolver)
 
-        # Resolve all headers for functions to hook
-        entries = self.__engine.select_functions(syscalls)
-        stubs_code = ""
-
-        # Loop functions to hook
-        for name, params in entries.items():
-            # Calculate function hash
-            hash_value = self.get_function_hash(seed, name)
-
-            # Generate stub
-            stubs_code += self.__engine.generate_stub(name, params, hash_value)
-
-        # Replace syscall stubs
-        self.__engine.replace_tag("SPT_STUBS", stubs_code)
+        # Generate stubs
+        if syscalls == "all":
+            self.logger.info("\t. All supported functions selected", stripped=True)
+            syscalls = self.__engine.list_supported_syscalls()
+        elif syscalls == "common":
+            self.logger.info("\t. Common supported functions selected", stripped=True)
+            syscalls = self.__engine.list_common_syscalls()
+        elif syscalls == "donut":
+            self.logger.info("\t. Donut functions selected", stripped=True)
+            syscalls = self.__engine.list_donut_syscalls()
+        elif type(syscalls) is not list:
+            raise ValueError("Unsupported functions type")
+        else:
+            self.logger.info("\t. Custom set of functions selected", stripped=True)
+        self.__engine.generate_stubs(syscalls)
 
         # Resolve required type definition
         self.__engine.generate_definitions()
@@ -78,10 +77,12 @@ class Generator(AbstractFactory):
     def output(self, output_path: str) -> str:
         # Write file
         clean_path = (
-            output_path if output_path.endswith(".nim") else f"{output_path}.nim"
+            output_path
+            if output_path.endswith(f".{self.__language}")
+            else f"{output_path}.{self.__language}"
         )
         with open(clean_path, "w") as o:
             o.write(str(self.__engine))
-        self.logger.info(f"Syscall file written to {clean_path}")
+            self.logger.info(f"Syscall file written to {clean_path}")
 
         return str(self.__engine)
