@@ -14,7 +14,9 @@ from sysplant.constants.sysplantConstants import SysPlantConstants
 
 
 class AbstractFactory(ABC):
-    """Public factory class handling standard methods used by child instances"""
+    """
+    Public factory class handling standard methods used by child instances
+    """
 
     def __init__(self, log_level: int = logging.INFO) -> None:
         super().__init__()
