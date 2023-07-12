@@ -1,3 +1,16 @@
+# Check if stub is modified
+proc isClean(address: PBYTE, cw: int32): bool =
+    # First opcodes should be :
+    #    MOV R10, RCX
+    #    MOV RCX, <syscall>
+    for i, value in @[byte 0x4c, 0x8b, 0xd1, 0xb8, 0xff, 0xff, 0x00, 0x00].pairs:
+        # Skip syscall values
+        if value == 0xff:
+            continue
+        if address{cw + i}[] != value:
+            return false
+    return true
+
 # Parse Export Directory and look for opcode scheme: https://github.com/am0nsec/HellsGate/blob/master/HellsGate/main.c
 iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
     # Extract headers
@@ -32,10 +45,7 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
             if address{cw}[] == 0xc3:
                 break
 
-            # First opcodes should be :
-            #    MOV R10, RCX
-            #    MOV RCX, <syscall>
-            if (address{cw}[] == 0x4c) and (address{cw + 1}[] == 0x8b) and (address{cw + 2}[] == 0xd1) and (address{cw + 3}[] == 0xb8) and (address{cw + 6}[] == 0x00) and (address{cw + 7}[] == 0x00):
+            if address.isClean(cw):
                 let
                     hash = SPT_HashSyscallName(name)
                     found = address{cw}[int64]
@@ -47,6 +57,7 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
                     ssn: int32 = (high_b shl 8).bitor(low_b)[int32]
                 
                 yield (hash, ssn, found)
+                break
             
             cw += 1
     
