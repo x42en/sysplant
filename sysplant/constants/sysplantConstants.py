@@ -14,6 +14,7 @@ class SysPlantConstants:
     INTERNAL_FUNCTIONS = [
         "hashSyscallName",
         "SPT_SEED",
+        "SPT_Syscall",
         "SPT_GetSyscallNumber",
         "SPT_PopulateSyscalls",
         "SPT_GetSyscallAddress",

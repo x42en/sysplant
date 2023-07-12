@@ -94,13 +94,15 @@ proc hashSyscallName(name: string): DWORD =
     let hash = getMD5(&"{SPT_SEED}{name[2 .. ^1]}")
     return cast[DWORD](parseHexInt(hash[0 .. ^25]))
 
-##__ITERATOR__##
+##__SPT_ITERATOR__##
 
 proc SPT_GetSyscallNumber(hash: DWORD): int =
     # Always generate table
     SPT_PopulateSyscalls()
     return ssdt[hash].ssn
 
-##__GET_SYSCALL_ADDR__##
+##__SPT_RESOLVER__##
 
-##__SYSCALL_STUBS__##
+##__SPT_CALLER__##
+
+##__SPT_STUBS__##
