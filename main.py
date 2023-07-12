@@ -18,10 +18,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=DESC_HEADER)
 
     ###################### ARCH OPTIONS #######################
-    arch_options = parser.add_argument_group("Output options")
+    arch_options = parser.add_argument_group("Architecture options")
     arch = arch_options.add_mutually_exclusive_group()
     arch.add_argument(
         "-x86", action="store_true", help="Set mode to 32bits", default=False
+    )
+    arch.add_argument(
+        "-wow",
+        action="store_true",
+        help="Set mode to WoW64 (execution of 32bits on 64bits)",
+        default=False,
     )
     arch.add_argument(
         "-x64",
@@ -167,14 +173,11 @@ if __name__ == "__main__":
         else:
             args.syscalls = args.preset
 
-        engine = Generator()
+        engine = Generator(arch=arch, language="nim")
         engine.generate(
-            iterator=iterator,
-            resolver=resolver,
-            stub=stub,
-            syscalls=args.syscalls,
-            scramble=args.scramble,
-            output=args.output,
+            iterator=iterator, resolver=resolver, stub=stub, syscalls=args.syscalls
         )
+        engine.scramble(args.scramble)
+        engine.output(args.output)
     except Exception as err:
         logger.critical(err)
