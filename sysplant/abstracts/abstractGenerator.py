@@ -18,36 +18,36 @@ class AbstractGenerator(ABC):
         self.logger = LoggerSingleton(log_level)
 
         # Store definitions already defined
-        self.defined = set()
+        self.type_defined = set()
 
     @abstractmethod
     def generate_struct(self, name: str, definition: list) -> str:
-        raise NotImplementedError("Not implemented yet")
+        raise NotImplementedError("Structure generation not implemented yet")
 
     @abstractmethod
     def generate_union(self, name: str, definition: list) -> str:
-        raise NotImplementedError("Not implemented yet")
+        raise NotImplementedError("Union generation not implemented yet")
 
     @abstractmethod
     def generate_pointer(self, name: str, definition: list) -> str:
-        raise NotImplementedError("Not implemented yet")
+        raise NotImplementedError("Pointer generation not implemented yet")
 
     @abstractmethod
     def generate_standard(self, name: str, definition: list) -> str:
-        raise NotImplementedError("Not implemented yet")
+        raise NotImplementedError("Standard var generation not implemented yet")
 
     @abstractmethod
     def generate_enum(self, name: str, definition: list) -> str:
-        raise NotImplementedError("Not implemented yet")
+        raise NotImplementedError("Enum generation not implemented yet")
 
     @abstractmethod
     def generate_seed(self, name: str, definition: list) -> str:
-        raise NotImplementedError("Not implemented yet")
+        raise NotImplementedError("Seed generation not implemented yet")
 
     @abstractmethod
     def generate_stub(self, name: str, params: dict, fhash: int) -> str:
-        raise NotImplementedError("Not implemented yet")
+        raise NotImplementedError("Stub generation not implemented yet")
 
     @abstractmethod
     def generate_definitions(self) -> str:
-        raise NotImplementedError("Not implemented yet")
+        raise NotImplementedError("Type definition generation not implemented yet")
