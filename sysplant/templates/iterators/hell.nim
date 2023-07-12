@@ -1,5 +1,5 @@
-# Parse Export Table and look for opcode scheme: https://github.com/am0nsec/HellsGate/blob/master/HellsGate/main.c
-iterator syscalls(mi: MODULEINFO): (DWORD, int32, int64) =
+# Parse Export Directory and look for opcode scheme: https://github.com/am0nsec/HellsGate/blob/master/HellsGate/main.c
+iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
     # Extract headers
     let codeBase = mi.lpBaseOfDll
     let dosHeader = cast[PIMAGE_DOS_HEADER](codeBase)
@@ -37,8 +37,8 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int32, int64) =
             #    MOV RCX, <syscall>
             if (address{cw}[] == 0x4c) and (address{cw + 1}[] == 0x8b) and (address{cw + 2}[] == 0xd1) and (address{cw + 3}[] == 0xb8) and (address{cw + 6}[] == 0x00) and (address{cw + 7}[] == 0x00):
                 let
-                    hash = hashSyscallName(name)
-                    found = address{0xb2}[int64]
+                    hash = SPT_HashSyscallName(name)
+                    found = address{cw}[int64]
                     
                 # Retrieve the SSN taking care of the endianess 
                 let
@@ -84,7 +84,7 @@ proc SPT_PopulateSyscalls =
     handle.GetModuleInformation(me32.hModule, addr mi, cast[DWORD](sizeof(mi)))
 
     # Resolve address
-    for hash, ssn, address in mi.syscalls():
+    for hash, ssn, address in mi.SPT_Iterator():
         ssdt[hash] = Syscall(address: address, ssn: ssn)
 
     return

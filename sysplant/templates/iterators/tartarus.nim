@@ -1,14 +1,15 @@
 const MAX_STEPS = 500
 const STEP_SIZE = 32
 
+# Check if stub is modified
 proc isClean(address: PBYTE, cw: int32, step: int = 0): bool =
     # First opcodes should be :
     #    MOV R10, RCX
     #    MOV RCX, <syscall>
     return ((address{cw + (step * STEP_SIZE)}[] == 0x4c) and (address{cw + 1 + (step * STEP_SIZE)}[] == 0x8b) and (address{cw + 2 + (step * STEP_SIZE)}[] == 0xd1) and (address{cw + 3 + (step * STEP_SIZE)}[] == 0xb8) and (address{cw + 6 + (step * STEP_SIZE)}[] == 0x00) and (address{cw + 7 + (step * STEP_SIZE)}[] == 0x00))
 
-# Parse Export Table and look for opcodes, check up and down if hooked https://github.com/trickster0/TartarusGate
-iterator syscalls(mi: MODULEINFO): (DWORD, int32, int64) =
+# Parse Export Directory and look for 1st & 3rd opcodes, check up and down if hooked https://github.com/trickster0/TartarusGate
+iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
     # Extract headers
     let codeBase = mi.lpBaseOfDll
     let dosHeader = cast[PIMAGE_DOS_HEADER](codeBase)
@@ -46,12 +47,11 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int32, int64) =
                 break
             
             let
-                hash = hashSyscallName(name)
+                hash = SPT_HashSyscallName(name)
                 found = address{0xb2}[int64]
 
             # Check current syscall is clean (Tartarus's method: JMP set on first or third)
-            foundClean = (address{cw}[] != 0xe9) and (address{cw + 3}[] != 0xe9)
-            if not foundClean:
+            if (address{cw}[] == 0xe9) or (address{cw + 3}[] == 0xe9):
                 # Look up & down to next unhook syscall
                 for i in 1 ..< MAX_STEPS:
                     # Check next syscall is Clean
@@ -65,6 +65,8 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int32, int64) =
                         index = -i
                         foundClean = true
                         break
+            else:
+                foundClean = address.isClean()
             
             if foundClean:
                 # Retrieve the SSN taking care of the endianess 
@@ -114,7 +116,7 @@ proc SPT_PopulateSyscalls =
     handle.GetModuleInformation(me32.hModule, addr mi, cast[DWORD](sizeof(mi)))
 
     # Resolve address
-    for hash, ssn, address in mi.syscalls():
+    for hash, ssn, address in mi.SPT_Iterator():
         ssdt[hash] = Syscall(address: address, ssn: ssn)
 
     return

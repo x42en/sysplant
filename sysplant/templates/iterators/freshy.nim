@@ -1,5 +1,5 @@
-# Use RunTime Function table from exception directory to gather SSN: https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/
-iterator syscalls(mi: MODULEINFO): (DWORD, int64) =
+# Parse Export Directory and lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number https://github.com/crummie5/FreshyCalls
+iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int64) =
     # Extract headers
     let codeBase = mi.lpBaseOfDll
     let dosHeader = cast[PIMAGE_DOS_HEADER](codeBase)
@@ -22,7 +22,7 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int64) =
         
         # Check offset with current function, ensure this is a syscall
         if name.startsWith("Nt") and not name.startsWith("Ntdll"):
-            let hash = hashSyscallName(name)
+            let hash = SPT_HashSyscallName(name)
             # Calculate jmp address avoiding EDR hooks
             yield (hash, codeBase{offset + 0xb2}[int64])
             
@@ -65,7 +65,7 @@ proc SPT_PopulateSyscalls =
     handle.GetModuleInformation(me32.hModule, addr mi, cast[DWORD](sizeof(mi)))
 
     # Resolve address
-    for hash, address in mi.syscalls():
+    for hash, address in mi.SPT_Iterator():
         tmp.add((address, hash))
     
     # Sort syscalls by address

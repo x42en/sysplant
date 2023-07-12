@@ -90,7 +90,7 @@ proc debug_output(line: string) =
     if SPT_DEBUG:
         echo line
 
-proc hashSyscallName(name: string): DWORD =
+proc SPT_HashSyscallName(name: string): DWORD =
     let hash = getMD5(&"{SPT_SEED}{name[2 .. ^1]}")
     return cast[DWORD](parseHexInt(hash[0 .. ^25]))
 

@@ -12,9 +12,10 @@ class SysPlantConstants:
     TAG_START = "##__"
     TAG_END = "__##"
     INTERNAL_FUNCTIONS = [
-        "hashSyscallName",
         "SPT_SEED",
+        "SPT_Iterator",
         "SPT_Syscall",
+        "SPT_HashSyscallName",
         "SPT_GetSyscallNumber",
         "SPT_PopulateSyscalls",
         "SPT_GetSyscallAddress",

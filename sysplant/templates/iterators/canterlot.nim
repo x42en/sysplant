@@ -1,5 +1,6 @@
 # Use RunTime Function table from exception directory to gather SSN: https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/
-iterator syscalls(mi: MODULEINFO): (DWORD, int, int64) =
+# Auto calculate syscall offset
+iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int, int64) =
     var
         i: int = 0
         ssn: int = 0
@@ -37,7 +38,7 @@ iterator syscalls(mi: MODULEINFO): (DWORD, int, int64) =
             
             # Check offset with current function, ensure this is a syscall
             if (offset == current) and name.startsWith("Zw"):
-                let hash = hashSyscallName(name)
+                let hash = SPT_HashSyscallName(name)
                 # All syscall stub are identical for a Windows version
                 if padding == 0x0:
                     # Calculate jmp address avoiding EDR hooks
@@ -85,7 +86,7 @@ proc SPT_PopulateSyscalls =
     handle.GetModuleInformation(me32.hModule, addr mi, cast[DWORD](sizeof(mi)))
     
     # Resolve ssn & address
-    for hash, ssn, address in mi.syscalls():
+    for hash, ssn, address in mi.SPT_Iterator():
         var entry = Syscall(ssn: ssn, address: address)
         ssdt[hash] = entry
 

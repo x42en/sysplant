@@ -8,6 +8,7 @@ proc SPT_Syscall {.asmNoStackFrame.} =
         mov [rsp+32], r9
         sub rsp, 0x28
         mov rcx, rax
+        ##__DEBUG_INT__##
         call `SPT_GetSyscallNumber`
         add rsp, 0x28
         mov rcx, [rsp+ 8]
@@ -15,6 +16,7 @@ proc SPT_Syscall {.asmNoStackFrame.} =
         mov r8, [rsp+24]
         mov r9, [rsp+32]
         mov r10, rcx
-        syscall
+        ##__DEBUG_INT__##
+        ##__SYSCALL_INT__##
         ret
     """
