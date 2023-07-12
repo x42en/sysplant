@@ -12,9 +12,11 @@ class Generator(AbstractFactory):
     Main Class used to generate and manipulate Nim code
     """
 
-    def __init__(self, syscall: str = "syscall", language: str = "nim") -> None:
+    def __init__(
+        self, arch: str = "x64", syscall: str = "syscall", language: str = "nim"
+    ) -> None:
         super().__init__()
-        self.__engine = TemplateManager(language)
+        self.__engine = TemplateManager(language, arch)
 
         if syscall not in ["syscall", "int 0x2e"]:
             raise NotImplementedError("Unsupported syscall instruction")
@@ -29,13 +31,7 @@ class Generator(AbstractFactory):
         self.__language = language
 
     def generate(
-        self,
-        iterator: str,
-        resolver: str,
-        stub: str,
-        syscalls: Union[str, list],
-        scramble: bool,
-        output: str,
+        self, iterator: str, resolver: str, stub: str, syscalls: Union[str, list]
     ) -> str:
         self.logger.info("Summary of params used")
         self.logger.info(f"\t. Language: {self.__language.upper()}", stripped=True)
@@ -54,9 +50,9 @@ class Generator(AbstractFactory):
         self.logger.info(f"\t. Selected syscall resolver: {resolver}", stripped=True)
         self.__engine.set_resolver(resolver)
 
-        # Generate stubs
-        self.logger.info(f"\t. Selected syscall stub: {stub}", stripped=True)
-        syscall_stub = TemplateManager(self.__language)
+        # Generate caller stub
+        self.logger.info(f"\t. Selected syscall caller stub: {stub}", stripped=True)
+        self.__engine.set_caller(stub, resolver)
 
         # Resolve all headers for functions to hook
         entries = self.__engine.select_functions(syscalls)
@@ -64,45 +60,53 @@ class Generator(AbstractFactory):
 
         # Loop functions to hook
         for name, params in entries.items():
-            # Reset stub
-            syscall_stub.load_stub(stub)
-
-            # Generate function declaration
-            syscall_stub.generate_header(name, params)
-
-            # Replace resolver functions in stub
-            func_resolver = (
-                "SPT_GetRandomSyscallAddress"
-                if resolver == "random"
-                else "SPT_GetSyscallAddress"
-            )
-            syscall_stub.replace_tag("FUNCTION_RESOLVE", func_resolver)
-
             # Calculate function hash
             hash_value = self.get_function_hash(seed, name)
-            syscall_stub.replace_tag("FUNCTION_HASH", hex(hash_value))
 
-            # Replace syscall instruction if set in template
-            syscall_stub.replace_tag("SYSCALL_INST", self.__instruction)
+            # Generate stub
+            stubs_code += self.__engine.generate_stub(name, params, hash_value)
 
-            # Append stub
-            stubs_code += str(syscall_stub) + "\n\n"
+            # # Reset stub
+            # syscall_stub.load_stub(stub)
+
+            # # Generate function declaration
+            # syscall_stub.generate_header(name, params)
+
+            # # Replace resolver functions in stub
+            # func_resolver = (
+            #     "SPT_GetRandomSyscallAddress"
+            #     if resolver == "random"
+            #     else "SPT_GetSyscallAddress"
+            # )
+            # syscall_stub.replace_tag("SPT_RESOLVER", func_resolver)
+
+            # syscall_stub.replace_tag("FUNCTION_HASH", hex(hash_value))
+
+            # # Replace syscall instruction if set in template
+            # syscall_stub.replace_tag("SYSCALL_INST", self.__instruction)
+
+            # # Append stub
+            # stubs_code += str(syscall_stub) + "\n\n"
 
         # Replace syscall stubs
-        self.__engine.replace_tag("SYSCALL_STUBS", stubs_code)
+        self.__engine.replace_tag("SPT_STUBS", stubs_code)
 
         # Resolve required type definition
-        self.__engine.generate_definitions(syscall_stub.get_definitions())
+        self.__engine.generate_definitions()
 
+    def scramble(self, scramble: bool) -> None:
         # If internal name randomization is required
         self.logger.info(f"\t. Randomize internal function: {scramble}", stripped=True)
         if scramble:
             self.__engine.scramble()
 
+    def output(self, output_path: str) -> str:
         # Write file
-        output_path = output if output.endswith(".nim") else f"{output}.nim"
-        with open(output_path, "w") as o:
+        clean_path = (
+            output_path if output_path.endswith(".nim") else f"{output_path}.nim"
+        )
+        with open(clean_path, "w") as o:
             o.write(str(self.__engine))
-        self.logger.info(f"Syscall file written to {output_path}")
+        self.logger.info(f"Syscall file written to {clean_path}")
 
         return str(self.__engine)

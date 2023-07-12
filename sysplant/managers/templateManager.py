@@ -21,14 +21,17 @@ class TemplateManager(AbstractFactory):
     Main class responsible for template handling
     """
 
-    def __init__(self, language: str) -> None:
+    def __init__(self, language: str, arch: str = "x64") -> None:
         super().__init__()
 
         # Define language template
         if language not in ["nim"]:
             raise NotImplementedError("Sorry language not supported ... yet ?!")
+        if arch not in ["x86", "x64", "wow"]:
+            raise NotImplementedError("Sorry architecture not implemented yet")
 
         self.__lang = language
+        self.__arch = arch
 
         # Set coder bot
         if self.__lang == "nim":
@@ -53,7 +56,7 @@ class TemplateManager(AbstractFactory):
             raise ValueError("Template name can not be null")
 
         # Check only extension dot is set
-        if not name.replace(".", "", 1).isalpha():
+        if not name.replace(".", "", 1).replace(f"_{self.__arch}", "", 1).isalpha():
             raise ValueError("Invalid template name")
 
         # Adapt module based on what to load
@@ -78,16 +81,6 @@ class TemplateManager(AbstractFactory):
 
         return self.data
 
-    def set_iterator(self, name: str) -> None:
-        # Get iterator template from package
-        data = self.__load_template(pkg_iterators, f"{name}.{self.__lang}")
-        self.replace_tag("ITERATOR", data)
-
-    def set_resolver(self, name: str) -> None:
-        # Get resolver template from package
-        data = self.__load_template(pkg_resolvers, f"{name}.{self.__lang}")
-        self.replace_tag("GET_SYSCALL_ADDR", data)
-
     def set_debug(self) -> None:
         # Generate debug constant based on log level condition
         debug_const = self.__coder.generate_debug(self.logger.isDebug())
@@ -103,6 +96,29 @@ class TemplateManager(AbstractFactory):
         self.replace_tag("SPT_SEED", seed_code)
 
         return seed
+
+    def set_iterator(self, name: str) -> None:
+        # Get iterator template from package
+        data = self.__load_template(pkg_iterators, f"{name}.{self.__lang}")
+        self.replace_tag("SPT_ITERATOR", data)
+
+    def set_resolver(self, name: str) -> None:
+        # Get resolver template from package
+        data = self.__load_template(pkg_resolvers, f"{name}.{self.__lang}")
+        self.replace_tag("SPT_RESOLVER", data)
+
+    def set_caller(self, name: str, resolver: str) -> None:
+        # Get caller function from package
+        data = self.__load_template(pkg_stubs, f"{name}_{self.__arch}.{self.__lang}")
+        self.replace_tag("SPT_CALLER", data)
+
+        # Replace resolver functions in stub
+        func_resolver = (
+            "SPT_GetRandomSyscallAddress"
+            if resolver == "random"
+            else "SPT_GetSyscallAddress"
+        )
+        self.replace_tag("FUNCTION_RESOLVE", func_resolver)
 
     def select_functions(self, names: Union[str, list]) -> dict:
         if names == "all":
@@ -129,15 +145,14 @@ class TemplateManager(AbstractFactory):
 
         return results
 
-    def generate_header(self, name: str, params: dict) -> str:
-        header = self.__coder.generate_header(name, params)
-        self.replace_tag("PROC_DEFINITION", header)
+    def generate_stub(self, name: str, params: dict, fhash: int) -> str:
+        return self.__coder.generate_stub(name, params, fhash)
 
-    def get_definitions(self) -> set:
-        return self.__coder.defined
+    def set_stubs(self, stubs: str) -> None:
+        self.replace_tag("SPT_STUBS", stubs)
 
-    def generate_definitions(self, definitions: set) -> None:
-        code = self.__coder.generate_definitions(definitions)
+    def generate_definitions(self) -> None:
+        code = self.__coder.generate_definitions()
         self.replace_tag("TYPE_DEFINITIONS", code)
 
     def scramble(self) -> str:

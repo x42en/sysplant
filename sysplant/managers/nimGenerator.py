@@ -101,18 +101,24 @@ class NIMGenerator(AbstractGenerator):
     def generate_seed(self, seed: int) -> str:
         return f"const SPT_SEED = {hex(seed)}"
 
-    def generate_header(self, name: str, params: dict) -> str:
-        # Generate function header
-        header = f"proc {name}*("
+    def generate_stub(self, name: str, params: dict, fhash: int) -> str:
         # Build function param declaration
+        stub = f"proc {name}*("
         args = list()
         for p in params.get("params", []):
             # Register each type var
             self.defined.add(p["type"])
             args.append(f"{p['name']}: {p['type']}")
-        header += ", ".join(args)
-        header += ") {.asmNoStackFrame.} ="
-        return header
+        stub += ", ".join(args)
+        stub += ") {.asmNoStackFrame.} =\n"
+
+        # Append stub code
+        stub += f'{SysPlantConstants.NIM_TAB}asm """\n'
+        stub += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}push dword ptr {hex(fhash)}\n"
+        stub += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}call `SPT_Syscall`\n"
+        stub += f'{SysPlantConstants.NIM_TAB}"""\n'
+
+        return stub
 
     def __generate_typedefs(self, name: str, entry: dict) -> str:
         typedef_code = ""
@@ -152,9 +158,9 @@ class NIMGenerator(AbstractGenerator):
 
         return typedef_code
 
-    def generate_definitions(self, definitions: set) -> str:
+    def generate_definitions(self) -> str:
         code = ""
-        for name in definitions:
+        for name in self.defined:
             # If Winim already share this structure
             if f"{name}*" in self.__winimdef:
                 continue
