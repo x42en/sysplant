@@ -21,17 +21,24 @@ class TemplateManager(AbstractFactory):
     Main class responsible for template handling
     """
 
-    def __init__(self, language: str, arch: str = "x64") -> None:
+    def __init__(
+        self, arch: str = "x64", language: str = "nim", syscall: str = "syscall"
+    ) -> None:
         super().__init__()
 
         # Define language template
-        if language not in ["nim"]:
-            raise NotImplementedError("Sorry language not supported ... yet ?!")
         if arch not in ["x86", "x64", "wow"]:
             raise NotImplementedError("Sorry architecture not implemented yet")
+        if language not in ["nim"]:
+            raise NotImplementedError("Sorry language not supported ... yet ?!")
+        if syscall not in ["syscall", "sysenter", "int 0x2h"]:
+            raise NotImplementedError(
+                "Sorry syscall instruction not supported ... yet ?!"
+            )
 
         self.__lang = language
         self.__arch = arch
+        self.__syscall = syscall
 
         # Set coder bot
         if self.__lang == "nim":
@@ -112,13 +119,22 @@ class TemplateManager(AbstractFactory):
         data = self.__load_template(pkg_stubs, f"{name}_{self.__arch}.{self.__lang}")
         self.replace_tag("SPT_CALLER", data)
 
+        # Set debug interruption on debug state
+        if self.logger.isDebug():
+            self.replace_tag("DEBUG_INT", "int 3")
+        else:
+            self.remove_tag("DEBUG_INT")
+
         # Replace resolver functions in stub
         func_resolver = (
             "SPT_GetRandomSyscallAddress"
             if resolver == "random"
             else "SPT_GetSyscallAddress"
         )
+
+        # Adapt caller with proper options
         self.replace_tag("FUNCTION_RESOLVE", func_resolver)
+        self.replace_tag("SYSCALL_INT", self.__syscall)
 
     def select_functions(self, names: Union[str, list]) -> dict:
         if names == "all":
