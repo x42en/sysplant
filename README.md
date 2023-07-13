@@ -94,10 +94,48 @@ optional arguments:
                         Select syscall stub (Default: indirect)
 ```
 
+## Usage
+Here are some usage examples that will generate common NtFunctions only. This tool is not restricted to them, please [READ THE DOC]()
+
+#### Hell's Gate generation
+```bash
+$ ./main.py -o syscall.nim hell
+```
+
+#### Halo's Gate generation
+```bash
+$ ./main.py -o syscall.nim halo
+```
+
+#### Tartarus's Gate generation
+```bash
+$ ./main.py -o syscall.nim tartarus
+```
+
+#### FreshyCall generation
+```bash
+$ ./main.py -o syscall.nim freshy
+```
+
+#### Syswhispers2 like generation
+```bash
+$ ./main.py -o syscall.nim syswhispers
+```
+
+#### Canterlot's Gate generation
+```bash
+$ ./main.py -o syscall.nim canterlot
+```
+
+#### Custom generation
+```bash
+$ ./main.py -o syscall.nim custom -i canterlot -r random -s indirect
+```
+
 ## Example
 A simple example (launching calc.exe) is accessible using `inject.nim`.  
 1. Be sure to install [winim](https://github.com/khchen/winim) library first: `nimble install winim`
-2. Generate the `syscall.nim` file with `./main.py -o example/syscall.nim`
+2. Generate the `syscall.nim` file with `./main.py -o example/syscall.nim canterlot`
 3. Compile the injection template file with `nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=app.exe example/inject.nim` on Linux (be sure to have mingw installed)
 4. Copy the `app.exe` generated on your Windows device.
 
@@ -117,7 +155,7 @@ Some PR & reviews are more than welcome :tada: !
 - [ ] Add x86 support
 - [ ] Add WoW64 support
 - [ ] Add some tests
-- [ ] Setup documentation
+- [x] Setup documentation
 
 ## License
 This project is licensed under the [MIT License](https://www.tldrlegal.com/license/mit-license), for individuals only. If you want to integrate this work in your commercial project please contact me through `0x42en[at]gmail.com`
