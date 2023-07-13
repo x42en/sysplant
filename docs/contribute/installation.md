@@ -15,7 +15,7 @@ Tools to generate your doc are strongly advised except if you like to do this ma
 
 - lazydoc to auto-generate markdown doc from DocString
 - mkdocs to auto-generate html page from basic markdown structure and lazydoc output
-- mkdocs-awesome-pages-plugin in order to have a beautiful theme ;)
+- mkdocs-awesome-pages-plugin in order to have a beautiful theme :wink:
 
 ## Adapt code exceptions
 If you are using vscode along with poetry you can find inside `pyproject.toml` some exclusion on Google style code. If you need to add some extras ones [here](http://www.pydocstyle.org/en/6.2.2/error_codes.html) is the Error codes.
