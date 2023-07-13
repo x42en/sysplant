@@ -65,14 +65,15 @@ class Generator:
             self.logger.info("\t. Custom set of functions selected", stripped=True)
         self.__engine.generate_stubs(syscalls)
 
-        # Resolve required type definition
-        self.__engine.generate_definitions()
+        return str(self.__engine)
 
-    def scramble(self, scramble: bool) -> None:
+    def scramble(self, scramble: bool) -> str:
         # If internal name randomization is required
         self.logger.info(f"\t. Randomize internal function: {scramble}", stripped=True)
         if scramble:
             self.__engine.scramble()
+
+        return str(self.__engine)
 
     def output(self, output_path: str) -> str:
         # Write file
