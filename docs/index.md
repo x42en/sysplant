@@ -95,7 +95,7 @@ optional arguments:
 ```
 
 ## Usage
-Here are some usage examples that will generate common NtFunctions only. This tool is not restricted to them, please [READ THE DOC]()
+Here are some usage examples that will generate common NtFunctions only. This tool is not restricted to them, please [READ THE DOC](https://x42en.github.io/sysplant/)
 
 #### Hell's Gate generation
 ```bash
