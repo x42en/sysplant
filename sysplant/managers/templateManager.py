@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
 import json
 
-from typing import Union
-
 import importlib.resources as pkg_resources
 
 from sysplant import data as pkg_data

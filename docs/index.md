@@ -154,7 +154,7 @@ Some PR & reviews are more than welcome :tada: !
    - [x] Add internal names randomization
    - [ ] Add x86 support
    - [ ] Add WoW64 support
-   - [ ] Add some tests
+   - [-] Add some tests
    - [x] Setup documentation
 
 ## License
