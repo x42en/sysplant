@@ -11,9 +11,9 @@ python = "^3.8"
 
 
 [tool.poetry.group.dev.dependencies]
-lazydoc = "^1.0.1"
 pytest = "^7.4.0"
 mkdocs-awesome-pages-plugin = "^2.9.1"
+lazydocs = "^0.4.8"
 
 [build-system]
 requires = ["poetry-core"]
