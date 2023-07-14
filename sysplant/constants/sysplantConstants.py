@@ -7,6 +7,7 @@ class SysPlantConstants:
 
     """
 
+    SEARCH_EXT = (".h", ".c", ".cpp", ".nim")
     TEMPLATE_EXT = "nim"
     NIM_TAB = "    "
     TAG_START = "##__"

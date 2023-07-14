@@ -6,7 +6,7 @@ import argparse
 
 from sysplant.utils.loggerSingleton import LoggerSingleton
 from sysplant.constants import DESC_HEADER, FANCY_HEADER
-from sysplant.generator import Generator
+from sysplant.sysplant import Sysplant
 
 if __name__ == "__main__":
     # Set default level
@@ -16,25 +16,6 @@ if __name__ == "__main__":
     logger = LoggerSingleton(log_level)
 
     parser = argparse.ArgumentParser(description=DESC_HEADER)
-
-    ###################### ARCH OPTIONS #######################
-    arch_options = parser.add_argument_group("Architecture options")
-    arch = arch_options.add_mutually_exclusive_group()
-    arch.add_argument(
-        "-x86", action="store_true", help="Set mode to 32bits", default=False
-    )
-    arch.add_argument(
-        "-wow",
-        action="store_true",
-        help="Set mode to WoW64 (execution of 32bits on 64bits)",
-        default=False,
-    )
-    arch.add_argument(
-        "-x64",
-        action="store_true",
-        help="Set mode to 64bits (Default True)",
-        default=True,
-    )
 
     ##################### VERBOSITY OPTIONS #####################
     output_options = parser.add_argument_group("Output options")
@@ -53,8 +34,20 @@ if __name__ == "__main__":
         help="Remove all messages upon execution",
     )
 
-    ################## GENERATION METHOD ########################
-    subparsers = parser.add_subparsers(dest="generation")
+    ##################### ACTIONS OPTIONS #####################
+    actions = parser.add_subparsers(dest="action")
+    actions.required = True
+
+    action_list = actions.add_parser("list")
+    action_generate = actions.add_parser("generate")
+
+    ################## LIST ACTION ########################
+    action_list.add_argument(
+        "path", help="Path to search for NtFunction, could be a file or a directory"
+    )
+
+    ################## GENERATE ACTION ########################
+    subparsers = action_generate.add_subparsers(dest="generation")
     subparsers.required = True
 
     parser_hell = subparsers.add_parser("hell")
@@ -64,6 +57,25 @@ if __name__ == "__main__":
     parser_syswhispers = subparsers.add_parser("syswhispers")
     parser_canterlot = subparsers.add_parser("canterlot")
     parser_custom = subparsers.add_parser("custom")
+
+    ###################### ARCH OPTIONS #######################
+    arch_options = action_generate.add_argument_group("Architecture options")
+    arch = arch_options.add_mutually_exclusive_group()
+    arch.add_argument(
+        "-x86", action="store_true", help="Set mode to 32bits", default=False
+    )
+    arch.add_argument(
+        "-wow",
+        action="store_true",
+        help="Set mode to WoW64 (execution of 32bits on 64bits)",
+        default=False,
+    )
+    arch.add_argument(
+        "-x64",
+        action="store_true",
+        help="Set mode to 64bits (Default True)",
+        default=True,
+    )
 
     ##################### CUSTOM OPTIONS #####################
     parser_custom.add_argument(
@@ -89,7 +101,7 @@ if __name__ == "__main__":
     )
 
     ##################### SYSCALL OPTIONS #####################
-    syscalls_options = parser.add_argument_group("Syscall options")
+    syscalls_options = action_generate.add_argument_group("Syscall options")
     syscalls = syscalls_options.add_mutually_exclusive_group()
     syscalls.add_argument(
         "-p",
@@ -103,15 +115,15 @@ if __name__ == "__main__":
         "-f", "--functions", help="Comma-separated functions", required=False
     )
 
-    ##################### GLOBAL OPTIONS #####################
-    parser.add_argument(
+    ##################### GENERATE OPTIONS #####################
+    action_generate.add_argument(
         "-x",
         "--scramble",
         help="Randomize internal function names to evade static analysis",
         action="store_true",
     )
 
-    parser.add_argument(
+    action_generate.add_argument(
         "-o",
         "--output",
         help="Output path for NIM generated file",
@@ -119,9 +131,6 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-
-    # Set architecture
-    arch = "x86" if args.x86 else "x64"
 
     if args.verbose:
         log_level = logging.INFO
@@ -132,52 +141,66 @@ if __name__ == "__main__":
 
     # Update log level if necessary
     logger.log_level = log_level
-
-    # Preset infos when necessary
-    if args.generation == "hell":
-        iterator = "hell"
-        resolver = "basic"
-        stub = "direct"
-    elif args.generation == "halo":
-        iterator = "halo"
-        resolver = "basic"
-        stub = "direct"
-    elif args.generation == "tartarus":
-        iterator = "tartarus"
-        resolver = "basic"
-        stub = "direct"
-    elif args.generation == "freshy":
-        iterator = "freshy"
-        resolver = "basic"
-        stub = "direct"
-    elif args.generation == "syswhispers":
-        iterator = "syswhispers"
-        resolver = "basic"
-        stub = "direct"
-    elif args.generation == "canterlot":
-        iterator = "canterlot"
-        resolver = "random"
-        stub = "indirect"
-    elif args.generation == "custom":
-        iterator = args.iterator
-        resolver = args.resolver
-        stub = args.stub
-
     logger.info(FANCY_HEADER, stripped=True)
 
-    try:
-        # Override default condition (preset: common) if funcitons are set
-        if args.functions:
-            args.syscalls = args.functions.split(",")
-        # Set syscall to generate
-        else:
-            args.syscalls = args.preset
+    if args.action == "generate":
+        # Set architecture
+        arch = "x86" if args.x86 else "x64"
 
-        engine = Generator(arch=arch, language="nim")
-        engine.generate(
-            iterator=iterator, resolver=resolver, stub=stub, syscalls=args.syscalls
-        )
-        engine.scramble(args.scramble)
-        engine.output(args.output)
-    except Exception as err:
-        logger.critical(err)
+        # Preset infos when necessary
+        if args.generation == "hell":
+            iterator = "hell"
+            resolver = "basic"
+            stub = "direct"
+        elif args.generation == "halo":
+            iterator = "halo"
+            resolver = "basic"
+            stub = "direct"
+        elif args.generation == "tartarus":
+            iterator = "tartarus"
+            resolver = "basic"
+            stub = "direct"
+        elif args.generation == "freshy":
+            iterator = "freshy"
+            resolver = "basic"
+            stub = "direct"
+        elif args.generation == "syswhispers":
+            iterator = "syswhispers"
+            resolver = "basic"
+            stub = "direct"
+        elif args.generation == "canterlot":
+            iterator = "canterlot"
+            resolver = "random"
+            stub = "indirect"
+        elif args.generation == "custom":
+            iterator = args.iterator
+            resolver = args.resolver
+            stub = args.stub
+
+        try:
+            # Override default condition (preset: common) if funcitons are set
+            if args.functions:
+                args.syscalls = args.functions.split(",")
+            # Set syscall to generate
+            else:
+                args.syscalls = args.preset
+
+            engine = Sysplant(arch=arch, language="nim")
+            engine.generate(
+                iterator=iterator, resolver=resolver, stub=stub, syscalls=args.syscalls
+            )
+            engine.scramble(args.scramble)
+            engine.output(args.output)
+        except Exception as err:
+            logger.critical(err)
+    else:
+        try:
+            engine = Sysplant()
+            found = engine.list(args.path)
+            if len(found) > 0:
+                logger.info(f"{len(found)} NtFunctions found:")
+                logger.output(",".join(found))
+            else:
+                logger.info("No NtFunctions found")
+        except Exception as err:
+            logger.critical(err)

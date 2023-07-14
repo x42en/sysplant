@@ -1,14 +1,16 @@
 # -*- coding:utf-8 -*-
 
+import os
 from typing import Union
 
 from sysplant.utils.loggerSingleton import LoggerSingleton
 from sysplant.managers.templateManager import TemplateManager
+from sysplant.constants.sysplantConstants import SysPlantConstants
 
 
-class Generator:
+class Sysplant:
     """
-    Main Class defining the generation algorithm. Nothing should be done to the data in here.
+    Main Class handling the global function to execute. Nothing should be done to the data in here.
     Check TemplateManager (self.__engine) for data generation and modifications.
     """
 
@@ -30,6 +32,39 @@ class Generator:
 
         # Init language
         self.__language = language
+
+    def list(self, search_path: str) -> set:
+        results = set()
+        # Get all supported functions
+        patterns = self.__engine.list_supported_syscalls()
+
+        if os.path.isdir(search_path):
+            # Extract path from user setting
+            path_list = [
+                os.path.join(dirpath, filename)
+                for dirpath, _, filenames in os.walk(search_path)
+                for filename in filenames
+                if filename.endswith(SysPlantConstants.SEARCH_EXT)
+            ]
+        elif os.path.isfile(search_path):
+            if search_path.endswith(SysPlantConstants.SEARCH_EXT):
+                path_list = [search_path]
+        else:
+            raise OSError(f"Path {search_path} does not exists")
+
+        # Loop allowed files
+        for filename in path_list:
+            self.logger.debug(f"Search in {filename}")
+            with open(filename, "r") as dst:
+                data = dst.read()
+
+                # Search pattern in file
+                for p in patterns:
+                    # Check bot Nt and Zw versions
+                    if (p in data) or ("Zw" + p[2:] in data):
+                        results.add(p)
+
+        return results
 
     def generate(
         self, iterator: str, resolver: str, stub: str, syscalls: Union[str, list]
