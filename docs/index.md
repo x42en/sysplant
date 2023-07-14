@@ -108,6 +108,21 @@ Syscall options:
                         Comma-separated functions
 ```
 
+If you choose the `custom` generation method, some precise options apply:
+```bash
+$ ./main.py generate custom -h
+usage: main.py generate custom [-h] [-i {hell,halo,tartarus,freshy,syswhispers,canterlot}] [-r {basic,random}] [-s {direct,indirect}]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i {hell,halo,tartarus,freshy,syswhispers,canterlot}, --iterator {hell,halo,tartarus,freshy,syswhispers,canterlot}
+                        Select syscall iterator (Default: canterlot)
+  -r {basic,random}, --resolver {basic,random}
+                        Select syscall resolver (Default: basic)
+  -s {direct,indirect}, --stub {direct,indirect}
+                        Select syscall stub (Default: indirect)
+```
+
 ## Usage
 Here are some usage examples that will generate common NtFunctions only. This tool is not restricted to them, please **[READ THE DOC](https://x42en.github.io/sysplant/)**
 
