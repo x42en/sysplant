@@ -45,7 +45,9 @@ setup(
             "data/*.json",
             "data/*.nim",
             "templates/**/*.nim",
-            "templates/**/*.asm",
+            "templates/**/*.cpp",
+            "templates/**/*.c",
+            "templates/**/*.h",
         ]
     },
 )

@@ -50,9 +50,42 @@ poetry install
 This tool comes with various options that should be self-explanatory using the standard `-h` flag
 ```bash
 $ ./main.py -h
-usage: main.py [-h] [-x86 | -x64] [--debug | --verbose | --quiet] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,canterlot,custom} ...
+usage: main.py [-h] [--debug | --verbose | --quiet] {list,generate} ...
 
 ..:: SysPlant - Your Syscall Factory ::..
+
+positional arguments:
+  {list,generate}
+
+optional arguments:
+  -h, --help       show this help message and exit
+
+Output options:
+  --debug          Display all DEBUG messages upon execution
+  --verbose        Display all INFO messages upon execution
+  --quiet          Remove all messages upon execution
+```
+
+By now only two actions are supported `list` (that will parse file or directory to find NtFunction usage) and `generate` that will generate a syscall hooking file to import into your project
+
+#### List action
+In order to use the list action you could check the associated help `./main.py list -h`
+```bash
+$ ./main.py list -h
+usage: main.py list [-h] path
+
+positional arguments:
+  path        Path to search for NtFunction, could be a file or a directory
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+#### Generate action
+In order to use the generate action you could check the associated help `./main.py generate -h`
+```bash
+$ ./main.py generate -h
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,canterlot,custom} ...
 
 positional arguments:
   {hell,halo,tartarus,freshy,syswhispers,canterlot,custom}
@@ -63,14 +96,10 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         Output path for NIM generated file
 
-Output options:
+Architecture options:
   -x86                  Set mode to 32bits
+  -wow                  Set mode to WoW64 (execution of 32bits on 64bits)
   -x64                  Set mode to 64bits (Default True)
-
-Output options:
-  --debug               Display all DEBUG messages upon execution
-  --verbose             Display all INFO messages upon execution
-  --quiet               Remove all messages upon execution
 
 Syscall options:
   -p {all,donut,common}, --preset {all,donut,common}
@@ -79,10 +108,10 @@ Syscall options:
                         Comma-separated functions
 ```
 
-If you choose the `custom` generation some options apply
+If you choose the `custom` generation method, some precise options apply:
 ```bash
-$ ./main.py custom -h
-usage: main.py custom [-h] [-i {hell,halo,tartarus,freshy,syswhispers,canterlot}] [-r {basic,random}] [-s {direct,indirect}]
+$ ./main.py generate custom -h
+usage: main.py generate custom [-h] [-i {hell,halo,tartarus,freshy,syswhispers,canterlot}] [-r {basic,random}] [-s {direct,indirect}]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -99,37 +128,37 @@ Here are some usage examples that will generate common NtFunctions only. This to
 
 #### Hell's Gate generation
 ```bash
-$ ./main.py -o syscall.nim hell
+$ ./main.py generate -o syscall.nim hell
 ```
 
 #### Halo's Gate generation
 ```bash
-$ ./main.py -o syscall.nim halo
+$ ./main.py generate -o syscall.nim halo
 ```
 
 #### Tartarus's Gate generation
 ```bash
-$ ./main.py -o syscall.nim tartarus
+$ ./main.py generate -o syscall.nim tartarus
 ```
 
 #### FreshyCall generation
 ```bash
-$ ./main.py -o syscall.nim freshy
+$ ./main.py generate -o syscall.nim freshy
 ```
 
 #### Syswhispers2 like generation
 ```bash
-$ ./main.py -o syscall.nim syswhispers
+$ ./main.py generate -o syscall.nim syswhispers
 ```
 
 #### Canterlot's Gate generation
 ```bash
-$ ./main.py -o syscall.nim canterlot
+$ ./main.py generate -o syscall.nim canterlot
 ```
 
 #### Custom generation
 ```bash
-$ ./main.py -o syscall.nim custom -i canterlot -r random -s indirect
+$ ./main.py generate -o syscall.nim custom -i canterlot -r random -s indirect
 ```
 
 ## Example
