@@ -75,9 +75,9 @@ class Sysplant:
         Modifications are let to TemplateManager class.
 
         Args:
-            iterator (str): Iterator name to use
-            resolver (str): Resolver name to use
-            stub (str): Stub type name to use
+            iterator (str): Iterator name to use (hell, halo, tartarus, freshy, syswhispers, canterlot)
+            resolver (str): Resolver name to use (basic, random)
+            stub (str): Stub type name to use (direct, indirect)
             syscalls (Union[str, list]): NtFunctions list names to hook, or preset name (all|common|donut)
 
         Raises:
