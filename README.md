@@ -19,6 +19,15 @@ SysPlant is a small implementation in NIM of the currently known syscall hooking
 > Usage is restricted to Pentesting or Education only.
 > All credits are based on my own research, please feel free to claim any method if I made mistakes...
 
+![pipeline status](https://code.prohacktive.io/bmz/syswhispers3/badges/master/pipeline.svg)
+
+---
+- Created at: 01/07/2023
+- Updated at: 16/07/2023
+- Version: 0.1.1
+
+---
+
 ## Introduction
 This personal project aims to be a simple tool to better understand & generate different syscall retrieval methods, and being able to play with direct / indirect syscall stub. The first goal was to get my hands into NIM and then it overflow :wink: ...  
 SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.
