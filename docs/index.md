@@ -19,10 +19,8 @@ SysPlant is a small implementation in NIM of the currently known syscall hooking
 > Usage is restricted to Pentesting or Education only.
 > All credits are based on my own research, please feel free to claim any method if I made mistakes...
 
----
-- Created at: 01/07/2023
-- Updated at: 16/07/2023
-- Version: 0.1.1
+[![Build Status](https://app.travis-ci.com/x42en/sysplant.svg?branch=main)](https://app.travis-ci.com/x42en/sysplant)
+[![PyPI version](https://badge.fury.io/py/sysplant.svg)](https://badge.fury.io/py/sysplant)
 
 ---
 
@@ -31,7 +29,7 @@ This personal project aims to be a simple tool to better understand & generate d
 SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.
 
 ## Installation
-This is a python project that will generate NIM source code (bit weird hu ?! :grin:). So you can use it inside your python project as an external module or directly on your device as a tool.
+This is a python project that will generate NIM/C/etc... source code (bit weird hu ?! :grin:). So you can use it inside your python project as an external module or directly on your device as a tool.
 
 ### As a Python module
 If you are using standard pip3 package manager
@@ -188,10 +186,13 @@ Massive shout-out to these useful projects that helps me during this journey, or
 This project is really in WIP state...  
 Some PR & reviews are more than welcome :tada: !
 - [x] Add internal names randomization
+- [x] Setup documentation
+- [-] Add some tests
 - [ ] Add x86 support
 - [ ] Add WoW64 support
-- [-] Add some tests
-- [x] Setup documentation
+- [ ] Setup C templates
+- [ ] Setup Go templates
+- [ ] Setup Rust? templates
 
 ## License
 This project is licensed under the [MIT License](https://www.tldrlegal.com/license/mit-license), for individuals only. If you want to integrate this work in your commercial project please contact me through `0x42en[at]gmail.com`
