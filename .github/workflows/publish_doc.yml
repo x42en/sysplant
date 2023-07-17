@@ -1,4 +1,4 @@
-name: Publish SysPlant docs via GitHub Pages
+name: Publish SysPlant documentation
 on:
   push:
     branches:
