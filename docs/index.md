@@ -1,7 +1,23 @@
-# SysPlant
-#### "Your Syscall Factory" *(feat. Canterlot's Gate)*
+<!-- markdownlint-disable MD033 MD041 -->
+<h1 align="center">
+SysPlant
+</h1>
 
-![Canterlot's Gate](docs/assets/canterlot.jpeg)
+<p align="center">
+  <strong>Your Syscall Factory</strong> <i>(feat. Canterlot's Gate)</i>
+</p>
+
+<p align="center">
+  <img src="/assets/canterlot.jpeg" alt="Canterlot's Gate"/>
+</p>
+
+[![PyPI version](https://img.shields.io/pypi/v/sysplant.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/sysplant/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/sysplant.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/sysplant/)
+[![Build Status](https://github.com/x42en/sysplant/actions/workflows/build.yml/badge.svg)](https://github.com/x42en/sysplant)
+[![Project Licence](https://img.shields.io/github/license/x42en/sysplant.svg)](https://github.com/x42en/sysplant/blob/main/LICENSE)
+[![PyPI downloads](https://img.shields.io/pypi/dm/sysplant.svg)](https://pypistats.org/packages/sysplant)
+[![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
+
 
 SysPlant is a small implementation in NIM of the currently known syscall hooking methods. It currently supports following gates:
 - [Hell's Gate](https://github.com/am0nsec/HellsGate) : Lookup syscall by first opcodes
@@ -19,9 +35,6 @@ SysPlant is a small implementation in NIM of the currently known syscall hooking
 > Usage is restricted to Pentesting or Education only.
 > All credits are based on my own research, please feel free to claim any method if I made mistakes...
 
-[![Build Status](https://app.travis-ci.com/x42en/sysplant.svg?branch=main)](https://app.travis-ci.com/x42en/sysplant)
-[![PyPI version](https://badge.fury.io/py/sysplant.svg)](https://badge.fury.io/py/sysplant)
-
 ---
 
 ## Introduction
@@ -29,6 +42,9 @@ This personal project aims to be a simple tool to better understand & generate d
 SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.
 
 ## Installation
+
+> _Requirements: Pyton 3.8+_
+
 This is a python project that will generate NIM/C/etc... source code (bit weird hu ?! :grin:). So you can use it inside your python project as an external module or directly on your device as a tool.
 
 ### As a Python module
