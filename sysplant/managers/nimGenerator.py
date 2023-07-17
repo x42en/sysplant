@@ -84,12 +84,17 @@ class NIMGenerator(AbstractGenerator):
         """
         result = f"{SysPlantConstants.NIM_TAB}{name}* " + "{.pure.} = object\n"
         for var in definition:
-            if len(var) >= 2:
+            if len(var) == 2:
                 result += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]}: {var[0]}\n"
 
-            # I have not found how to initialize value in NIM type definitions...
-            # elif len(var) == 3:
-            #     result += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]}: {var[0]} = {var[2]}\n"
+            elif len(var) == 3:
+                result += (
+                    f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]} "
+                    + "{.bitsize: "
+                    + str(var[2])
+                    + ".}: "
+                    + f"{var[0]}\n"
+                )
         # Always add pointer
         result += f"{SysPlantConstants.NIM_TAB}P{name}* = ptr {name}\n"
 
@@ -113,7 +118,13 @@ class NIMGenerator(AbstractGenerator):
             if len(var) == 2:
                 result += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]}: {var[0]}\n"
             elif len(var) == 3:
-                result += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]}: {var[0]} = {var[2]}\n"
+                result += (
+                    f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]} "
+                    + "{.bitsize: "
+                    + var[2]
+                    + ".}: "
+                    + f"{var[0]}\n"
+                )
         # Always add pointer
         result += f"{SysPlantConstants.NIM_TAB}P{name} = ptr {name}\n"
 
@@ -216,7 +227,7 @@ class NIMGenerator(AbstractGenerator):
         # Loop function params
         for p in params.get("params", []):
             # Register each type var
-            self.type_defined.add(p["type"])
+            self.type_set.add(p["type"])
             args.append(f"{p['name']}: {p['type']}")
 
         # Generate NIM proc parameters
@@ -252,6 +263,9 @@ class NIMGenerator(AbstractGenerator):
         # Resolve dependencies first
         if len(dependencies) > 0:
             for dep in dependencies:
+                # Avoid duplicate generation
+                if self.is_generated(dep):
+                    continue
                 # Avoid defining external types
                 if self.__definitions.get(dep) is not None:
                     typedef_code += self.__generate_typedefs(
@@ -275,6 +289,9 @@ class NIMGenerator(AbstractGenerator):
         else:
             raise NotImplementedError("Unsupported definition type")
 
+        # Register definitions generated
+        self.register_definition(name)
+
         return typedef_code
 
     def generate_definitions(self) -> str:
@@ -288,19 +305,24 @@ class NIMGenerator(AbstractGenerator):
             str: NIM code for template integration
         """
         code = ""
-        for name in self.type_defined:
+        for name in self.type_set:
             # If Winim already share this structure
             if f"{name}*" in self.__winimdef:
                 continue
 
             entry = self.__definitions.get(name)
-            # Search for pointers
+
+            # Search pointer definition
             if entry is None:
                 name = name[1:]
                 entry = self.__definitions.get(name)
 
             # Still nothing... it might be a standard struct then
             if entry is None:
+                continue
+
+            # Avoid duplicate generation
+            if self.is_generated(name):
                 continue
 
             code += self.__generate_typedefs(name, entry)

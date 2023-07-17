@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import tempfile
 import unittest
 import importlib.resources as pkg_resources
 
@@ -92,7 +93,8 @@ class TestAbstract(unittest.TestCase):
     def test_04_output(self):
         klass = Sysplant()
         klass.generate("canterlot", "basic", "direct", "common")
-        result = klass.output("/tmp/test.nim")
+        (_, filename) = tempfile.mkstemp(text=True)
+        result = klass.output(filename)
 
-        with open("/tmp/test.nim", "r") as raw:
+        with open(f"{filename}.nim", "r") as raw:
             self.assertEqual(result, raw.read())

@@ -24,6 +24,21 @@ class TestAbstract(unittest.TestCase):
         self.assertEqual(type(result), str)
         self.assertEqual(result, nim_output.structure)
 
+    def test_01_generate_struct3(self):
+        klass = NIMGenerator()
+        definition = [
+            ["UCHAR", "WriteOutputOnExit", 1],
+            ["UCHAR", "DetectManifest", 1],
+            ["UCHAR", "IFEOSkipDebugger", 1],
+            ["UCHAR", "IFEODoNotPropagateKeyState", 1],
+            ["UCHAR", "SpareBits1", 4],
+            ["UCHAR", "SpareBits2", 8],
+            ["UCHAR", "ProhibitedImageCharacteristics", 16],
+        ]
+        result = klass.generate_struct("PS_CREATE_INFO_INIT_STATE_FLAGS", definition)
+        self.assertEqual(type(result), str)
+        self.assertEqual(result, nim_output.structure3)
+
     def test_02_generate_union(self):
         klass = NIMGenerator()
         definition = [["ULONG_PTR", "Value"], ["PVOID", "ValuePtr"]]

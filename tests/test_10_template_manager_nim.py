@@ -4,7 +4,6 @@ import unittest
 
 import importlib.resources as pkg_resources
 
-from sysplant import data as pkg_data
 from sysplant import templates as pkg_templates
 
 from sysplant.managers.templateManager import TemplateManager
