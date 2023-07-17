@@ -41,7 +41,7 @@ class AbstractGenerator(ABC):
         raise NotImplementedError("Enum generation not implemented yet")
 
     @abstractmethod
-    def generate_seed(self, name: str, definition: list) -> str:
+    def generate_seed(self, name: str) -> str:
         raise NotImplementedError("Seed generation not implemented yet")
 
     @abstractmethod
