@@ -2,8 +2,6 @@
 # -*- coding:utf8 -*-
 
 from setuptools import setup, find_packages
-from setuptools.command import easy_install
-from setuptools.command.install import install
 
 import re
 
