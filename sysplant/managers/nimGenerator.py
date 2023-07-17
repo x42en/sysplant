@@ -84,12 +84,17 @@ class NIMGenerator(AbstractGenerator):
         """
         result = f"{SysPlantConstants.NIM_TAB}{name}* " + "{.pure.} = object\n"
         for var in definition:
-            if len(var) >= 2:
+            if len(var) == 2:
                 result += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]}: {var[0]}\n"
 
-            # I have not found how to initialize value in NIM type definitions...
-            # elif len(var) == 3:
-            #     result += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]}: {var[0]} = {var[2]}\n"
+            elif len(var) == 3:
+                result += (
+                    f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]} "
+                    + "{.bitsize: "
+                    + str(var[2])
+                    + ".}: "
+                    + f"{var[0]}\n"
+                )
         # Always add pointer
         result += f"{SysPlantConstants.NIM_TAB}P{name}* = ptr {name}\n"
 
@@ -113,7 +118,13 @@ class NIMGenerator(AbstractGenerator):
             if len(var) == 2:
                 result += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]}: {var[0]}\n"
             elif len(var) == 3:
-                result += f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]}: {var[0]} = {var[2]}\n"
+                result += (
+                    f"{SysPlantConstants.NIM_TAB}{SysPlantConstants.NIM_TAB}{var[1]} "
+                    + "{.bitsize: "
+                    + var[2]
+                    + ".}: "
+                    + f"{var[0]}\n"
+                )
         # Always add pointer
         result += f"{SysPlantConstants.NIM_TAB}P{name} = ptr {name}\n"
 
