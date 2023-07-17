@@ -264,7 +264,7 @@ class NIMGenerator(AbstractGenerator):
         if len(dependencies) > 0:
             for dep in dependencies:
                 # Avoid duplicate generation
-                if dep in self.__generated:
+                if self.is_generated(dep):
                     continue
                 # Avoid defining external types
                 if self.__definitions.get(dep) is not None:
@@ -290,7 +290,7 @@ class NIMGenerator(AbstractGenerator):
             raise NotImplementedError("Unsupported definition type")
 
         # Register definitions generated
-        self.__generated.add(name)
+        self.register_definition(name)
 
         return typedef_code
 
@@ -305,14 +305,9 @@ class NIMGenerator(AbstractGenerator):
             str: NIM code for template integration
         """
         code = ""
-        self.__generated = set()
         for name in self.type_set:
             # If Winim already share this structure
             if f"{name}*" in self.__winimdef:
-                continue
-
-            # Avoid duplicate definitions
-            if name in self.__generated:
                 continue
 
             entry = self.__definitions.get(name)
@@ -324,6 +319,10 @@ class NIMGenerator(AbstractGenerator):
 
             # Still nothing... it might be a standard struct then
             if entry is None:
+                continue
+
+            # Avoid duplicate generation
+            if self.is_generated(name):
                 continue
 
             code += self.__generate_typedefs(name, entry)

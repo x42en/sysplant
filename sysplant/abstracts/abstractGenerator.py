@@ -17,8 +17,15 @@ class AbstractGenerator(ABC):
         # Share logger for all childs
         self.logger = LoggerSingleton(log_level)
 
-        # Store definitions already defined
+        # Store definitions to defined
         self.type_set = set()
+        self.__generated = set()
+
+    def register_definition(self, name: str) -> None:
+        self.__generated.add(name)
+
+    def is_generated(self, name: str) -> bool:
+        return name in self.__generated
 
     @abstractmethod
     def generate_struct(self, name: str, definition: list) -> str:
