@@ -120,7 +120,7 @@ class Sysplant:
         elif syscalls == "donut":
             self.logger.info("\t. Donut functions selected", stripped=True)
             syscalls = self.__engine.list_donut_syscalls()
-        elif type(syscalls) is not list:
+        elif not isinstance(syscalls, list):
             raise ValueError("Unsupported functions type")
         else:
             self.logger.info("\t. Custom set of functions selected", stripped=True)
