@@ -8,7 +8,7 @@ SysPlant
 </p>
 
 <p align="center">
-  <img src="/assets/canterlot.jpeg" alt="Canterlot's Gate"/>
+  <img src="docs/assets/canterlot.jpeg" alt="Canterlot's Gate"/>
 </p>
 
 [![PyPI version](https://img.shields.io/pypi/v/sysplant.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/sysplant/)
