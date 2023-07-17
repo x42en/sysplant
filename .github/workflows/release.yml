@@ -1,4 +1,4 @@
-name: Bump version
+name: Create SysPlant release
 on:
   push:
     branches:

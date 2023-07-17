@@ -1,4 +1,4 @@
-name: Publish to PyPI.org
+name: Publish SysPlant package
 on:
   release:
     types: [published]

@@ -1,4 +1,4 @@
-name: SysPlan Build
+name: Build & Test SysPlant project
 
 on: [push]
 
