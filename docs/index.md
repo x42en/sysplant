@@ -184,10 +184,10 @@ $ ./main.py generate -o syscall.nim custom -i canterlot -r random -s indirect
 
 ## Example
 A simple example (launching calc.exe) is accessible using `inject.nim`.  
-1. Be sure to install [winim](https://github.com/khchen/winim) library first: `nimble install winim`
-2. Generate the `syscall.nim` file with `./main.py -o example/syscall.nim canterlot`
-3. Compile the injection template file with `nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=app.exe example/inject.nim` on Linux (be sure to have mingw installed)
-4. Copy the `app.exe` generated on your Windows device.
+  1. Be sure to install [winim](https://github.com/khchen/winim) library first: `nimble install winim`
+  2. Generate the `syscall.nim` file with `./main.py -o example/syscall.nim canterlot`
+  3. Compile the injection template file with `nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=app.exe example/inject.nim` on Linux (be sure to have mingw installed)
+  4. Copy the `app.exe` generated on your Windows device.
 
 Happy Hacking :beach: !
 
