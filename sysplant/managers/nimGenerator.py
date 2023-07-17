@@ -227,7 +227,7 @@ class NIMGenerator(AbstractGenerator):
         # Loop function params
         for p in params.get("params", []):
             # Register each type var
-            self.type_defined.add(p["type"])
+            self.type_set.add(p["type"])
             args.append(f"{p['name']}: {p['type']}")
 
         # Generate NIM proc parameters
@@ -263,6 +263,9 @@ class NIMGenerator(AbstractGenerator):
         # Resolve dependencies first
         if len(dependencies) > 0:
             for dep in dependencies:
+                # Avoid duplicate generation
+                if dep in self.__generated:
+                    continue
                 # Avoid defining external types
                 if self.__definitions.get(dep) is not None:
                     typedef_code += self.__generate_typedefs(
@@ -286,6 +289,9 @@ class NIMGenerator(AbstractGenerator):
         else:
             raise NotImplementedError("Unsupported definition type")
 
+        # Register definitions generated
+        self.__generated.add(name)
+
         return typedef_code
 
     def generate_definitions(self) -> str:
@@ -299,13 +305,19 @@ class NIMGenerator(AbstractGenerator):
             str: NIM code for template integration
         """
         code = ""
-        for name in self.type_defined:
+        self.__generated = set()
+        for name in self.type_set:
             # If Winim already share this structure
             if f"{name}*" in self.__winimdef:
                 continue
 
+            # Avoid duplicate definitions
+            if name in self.__generated:
+                continue
+
             entry = self.__definitions.get(name)
-            # Search for pointers
+
+            # Search pointer definition
             if entry is None:
                 name = name[1:]
                 entry = self.__definitions.get(name)

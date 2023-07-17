@@ -18,7 +18,7 @@ class AbstractGenerator(ABC):
         self.logger = LoggerSingleton(log_level)
 
         # Store definitions already defined
-        self.type_defined = set()
+        self.type_set = set()
 
     @abstractmethod
     def generate_struct(self, name: str, definition: list) -> str:
