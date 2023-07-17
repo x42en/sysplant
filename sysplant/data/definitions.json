@@ -3,7 +3,7 @@
     "dependencies": [],
     "type": "enum",
     "definition": [
-      "MemExtendedParameterInvalidType",
+      "MemExtendedParameterInvalidType = 0",
       "MemExtendedParameterAddressRequirements",
       "MemExtendedParameterNumaNode",
       "MemExtendedParameterPartitionHandle",
@@ -177,6 +177,21 @@
     "dependencies": [],
     "type": "enum",
     "definition": ["NotificationEvent = 0", "SynchronizationEvent = 1"]
+  },
+  "ENCLAVE_ROUTINE": {
+    "dependencies": [],
+    "type": "standard",
+    "definition": ["LPVOID"]
+  },
+  "PCWNF_STATE_NAME": {
+    "dependencies": ["WNF_STATE_NAME"],
+    "type": "pointer",
+    "definition": ["WNF_STATE_NAME"]
+  },
+  "PCWNF_TYPE_ID": {
+    "dependencies": ["WNF_TYPE_ID"],
+    "type": "pointer",
+    "definition": ["WNF_TYPE_ID"]
   },
   "FILE_FULL_EA_INFORMATION": {
     "dependencies": [],
@@ -1006,6 +1021,34 @@
     "type": "struct",
     "definition": [["GUID", "TypeId"]]
   },
+  "SE_SIGNING_LEVEL": {
+    "dependencies": [],
+    "type": "standard",
+    "definition": ["ULONG"]
+  },
+  "MEM_EXTENDED_PARAMETER_UNION": {
+    "dependencies": [],
+    "type": "union",
+    "definition": [
+      ["DWORD64", "ULong64"],
+      ["PVOID", "Pointer"],
+      ["SIZE_T", "Size"],
+      ["HANDLE", "Handle"],
+      ["DWORD", "ULong"]
+    ]
+  },
+  "MEM_EXTENDED_PARAMETER": {
+    "dependencies": [
+      "MEM_EXTENDED_PARAMETER_TYPE",
+      "MEM_EXTENDED_PARAMETER_UNION"
+    ],
+    "type": "struct",
+    "definition": [
+      ["MEM_EXTENDED_PARAMETER_TYPE", "Type"],
+      ["DWORD", "Reserved"],
+      ["MEM_EXTENDED_PARAMETER_UNION", "u1"]
+    ]
+  },
   "WNF_DELIVERY_DESCRIPTOR": {
     "dependencies": ["WNF_STATE_NAME", "WNF_TYPE_ID"],
     "type": "struct",
@@ -1093,14 +1136,6 @@
       "SysDbgGetTriageDump = 29",
       "SysDbgGetKdBlockEnable = 30",
       "SysDbgSetKdBlockEnable = 31"
-    ]
-  },
-  "CLIENT_ID": {
-    "dependencies": [],
-    "type": "struct",
-    "definition": [
-      ["HANDLE", "UniqueProcess"],
-      ["HANDLE", "UniqueThread"]
     ]
   },
   "FILE_BASIC_INFORMATION": {
