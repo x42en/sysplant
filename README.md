@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <h1 align="center">
-SysPlant
+..:: SysPlant ::..
 </h1>
 
 <p align="center">
