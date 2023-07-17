@@ -2,7 +2,7 @@ name: Create SysPlant release
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
