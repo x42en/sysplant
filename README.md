@@ -27,7 +27,8 @@ SysPlant is a small implementation in NIM of the currently known syscall hooking
   - [Tartarus' Gate](https://github.com/trickster0/TartarusGate) : Lookup syscall by first opcodes and search nearby if first or third instruction is a JMP
   - [FreshyCalls](https://github.com/crummie5/FreshyCalls) : Lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number
   - [SysWhispers2](https://github.com/jthuraisamy/SysWhispers2) : Lookup syscall by name (start with Zw), sort addresses to retrieve syscall number
-  - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect padding to syscall instruction for random jumps.
+  - [SysWhispers3](https://github.com/klezVirus/SysWhispers3) : SysWhispers2 style but introduce direct/indirect/random jump with static offset
+  - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
   - **Custom** Allows you to choose a generation method, a syscall resolver (basic / random) and a syscall stub (direct / indirect). **Careful: some combinations means nothing so it won't work (eg: freshy iterator + random resolver + indirect stub => as Freshy return back the syscall stub entry address, your syscall number will be rewrite by a random one)**  
 
 *Note: You can also generate your own combinations using the proper options... But be careful some options might not work or even make sense*
@@ -108,10 +109,10 @@ optional arguments:
 In order to use the generate action you could check the associated help `./main.py generate -h`
 ```bash
 $ ./main.py generate -h
-usage: main.py generate [-h] [-x86 | -wow | -x64] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,canterlot,custom} ...
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom} ...
 
 positional arguments:
-  {hell,halo,tartarus,freshy,syswhispers,canterlot,custom}
+  {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -129,21 +130,6 @@ Syscall options:
                         Preset functions to generate (Default: common)
   -f FUNCTIONS, --functions FUNCTIONS
                         Comma-separated functions
-```
-
-If you choose the `custom` generation method, some precise options apply:
-```bash
-$ ./main.py generate custom -h
-usage: main.py generate custom [-h] [-i {hell,halo,tartarus,freshy,syswhispers,canterlot}] [-r {basic,random}] [-s {direct,indirect}]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -i {hell,halo,tartarus,freshy,syswhispers,canterlot}, --iterator {hell,halo,tartarus,freshy,syswhispers,canterlot}
-                        Select syscall iterator (Default: canterlot)
-  -r {basic,random}, --resolver {basic,random}
-                        Select syscall resolver (Default: basic)
-  -s {direct,indirect}, --stub {direct,indirect}
-                        Select syscall stub (Default: indirect)
 ```
 
 ## Usage
@@ -172,6 +158,11 @@ $ ./main.py generate -o syscall.nim freshy
 #### Syswhispers2 like generation
 ```bash
 $ ./main.py generate -o syscall.nim syswhispers
+```
+
+#### Syswhispers3 like generation
+```bash
+$ ./main.py generate -o syscall.nim syswhispers3
 ```
 
 #### Canterlot's Gate generation
