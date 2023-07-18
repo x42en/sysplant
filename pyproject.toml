@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sysplant"
-version = "0.1.4"
+version = "0.2.0"
 description = "SysPlant - Your syscall factory"
 authors = ["Ben Mz <x42en@users.noreply.github.com>"]
 license = "MIT"

@@ -55,6 +55,7 @@ if __name__ == "__main__":
     parser_tartarus = subparsers.add_parser("tartarus")
     parser_freshy = subparsers.add_parser("freshy")
     parser_syswhispers = subparsers.add_parser("syswhispers")
+    parser_syswhispers3 = subparsers.add_parser("syswhispers3")
     parser_canterlot = subparsers.add_parser("canterlot")
     parser_custom = subparsers.add_parser("custom")
 
@@ -82,7 +83,15 @@ if __name__ == "__main__":
         "-i",
         "--iterator",
         help="Select syscall iterator (Default: canterlot)",
-        choices=["hell", "halo", "tartarus", "freshy", "syswhispers", "canterlot"],
+        choices=[
+            "hell",
+            "halo",
+            "tartarus",
+            "freshy",
+            "syswhispers",
+            "syswhispers3",
+            "canterlot",
+        ],
         default="canterlot",
     )
     parser_custom.add_argument(
@@ -168,6 +177,10 @@ if __name__ == "__main__":
             iterator = "syswhispers"
             resolver = "basic"
             stub = "direct"
+        elif args.generation == "syswhispers3":
+            iterator = "syswhispers3"
+            resolver = "random"
+            stub = "indirect"
         elif args.generation == "canterlot":
             iterator = "canterlot"
             resolver = "random"

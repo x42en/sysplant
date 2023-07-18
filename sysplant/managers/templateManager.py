@@ -97,7 +97,7 @@ class TemplateManager(AbstractFactory):
             raise ValueError("Template name can not be null")
 
         # Check only extension dot is set
-        if not name.replace(".", "", 1).replace(f"_{self.__arch}", "", 1).isalpha():
+        if not name.replace(".", "", 1).replace(f"_{self.__arch}", "", 1).isalnum():
             raise ValueError("Invalid template name")
 
         # Adapt module based on what to load
