@@ -213,4 +213,4 @@ Some PR & reviews are more than welcome :tada: !
   - [ ] Setup Rust? templates
 
 ## License
-This project is licensed under the [MIT License](https://www.tldrlegal.com/license/mit-license), for individuals only. If you want to integrate this work in your commercial project please contact me through `0x42en[at]gmail.com`
+This project is licensed under the [GPLv3 License](https://www.gnu.org/licenses/quick-guide-gplv3.en.html), for individuals only. If you want to integrate this work in your commercial project please contact me through `0x42en[at]gmail.com`
