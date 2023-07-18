@@ -235,5 +235,8 @@ docs/documentation/*.md
 site
 public
 
+# Remove pytest report
+report.xml
+
 # Avoid trash commit
 trash/
