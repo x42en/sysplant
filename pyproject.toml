@@ -32,8 +32,18 @@ files = ["README.md", "docs/index.md"]
 search = 'Version: {current_version}'
 replace = 'Version: {new_version}'
 
-[tool.coverage.run]
-omit = [".*", "*/sysplant/*"]
+[tool.pytest.ini_options]
+# Also see
+# https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
+# https://pytest-cov.readthedocs.io/en/latest/config.html
+# If you want to see console output from tests, include -s flag
+addopts = [
+    '--cov-fail-under=80',
+    '--cov-report=html:pytest',
+    '--cov-report=term-missing',
+    '--junitxml=report.xml'
+]
 
-[tool.coverage.report]
-fail_under = 50
+[tool.coverage.run]
+omit = ["tests"]
+source = ["sysplant"]

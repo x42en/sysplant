@@ -46,7 +46,7 @@ jobs:
       - name: Run tests
         run: |
           source .venv/bin/activate
-          pytest tests/
+          poetry run pytest --cov=sysplant
 
       # coverage report
       - name: Upload coverage reports to Codecov
