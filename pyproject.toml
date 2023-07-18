@@ -15,6 +15,7 @@ pytest = "^7.4.0"
 mkdocs-awesome-pages-plugin = "^2.9.1"
 lazydocs = "^0.4.8"
 poetry-bumpversion = "^0.3.1"
+pytest-cov = "^4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
