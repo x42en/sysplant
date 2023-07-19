@@ -1,3 +1,4 @@
+BOOL SW3_PopulateSyscallList();
 BOOL SW3_PopulateSyscallList(void)
 {
     // Return early if the list is already populated.
