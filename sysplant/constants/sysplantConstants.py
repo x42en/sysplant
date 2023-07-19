@@ -10,6 +10,7 @@ class SysPlantConstants:
     SEARCH_EXT = (".h", ".c", ".cpp", ".nim")
     TEMPLATE_EXT = "nim"
     NIM_TAB = "    "
+    C_TAB = "    "
     TAG_START = "##__"
     TAG_END = "__##"
     RANDOM_WORD_SIZE = 8
