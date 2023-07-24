@@ -515,6 +515,14 @@
       ["PS_CREATE_INFO_UNION", "u1"]
     ]
   },
+  "CLIENT_ID": {
+    "dependencies": [],
+    "type": "struct",
+    "definition": [
+       ["HANDLE", "UniqueProcess"],
+       ["HANDLE", "UniqueThread"]
+    ]
+  },
   "PORT_MESSAGE_UNION1_S1": {
     "dependencies": [],
     "type": "struct",
@@ -942,7 +950,7 @@
     ]
   },
   "PIO_APC_ROUTINE": {
-    "dependencies": ["PIO_STATUS_BLOCK"],
+    "dependencies": ["IO_STATUS_BLOCK"],
     "type": "struct",
     "definition": [
       ["PVOID", "AppContext"],
