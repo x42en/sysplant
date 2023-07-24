@@ -15,7 +15,7 @@ import winim/lean
 # Ensure syscall.nim is generated next to this file
 import syscall
 
-proc execute(name: string, shellcode: openarray[byte]): void =
+proc execute(name: string, shellcode: openarray[byte]) =
     var 
         op: DWORD
         oa: OBJECT_ATTRIBUTES
