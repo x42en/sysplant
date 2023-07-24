@@ -13,7 +13,7 @@ class CGenerator(AbstractGenerator):
     def __init__(self) -> None:
         super().__init__()
         self.__functions = dict()
-        
+
     def generate_struct(self, name: str, definition: list) -> str:
         """
         Public method used to generate a NIM basic structure.
@@ -30,10 +30,10 @@ class CGenerator(AbstractGenerator):
         result = f"#ifndef {name}\ntypedef struct _{name}\n" + "{\n"
         for var in definition:
             if len(var) == 2:
-                result += f"{SysPlantConstants.C_TAB}{var[0]}: {var[1]}\n"
+                result += f"{SysPlantConstants.C_TAB}{var[0]} {var[1]};\n"
 
             elif len(var) == 3:
-                result += f"{SysPlantConstants.C_TAB}{var[0]}: {var[1]} = {var[2]};\n"
+                result += f"{SysPlantConstants.C_TAB}{var[0]} {var[1]} = {var[2]};\n"
         # Always add pointer
         result += "}" + f" {name}, *P{name};\n#endif\n"
 
@@ -52,8 +52,17 @@ class CGenerator(AbstractGenerator):
         Returns:
             str: NIM code for union structure definition (except type keyword for definition chaining)
         """
-        # In C Union are simple structs
-        return self.generate_struct(name, definition)
+        result = f"#ifndef {name}\ntypedef union _{name}\n" + "{\n"
+        for var in definition:
+            if len(var) == 2:
+                result += f"{SysPlantConstants.C_TAB}{var[0]} {var[1]};\n"
+
+            elif len(var) == 3:
+                result += f"{SysPlantConstants.C_TAB}{var[0]} {var[1]} = {var[2]};\n"
+        # Always add pointer
+        result += "}" + f" {name}, *P{name};\n#endif\n"
+
+        return result
 
     def generate_pointer(self, name: str, definition: list) -> str:
         """
@@ -83,9 +92,9 @@ class CGenerator(AbstractGenerator):
         Returns:
             str: NIM code for variable definition (except type keyword for definition chaining)
         """
-        result = f"typedef {name}* = {definition[0]}\n"
+        result = f"typedef {name}* = {definition[0]};\n"
         # Always add pointer
-        result += f"{SysPlantConstants.NIM_TAB}P{name}* = ptr {name}\n"
+        result += f"{SysPlantConstants.NIM_TAB}P{name}* = ptr {name};\n"
         return result
 
     def generate_enum(self, name: str, definition: list) -> str:
@@ -119,7 +128,7 @@ class CGenerator(AbstractGenerator):
         Returns:
             str: NIM code for template integration
         """
-        return f"#define SPT_DEBUG = {str(debug).lower()}"
+        return f"#define SPT_DEBUG {str(debug).lower()}"
 
     def generate_seed(self, seed: int) -> str:
         """
@@ -131,7 +140,7 @@ class CGenerator(AbstractGenerator):
         Returns:
             str: NIM code for template integration
         """
-        return f"#define SPT_SEED = {hex(seed)}"
+        return f"#define SPT_SEED {hex(seed)}"
 
     def generate_stub(self, name: str, params: dict, fhash: int) -> str:
         """
@@ -149,34 +158,38 @@ class CGenerator(AbstractGenerator):
 
         # Build function param declaration
         stub = f"#define {name} {name}\n"
-        stub += f'__asm__("{name}: \n'
-        stub += f"{SysPlantConstants.C_TAB}push dword ptr {hex(fhash)}\n"
-        stub += f"{SysPlantConstants.C_TAB}call SPT_Syscall\n"
+        stub += f'__asm__("{name}: \\n\\\n'
+        stub += f"{SysPlantConstants.C_TAB}push dword ptr {hex(fhash)} \\n\\\n"
+        stub += f"{SysPlantConstants.C_TAB}call SPT_Syscall \\n\\\n"
         stub += '");\n'
 
         return stub
-    
+
     def generate_definitions(self) -> str:
-        # First generate structs
-        definitions = super().generate_definitions()
+        func_def = ""
 
-        # Then append function declarations
+        # Generate function declarations
         for name, params in self.__functions.items():
-            # Set function declaration
-            stub = f"EXTERN_C NTSTATUS {name}(\n"
-
             # Loop function params
+            stub_items = list()
             for p in params.get("params", []):
                 # Register each type var
                 self.type_set.add(p["type"])
                 if p.get("in", False):
-                    stub += f"{SysPlantConstants.C_TAB}IN {p['type']} {p['name']},\n"
+                    stub_items.append(
+                        f"{SysPlantConstants.C_TAB}IN {p['type']} {p['name']}"
+                    )
                 else:
-                    stub += f"{SysPlantConstants.C_TAB}OUT {p['type']} {p['name']},\n"
-
-            stub += ");\n"
+                    stub_items.append(
+                        f"{SysPlantConstants.C_TAB}OUT {p['type']} {p['name']}"
+                    )
 
             # Build function params
-            definitions += stub
+            func_def += (
+                f"EXTERN_C NTSTATUS {name}(\n" + ",\n".join(stub_items) + "\n);\n"
+            )
+
+        # Prepend structs definitions
+        definitions = super().generate_definitions() + f"\n{func_def}"
 
         return definitions
