@@ -158,11 +158,18 @@ class Sysplant:
         Returns:
             str: Template content
         """
+        # Set extension
+        ext = None
+        if self.__language == "nim":
+            ext = "nim"
+        elif self.__language == "c":
+            ext = "h"
+
         # Write file
         clean_path = (
             output_path
-            if output_path.endswith(f".{self.__language}")
-            else f"{output_path}.{self.__language}"
+            if output_path.endswith(f".{ext}")
+            else f"{output_path}.{ext}"
         )
         with open(clean_path, "w") as o:
             o.write(str(self.__engine))
