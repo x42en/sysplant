@@ -49,7 +49,7 @@ int execute(const char *name) {
 	
     // Generate Object
     InitializeObjectAttributes(&oa, NULL, 0, 0, NULL);
-	cid.UniqueProcess = (HANDLE)pi.dwProcessId;
+	cid.UniqueProcess = (HANDLE)((UINT_PTR)pi.dwProcessId);
     cid.UniqueThread = NULL;
 
 	// Open sacrificial process
