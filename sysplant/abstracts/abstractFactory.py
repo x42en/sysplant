@@ -4,6 +4,7 @@ import re
 import string
 import random
 import hashlib
+import struct
 
 from typing import Union
 
@@ -50,7 +51,7 @@ class AbstractFactory(ABC):
             name (str): the tag name to remove
         """
         self.data = re.sub(
-            f"\s*{SysPlantConstants.TAG_START}{name}{SysPlantConstants.TAG_END}",
+            f"\s*{SysPlantConstants.TAG_START}{name}{SysPlantConstants.TAG_END}.*",
             "",
             self.data,
         )
