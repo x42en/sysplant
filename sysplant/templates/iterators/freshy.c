@@ -1,5 +1,4 @@
 // Parse Export Directory and lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number https://github.com/crummie5/FreshyCalls
-BOOL SW3_PopulateSyscallList();
 BOOL SW3_PopulateSyscallList()
 {
     // Return early if the list is already populated.
