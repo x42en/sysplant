@@ -1,12 +1,12 @@
 /*
-Author: 0x42en
+    Author: 0x42en
     License: BSD 3-Clause
 
     This file require mingw compiler to be installed
         apt install mingw-w64
 
     Compile it on linux using:
-        x86_64-w64-mingw32-gcc -Wall -masm=intel inject.c -o inject.exe
+        x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel inject.c -o inject.exe
 */
 
 #include <windows.h>
