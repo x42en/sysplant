@@ -1,22 +1,22 @@
 // Parse Export Directory and lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number https://github.com/crummie5/FreshyCalls
-BOOL SW3_PopulateSyscallList()
+BOOL SPT_PopulateSyscallList()
 {
     // Return early if the list is already populated.
-    if (SPT_SYSCALL_LIST.Count) return TRUE;
+    if (SPT_SyscallList.Count) return TRUE;
 
     #ifdef _WIN64
-        PSW3_PEB Peb = (PSW3_PEB)__readgsqword(0x60);
+        PSPT_PEB Peb = (PSPT_PEB)__readgsqword(0x60);
     #else
-        PSW3_PEB Peb = (PSW3_PEB)__readfsdword(0x30);
+        PSPT_PEB Peb = (PSPT_PEB)__readfsdword(0x30);
     #endif
-    PSW3_PEB_LDR_DATA Ldr = Peb->Ldr;
+    PSPT_PEB_LDR_DATA Ldr = Peb->Ldr;
     PIMAGE_EXPORT_DIRECTORY ExportDirectory = NULL;
     PVOID DllBase = NULL;
 
     // Get the DllBase address of NTDLL.dll. NTDLL is not guaranteed to be the second
     // in the list, so it's safer to loop through the full list and find it.
-    PSW3_LDR_DATA_TABLE_ENTRY LdrEntry;
-    for (LdrEntry = (PSW3_LDR_DATA_TABLE_ENTRY)Ldr->Reserved2[1]; LdrEntry->DllBase != NULL; LdrEntry = (PSW3_LDR_DATA_TABLE_ENTRY)LdrEntry->Reserved1[0])
+    PSPT_LDR_DATA_TABLE_ENTRY LdrEntry;
+    for (LdrEntry = (PSPT_LDR_DATA_TABLE_ENTRY)Ldr->Reserved2[1]; LdrEntry->DllBase != NULL; LdrEntry = (PSPT_LDR_DATA_TABLE_ENTRY)LdrEntry->Reserved1[0])
     {
         DllBase = LdrEntry->DllBase;
         PIMAGE_DOS_HEADER DosHeader = (PIMAGE_DOS_HEADER)DllBase;
@@ -47,16 +47,17 @@ BOOL SW3_PopulateSyscallList()
     do
     {
         PCHAR FunctionName = SPT_RVA2VA(PCHAR, DllBase, Names[NumberOfNames - 1]);
+        PVOID FunctionAddress = SPT_RVA2VA(PVOID, DllBase, Functions[Ordinals[NumberOfNames - 1]]);
 
         // Is this a system call?
         if (*(USHORT*)FunctionName == 0x775a)
         {
             Entries[i].Hash = SPT_HashSyscallName(FunctionName);
-            Entries[i].Address = Functions[Ordinals[NumberOfNames - 1]];
-            Entries[i].SyscallAddress = SC_Address(SPT_RVA2VA(PVOID, DllBase, Entries[i].Address));
+            Entries[i].Address = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
+            Entries[i].SyscallAddress = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
 
             i++;
-            if (i == SW3_MAX_ENTRIES) break;
+            if (i == SPT_MAX_ENTRIES) break;
         }
     } while (--NumberOfNames);
 

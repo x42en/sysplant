@@ -33,7 +33,7 @@ typedef struct{
 typedef struct _SPT_SYSCALL_ENTRY
 {
     DWORD Hash;
-    DWORD Address;
+    PVOID Address;
     PVOID SyscallAddress;
 } SPT_SYSCALL_ENTRY, *PSPT_SYSCALL_ENTRY;
 
@@ -259,8 +259,6 @@ void md5Step(uint32_t *buffer, uint32_t *input){
     buffer[3] += DD;
 }
 
-##__SPT_ITERATOR__##
-
 DWORD SPT_HashSyscallName(PCSTR name)
 {
     DWORD Hash;
@@ -282,6 +280,8 @@ DWORD SPT_HashSyscallName(PCSTR name)
         | ((DWORD) md5_hash[0] << 24);
     return Hash;
 }
+
+##__SPT_ITERATOR__##
 
 EXTERN_C DWORD SPT_GetSyscallNumber(DWORD FunctionHash)
 {

@@ -83,12 +83,16 @@ BOOL SPT_PopulateSyscallList(void)
             ssn = isClean((PBYTE)FunctionAddress, cw);
             if (ssn > -1) {
                 Entries[ssn].Hash = SPT_HashSyscallName(FunctionName);
-                // Entries[ssn].Address = FunctionAddress;
+                Entries[ssn].Address = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
                 Entries[ssn].SyscallAddress = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
+
+                if (ssn == 472) {
+                    printf("[%p] HELL %s -> %d\n", Entries[ssn].SyscallAddress, FunctionName, ssn);
+                }
 
                 // Save total number of system calls found.
                 if (ssn > SPT_SyscallList.Count) {
-                    SPT_SyscallList.Count = ssn;
+                    SPT_SyscallList.Count = ssn + 1;
                 }
                 break;
             }

@@ -18,6 +18,7 @@ class SysPlantConstants:
         "SPT_SEED",
         "SPT_Iterator",
         "SPT_Syscall",
+        "SPT_DetectPadding",
         "SPT_HashSyscallName",
         "SPT_GetSyscallNumber",
         "SPT_PopulateSyscalls",

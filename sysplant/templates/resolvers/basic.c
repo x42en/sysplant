@@ -4,7 +4,7 @@ EXTERN_C PVOID SPT_GetSyscallAddress(DWORD FunctionHash)
     {
         if (FunctionHash == SPT_SyscallList.Entries[i].Hash)
         {
-            return SPT_SyscallList.Entries[i].SyscallAddress;
+            return SPT_SyscallList.Entries[i].Address;
         }
     }
 

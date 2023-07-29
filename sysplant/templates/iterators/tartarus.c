@@ -112,12 +112,12 @@ BOOL SPT_PopulateSyscallList(void)
             if (ssn > -1) {
                 // A bit of cheat as we do not pre-register functions in sysplant
                 Entries[ssn].Hash = SPT_HashSyscallName(FunctionName);
-                // Entries[ssn].Address = FunctionAddress;
+                Entries[ssn].Address = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
                 Entries[ssn].SyscallAddress = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
                 
                 // Save total number of system calls found.
                 if (ssn > SPT_SyscallList.Count) {
-                    SPT_SyscallList.Count = ssn;
+                    SPT_SyscallList.Count = ssn + 1;
                 }
 
                 break;
