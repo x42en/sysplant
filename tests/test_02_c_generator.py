@@ -46,7 +46,7 @@ class TestAbstract(unittest.TestCase):
 
         self.assertEqual(type(result), str)
         self.assertEqual(result, c_output.union)
-    
+
     def test_03_generate_pointer(self):
         klass = CGenerator()
         definition = ["PVOID"]
