@@ -109,7 +109,7 @@ optional arguments:
 In order to use the generate action you could check the associated help `./main.py generate -h`
 ```bash
 $ ./main.py generate -h
-usage: main.py generate [-h] [-x86 | -wow | -x64] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom} ...
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom} ...
 
 positional arguments:
   {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
@@ -124,6 +124,10 @@ Architecture options:
   -x86                  Set mode to 32bits
   -wow                  Set mode to WoW64 (execution of 32bits on 64bits)
   -x64                  Set mode to 64bits (Default True)
+
+Language options:
+  -nim                  Generate NIM code (Default: true)
+  -c                    Generate C code
 
 Syscall options:
   -p {all,donut,common}, --preset {all,donut,common}
@@ -196,10 +200,10 @@ This project is really in WIP state...
 Some PR & reviews are more than welcome :tada: !
   - [x] Add internal names randomization
   - [x] Setup documentation
-  - [-] Add some tests
+  - [x] Add some tests
   - [ ] Add x86 support
   - [ ] Add WoW64 support
-  - [ ] Setup C templates
+  - [x] Setup C templates
   - [ ] Setup Go templates
   - [ ] Setup Rust? templates
 
