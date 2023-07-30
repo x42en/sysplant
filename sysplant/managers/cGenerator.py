@@ -16,16 +16,16 @@ class CGenerator(AbstractGenerator):
 
     def generate_struct(self, name: str, definition: list) -> str:
         """
-        Public method used to generate a NIM basic structure.
+        Public method used to generate a C basic structure.
         The structure will be generated as a public object for external code usages.
-        A pointer to the structure will always be generated in the form of: P+NAME
+        A pointer to the structure will always be generated in the form of: *P+NAME
 
         Args:
             name (str): Structure name
             definition (list): Structure parameters from definitions.json
 
         Returns:
-            str: NIM code for basic structure definition (except type keyword for definition chaining)
+            str: C code for basic structure definition (except type keyword for definition chaining)
         """
         result = f"#ifndef {name}\ntypedef struct _{name}\n" + "{\n"
         for var in definition:
@@ -41,16 +41,16 @@ class CGenerator(AbstractGenerator):
 
     def generate_union(self, name: str, definition: list) -> str:
         """
-        Public method used to generate NIM union structure when a parent needs it.
+        Public method used to generate C union structure when a parent needs it.
         This structure will be generated as a private object as it won't be directly accessed by external code.
-        A pointer to the union structure will always be generated in the form of: P+NAME
+        A pointer to the union structure will always be generated in the form of: *P+NAME
 
         Args:
             name (str): Union structure name
             definition (list): Union structure parameters from definitions.json
 
         Returns:
-            str: NIM code for union structure definition (except type keyword for definition chaining)
+            str: C code for union structure definition (except type keyword for definition chaining)
         """
         result = f"#ifndef {name}\ntypedef union _{name}\n" + "{\n"
         for var in definition:
@@ -66,7 +66,7 @@ class CGenerator(AbstractGenerator):
 
     def generate_pointer(self, name: str, definition: list) -> str:
         """
-        Public method used to generate NIM pointer to defined var
+        Public method used to generate C pointer to defined var
         The pointer will be geneerated as a public object for external code usages.
 
         Args:
@@ -74,14 +74,14 @@ class CGenerator(AbstractGenerator):
             definition (list): Type definition to point to from definitions.json
 
         Returns:
-            str: NIM code for standard pointer declaration
+            str: C code for standard pointer declaration
         """
         result = f"typedef {name}* {definition[0]};\n"
         return result
 
     def generate_standard(self, name: str, definition: list) -> str:
         """
-        Public method used to generate NIM varaiable declaration.
+        Public method used to generate C varaiable declaration.
         The variable will be generated as a public object for external code usages.
         A pointer to the variable will always be generated in the form of: P+NAME
 
@@ -90,16 +90,16 @@ class CGenerator(AbstractGenerator):
             definition (list): Variable type from definitions.json
 
         Returns:
-            str: NIM code for variable definition (except type keyword for definition chaining)
+            str: C code for variable definition (except type keyword for definition chaining)
         """
         result = f"typedef {name}* = {definition[0]};\n"
         # Always add pointer
-        result += f"{SysPlantConstants.NIM_TAB}P{name}* = ptr {name};\n"
+        result += f"{SysPlantConstants.C_TAB}P{name}* = ptr {name};\n"
         return result
 
     def generate_enum(self, name: str, definition: list) -> str:
         """
-        Public method used to generate NIM enum declaration.
+        Public method used to generate C enum declaration.
         The enum structure will be generated as a public object for external code usages.
         A pointer to the enum structure will always be generated in the form of: P+NAME
 
@@ -108,7 +108,7 @@ class CGenerator(AbstractGenerator):
             definition (list): Enum structure entries from definitions.json
 
         Returns:
-            str: NIM code for enum structure (except type keyword for definition chaining)
+            str: C code for enum structure (except type keyword for definition chaining)
         """
         result = f"#ifndef {name}\ntypedef enum _{name}\n" + "{\n"
         for var in definition:
@@ -126,9 +126,9 @@ class CGenerator(AbstractGenerator):
             debug (bool): Debug flag value
 
         Returns:
-            str: NIM code for template integration
+            str: C code for template integration
         """
-        return f"#define SPT_DEBUG {str(debug).lower()}"
+        return f"#define SPT_DEBUG {str(debug).upper()}"
 
     def generate_seed(self, seed: int) -> str:
         """
@@ -138,7 +138,7 @@ class CGenerator(AbstractGenerator):
             seed (int): Seed value
 
         Returns:
-            str: NIM code for template integration
+            str: C code for template integration
         """
         return f"#define SPT_SEED {hex(seed)}"
 
@@ -152,7 +152,7 @@ class CGenerator(AbstractGenerator):
             fhash (int): NtFunction hash value used by ASM call
 
         Returns:
-            str: NIM code for template integration
+            str: C code for template integration
         """
         self.__functions[name] = params
 
