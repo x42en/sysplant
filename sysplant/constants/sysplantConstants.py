@@ -14,15 +14,26 @@ class SysPlantConstants:
     TAG_END = "__##"
     RANDOM_WORD_SIZE = 8
     INTERNAL_FUNCTIONS = [
+        "SPT_HEADER_H_",
         "SPT_SEED",
+        "SPT_RVA2VA",
+        "SPT_MAX_ENTRIES",
+        "SPT_SYSCALL_ENTRY",
+        "SPT_SYSCALL_LIST",
         "SPT_Iterator",
         "SPT_Syscall",
         "SPT_DetectPadding",
         "SPT_HashSyscallName",
         "SPT_GetSyscallNumber",
-        "SPT_PopulateSyscalls",
         "SPT_GetSyscallAddress",
         "SPT_GetRandomSyscallAddress",
+        "SPT_PopulateSyscallList",
+        "SPT_PopulateSyscalls",
+        "SPT_HashContext",
+        "SPT_HashInit",
+        "SPT_HashUpdate",
+        "SPT_HashFinalize",
+        "SPT_HashStep"
     ]
     DONUT_SYSCALLS = [
         "NtCreateSection",
