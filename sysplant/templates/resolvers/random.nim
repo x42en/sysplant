@@ -10,4 +10,4 @@ proc SPT_GetRandomSyscallAddress(hash: DWORD): ULONG_PTR =
     while entry.ssn == ssdt[hash].ssn:
         entry = entries.sample()
 
-    return cast[ULONG_PTR](entry.address)
+    return cast[ULONG_PTR](entry.syscallAddress)

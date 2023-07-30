@@ -80,7 +80,8 @@ Syscall options:
 ```
 
 ### Examples
-Here are some usage examples that will generate common NtFunctions only. This tool is not restricted to them, please **[READ THE DOC](https://x42en.github.io/sysplant/)**
+Here are some usage examples that will generate common NtFunctions only.  
+This tool is not restricted to them, please **[READ THE DOC](https://x42en.github.io/sysplant/)**
 
 #### Hell's Gate generation
 ```bash
@@ -122,7 +123,7 @@ $ ./main.py generate -o syscall canterlot
 $ ./main.py generate -o syscall custom -i canterlot -m direct
 ```
 
-#### Generate C Code using Canterlot's Gate for donut functions
+#### Generate C Code using Canterlot's Gate for [Donut](https://github.com/TheWover/donut) functions
 ```bash
 $ ./main.py generate -c -o syscall -p donut canterlot
 ```

@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="https://x42en.github.io/sysplant/assets/canterlot.jpeg" alt="Canterlot's Gate"/>
+  <img src="http://sysplant.readthedocs.io/en/main/assets/canterlot.jpeg" alt="Canterlot's Gate"/>
 </p>
 
 [![PyPI version](https://img.shields.io/pypi/v/sysplant.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/sysplant/)
@@ -19,6 +19,7 @@
 [![Code Quality](https://www.codefactor.io/repository/github/x42en/sysplant/badge)](https://www.codefactor.io/repository/github/x42en/sysplant)
 [![Code Coverage](https://codecov.io/gh/x42en/sysplant/branch/main/graph/badge.svg)](https://codecov.io/gh/x42en/sysplant)
 [![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
+[![Documentation Status](https://readthedocs.org/projects/sysplant/badge/?version=latest)](https://sysplant.readthedocs.io/en/latest/?badge=latest)
 
 
 SysPlant is a python generation tool of the currently known syscall hooking methods. It currently supports following gates:
@@ -30,8 +31,6 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
   - [SysWhispers3](https://github.com/klezVirus/SysWhispers3) : SysWhispers2 style but introduce direct/indirect/random jump with static offset
   - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
   - **Custom** Allows you to choose a generation method (aka: iterator) and a syscall stub (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
-
-*Note: You can also generate your own combinations using the proper options... But be careful some options might not work or even make sense*
 
 > :warning: **DISCLAIMER**
 > Please only use this tool on systems you have permission to access.
@@ -45,22 +44,23 @@ This personal project aims to be a simple tool to better understand & generate d
 SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.
 
 ## What is `iterator` option ?
-Sysplant is based on existing mechanisms for syscall number and addresses retrieval. I do not claim any of their discovery, I just harmonize all this methods in a single tool to be able to generate them easily using templates. These mechanisms are called `iterator`, if you look at the code you'll probably understand why :wink  
+Sysplant is based on existing mechanisms for syscall number and addresses retrieval. I do not claim any of their discovery, I just harmonize all this methods in a single tool to be able to generate them easily using templates. These mechanisms are called `iterator`, if you look at the code you'll probably understand why :wink:  
+If you want to go further in the explanations of *what is a syscall ?* you should check [@Alice Climent blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
 
 ## What is `method` option ?
 One your `iterator` has been choosen you can then specify a `method` option based on the existing way to call syscalls. All the iterator are supported which let you select whatever you want as a final syscall stub.
 
-  1. Direct: the syscall is made directly in the stubs. You then only need the syscall number but AV/EDR might be see you
-  2. Indirect: the Sysplant stub jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
-  3. Random: the Sysplant stub jump to a random syscall instruction of Ntdll stub. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
+  1. **Direct:** the syscall is made directly in the Sysplant ASM call. You only need the syscall number but AV/EDR might see you...
+  2. **Indirect:** the Sysplant ASM call jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
+  3. **Random:** the Sysplant ASM call jump to a random syscall instruction of Ntdll stubs. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
 
 
 ## Documentation
-I've tried to keep an up to date documentation, so please **[READ THE DOC](https://x42en.github.io/sysplant/)**. You will find there many information about the tool's usages and a complete description of the classes and methods.  
+I've tried to keep an up to date documentation, so please **[READ THE DOC](http://sysplant.readthedocs.io/en/main/)**. You will find there many information about the tool's usages and a complete description of the classes and methods.  
 
 Some specifics usages are described:
-  - [Sysplant as a CLI tool](https://x42en.github.io/sysplant/usage/cli)
-  - [Sysplant as a Python's module](https://x42en.github.io/sysplant/usage/lib)
+  - [Sysplant as a CLI tool](http://sysplant.readthedocs.io/en/main/usage/cli)
+  - [Sysplant as a Python's module](http://sysplant.readthedocs.io/en/main/usage/lib)
 
 ## Credits
 Massive shout-out to these useful projects that helps me during this journey, or individuals for their reviews

@@ -25,8 +25,7 @@ if __name__ == "__main__":
     # Generate code
     bot.generate(
         iterator="canterlot",
-        resolver="random",
-        stub="indirect",
+        method="random",
         syscalls="common"
     )
     # Optionally randomize internal names

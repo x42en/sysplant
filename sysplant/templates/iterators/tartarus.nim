@@ -27,7 +27,7 @@ proc isClean(address: PBYTE, cw: int32, step: int = 0): int32 =
     return (high_b shl 8).bitor(low_b)[int32] - step[int32]
     
 # Parse Export Directory and look for 1st & 3rd opcodes, check up and down if hooked https://github.com/trickster0/TartarusGate
-iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
+iterator SPT_Iterator(mi: MODULEINFO): (int32, DWORD, PBYTE) =
     # Extract headers
     let codeBase = mi.lpBaseOfDll
     let dosHeader = cast[PIMAGE_DOS_HEADER](codeBase)
@@ -82,10 +82,10 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
                     
             if ssn > -1:
                 let
-                    hash = SPT_HashSyscallName(name)
-                    found = address{cw}[int64]
+                    hash: int32 = SPT_HashSyscallName(name)
+                    found: PBYTE = address{cw}[PBYTE]
                 
-                yield (hash, ssn, found)
+                yield (hash, ssn[DWORD], found)
                 break
             
             cw += 1
@@ -123,8 +123,13 @@ proc SPT_PopulateSyscalls =
     
     handle.GetModuleInformation(me32.hModule, addr mi, cast[DWORD](sizeof(mi)))
 
+    var padding = 0x0
     # Resolve address
     for hash, ssn, address in mi.SPT_Iterator():
-        ssdt[hash] = Syscall(address: address, ssn: ssn)
+        # All syscall stub are identical for a Windows version
+        if padding == 0x0:
+            padding = SPT_DetectPadding(address)
+
+        ssdt[hash] = Syscall(address: address[PVOID], ssn: ssn, syscallAddress: address{padding}[PVOID])
 
     return

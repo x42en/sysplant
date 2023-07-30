@@ -1,9 +1,8 @@
 # Use RunTime Function table from exception directory to gather SSN: https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/
-# Auto calculate syscall offset
-iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int, int64) =
+iterator SPT_Iterator(mi: MODULEINFO): (int32, DWORD, PBYTE) =
     var
         i: int = 0
-        ssn: int = 0
+        ssn: DWORD = 0
     
     # Extract headers
     let codeBase = mi.lpBaseOfDll
@@ -18,8 +17,6 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int, int64) =
     let dirExcept = ntHeader.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXCEPTION]
     let rtf = codeBase{dirExcept.VirtualAddress}[PIMAGE_RUNTIME_FUNCTION_ENTRY] 
     
-    var padding = 0x0
-
     # Loop runtime function table
     while rtf[i].BeginAddress:
         let current = rtf[i].BeginAddress
@@ -38,14 +35,8 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int, int64) =
             
             # Check offset with current function, ensure this is a syscall
             if (offset == current) and name.startsWith("Zw"):
-                let hash = SPT_HashSyscallName(name)
-                # All syscall stub are identical for a Windows version
-                if padding == 0x0:
-                    # Calculate jmp address avoiding EDR hooks
-                    while (address{padding}[] != 0x0f) and (address{padding + 1}[] != 0x05):
-                        padding += 1
-                
-                yield (hash, ssn, address{padding}[int64])
+                let hash: int32 = SPT_HashSyscallName(name)
+                yield (hash, ssn, address)
                 # Increase syscall number
                 ssn += 1
                 break
@@ -85,9 +76,14 @@ proc SPT_PopulateSyscalls =
     
     handle.GetModuleInformation(me32.hModule, addr mi, cast[DWORD](sizeof(mi)))
     
+    var padding = 0x0
     # Resolve ssn & address
     for hash, ssn, address in mi.SPT_Iterator():
-        var entry = Syscall(ssn: ssn, address: address)
+        # All syscall stub are identical for a Windows version
+        if padding == 0x0:
+            padding = SPT_DetectPadding(address)
+        
+        var entry = Syscall(ssn: ssn, address: address[PVOID], syscallAddress: address{padding}[PVOID])
         ssdt[hash] = entry
 
     return

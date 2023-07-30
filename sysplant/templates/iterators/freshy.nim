@@ -1,5 +1,5 @@
 # Parse Export Directory and lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number https://github.com/crummie5/FreshyCalls
-iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int64) =
+iterator SPT_Iterator(mi: MODULEINFO): (int32, PBYTE) =
     # Extract headers
     let codeBase = mi.lpBaseOfDll
     let dosHeader = cast[PIMAGE_DOS_HEADER](codeBase)
@@ -19,12 +19,13 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int64) =
         let
             name = $(codeBase{nameRef[]}[LPCSTR])
             offset = funcRef[ordinal[j][int]]
-        
+            address = codeBase{offset}[PBYTE]
+
         # Check offset with current function, ensure this is a syscall
         if name.startsWith("Nt") and not name.startsWith("Ntdll"):
-            let hash = SPT_HashSyscallName(name)
+            let hash: int32 = SPT_HashSyscallName(name)
             # Calculate jmp address avoiding EDR hooks
-            yield (hash, codeBase{offset + 0xb2}[int64])
+            yield (hash, address)
             
         ++nameRef
 
@@ -44,8 +45,8 @@ proc SPT_PopulateSyscalls =
     let handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid)
 
     type Entry = tuple
-        address: int64
-        hash: DWORD
+        address: PBYTE
+        hash: int32
     
     var
         me32: MODULEENTRY32
@@ -71,11 +72,17 @@ proc SPT_PopulateSyscalls =
     # Sort syscalls by address
     tmp.sort(system.cmp)
 
+    var padding = 0x0
     # Register syscalls
     for i in 0 ..< len(tmp):
         let
             address = tmp[i][0]
             hash = tmp[i][1]
-        ssdt[hash] = Syscall(address: address, ssn: i)
+        
+        # All syscall stub are identical for a Windows version
+        if padding == 0x0:
+            padding = SPT_DetectPadding(address)
+
+        ssdt[hash] = Syscall(address: address[PVOID], ssn: i[int32], syscallAddress: address{padding}[PVOID])
 
     return
