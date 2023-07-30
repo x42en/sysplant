@@ -82,7 +82,10 @@ if __name__ == "__main__":
     lang_options = action_generate.add_argument_group("Language options")
     language = lang_options.add_mutually_exclusive_group()
     language.add_argument(
-        "-nim", action="store_false", help="Generate NIM code (Default: true)", default=True
+        "-nim",
+        action="store_false",
+        help="Generate NIM code (Default: true)",
+        default=True,
     )
     language.add_argument(
         "-c", action="store_true", help="Generate C code", default=False
@@ -105,17 +108,10 @@ if __name__ == "__main__":
         default="canterlot",
     )
     parser_custom.add_argument(
-        "-r",
-        "--resolver",
-        help="Select syscall resolver (Default: basic)",
-        choices=["basic", "random"],
-        default="basic",
-    )
-    parser_custom.add_argument(
-        "-s",
-        "--stub",
-        help="Select syscall stub (Default: indirect)",
-        choices=["direct", "indirect"],
+        "-m",
+        "--method",
+        help="Select syscall stub (Default: direct)",
+        choices=["direct", "indirect", "random"],
         default="direct",
     )
 
@@ -169,36 +165,28 @@ if __name__ == "__main__":
         # Preset infos when necessary
         if args.generation == "hell":
             iterator = "hell"
-            resolver = "basic"
-            stub = "direct"
+            method = "direct"
         elif args.generation == "halo":
             iterator = "halo"
-            resolver = "basic"
-            stub = "direct"
+            method = "direct"
         elif args.generation == "tartarus":
             iterator = "tartarus"
-            resolver = "basic"
-            stub = "direct"
+            method = "direct"
         elif args.generation == "freshy":
             iterator = "freshy"
-            resolver = "basic"
-            stub = "direct"
+            method = "direct"
         elif args.generation == "syswhispers":
             iterator = "syswhispers"
-            resolver = "basic"
-            stub = "direct"
+            method = "indirect"
         elif args.generation == "syswhispers3":
             iterator = "syswhispers3"
-            resolver = "random"
-            stub = "indirect"
+            method = "random"
         elif args.generation == "canterlot":
             iterator = "canterlot"
-            resolver = "random"
-            stub = "indirect"
+            method = "random"
         elif args.generation == "custom":
             iterator = args.iterator
-            resolver = args.resolver
-            stub = args.stub
+            method = args.method
 
         try:
             # Override default condition (preset: common) if funcitons are set
@@ -209,14 +197,12 @@ if __name__ == "__main__":
                 args.syscalls = args.preset
 
             # Set language mode
-            lang_set = "nim" # Default option
+            lang_set = "nim"  # Default option
             if args.c:
                 lang_set = "c"
-            
+
             engine = Sysplant(arch=arch, language=lang_set)
-            engine.generate(
-                iterator=iterator, resolver=resolver, stub=stub, syscalls=args.syscalls
-            )
+            engine.generate(iterator=iterator, method=method, syscalls=args.syscalls)
             engine.scramble(args.scramble)
             engine.output(args.output)
         except Exception as err:
