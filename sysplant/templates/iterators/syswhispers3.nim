@@ -1,13 +1,5 @@
-var distance_to_syscall: ULONG
-when defined(amd64):
-    # If the process is 64-bit on a 64-bit OS, we need to search for syscall
-    distance_to_syscall = 0x12
-elif defined(i386):
-    # If the process is 32-bit on a 32-bit OS, we need to search for sysenter
-    distance_to_syscall = 0x0f
-
 # Lookup from Export directory Nt function (and not Ntdll), and sort them by addresses to get corresponding syscall number
-iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int64) =
+iterator SPT_Iterator(mi: MODULEINFO): (int32, PBYTE) =
     # Extract headers
     let codeBase = mi.lpBaseOfDll
     let dosHeader = cast[PIMAGE_DOS_HEADER](codeBase)
@@ -27,11 +19,12 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int64) =
         let
             name = $(codeBase{nameRef[]}[LPCSTR])
             offset = funcRef[ordinal[j][int]]
+            address = codeBase{offset}[PBYTE]
         
         # Check offset with current function, ensure this is a syscall
         if name.startsWith("Zw"):
-            let hash = SPT_HashSyscallName(name)
-            yield (hash, codeBase{offset + distance_to_syscall}[int64])
+            let hash: int32 = SPT_HashSyscallName(name)
+            yield (hash, address)
             
         ++nameRef
 
@@ -51,8 +44,8 @@ proc SPT_PopulateSyscalls =
     let handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid)
 
     type Entry = tuple
-        address: int64
-        hash: DWORD
+        address: PBYTE
+        hash: int32
     
     var
         me32: MODULEENTRY32
@@ -78,11 +71,17 @@ proc SPT_PopulateSyscalls =
     # Sort syscalls by address
     tmp.sort(system.cmp)
 
+    var padding = 0x0
     # Register syscalls
     for i in 0 ..< len(tmp):
         let
             address = tmp[i][0]
             hash = tmp[i][1]
-        ssdt[hash] = Syscall(address: address, ssn: i)
+        
+        # All syscall stub are identical for a Windows version
+        if padding == 0x0:
+            padding = SPT_DetectPadding(address)
+
+        ssdt[hash] = Syscall(address: address[PVOID], ssn: i[int32], syscallAddress: address{padding}[PVOID])
 
     return
