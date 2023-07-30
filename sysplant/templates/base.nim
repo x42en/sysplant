@@ -92,11 +92,6 @@ proc SPT_HashSyscallName(name: string): DWORD =
 
 ##__SPT_ITERATOR__##
 
-proc SPT_GetSyscallNumber(hash: DWORD): int =
-    # Always generate table
-    SPT_PopulateSyscalls()
-    return ssdt[hash].ssn
-
 ##__SPT_RESOLVER__##
 
 ##__SPT_CALLER__##

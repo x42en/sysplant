@@ -1,4 +1,7 @@
 proc SPT_GetRandomSyscallAddress(hash: DWORD): ULONG_PTR =
+    # Ensure SPT_SyscallList is populated.
+    SPT_PopulateSyscalls()
+    
     let entries = toSeq(ssdt.values)
     # Pickup random non-hooked syscall to JUMP to
     var entry: Syscall = entries.sample()
