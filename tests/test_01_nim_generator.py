@@ -137,13 +137,6 @@ class TestAbstract(unittest.TestCase):
                         "optional": False,
                     },
                     {
-                        "name": "UserApcReserveHandle",
-                        "type": "HANDLE",
-                        "in": True,
-                        "out": False,
-                        "optional": True,
-                    },
-                    {
                         "name": "ApcRoutine",
                         "type": "PKNORMAL_ROUTINE",
                         "in": True,
