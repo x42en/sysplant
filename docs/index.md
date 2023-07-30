@@ -23,14 +23,14 @@
 
 
 SysPlant is a python generation tool of the currently known syscall hooking methods. It currently supports following gates:
-  - [Hell's Gate](https://github.com/am0nsec/HellsGate) : Lookup syscall by first opcodes
-  - [Halos's Gate](https://blog.sektor7.net/#!res/2021/halosgate.md) : Lookup syscall by first opcodes and search nearby if first instruction is a JMP
-  - [Tartarus' Gate](https://github.com/trickster0/TartarusGate) : Lookup syscall by first opcodes and search nearby if first or third instruction is a JMP
-  - [FreshyCalls](https://github.com/crummie5/FreshyCalls) : Lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number
-  - [SysWhispers2](https://github.com/jthuraisamy/SysWhispers2) : Lookup syscall by name (start with Zw), sort addresses to retrieve syscall number
-  - [SysWhispers3](https://github.com/klezVirus/SysWhispers3) : SysWhispers2 style but introduce direct/indirect/random jump with static offset
-  - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
-  - **Custom** Allows you to choose a generation method (aka: iterator) and a syscall stub (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
+    - [Hell's Gate](https://github.com/am0nsec/HellsGate) : Lookup syscall by first opcodes
+    - [Halos's Gate](https://blog.sektor7.net/#!res/2021/halosgate.md) : Lookup syscall by first opcodes and search nearby if first instruction is a JMP
+    - [Tartarus' Gate](https://github.com/trickster0/TartarusGate) : Lookup syscall by first opcodes and search nearby if first or third instruction is a JMP
+    - [FreshyCalls](https://github.com/crummie5/FreshyCalls) : Lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number
+    - [SysWhispers2](https://github.com/jthuraisamy/SysWhispers2) : Lookup syscall by name (start with Zw), sort addresses to retrieve syscall number
+    - [SysWhispers3](https://github.com/klezVirus/SysWhispers3) : SysWhispers2 style but introduce direct/indirect/random jump with static offset
+    - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
+    - **Custom** Allows you to choose a generation method (aka: iterator) and a syscall stub (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
 
 > :warning: **DISCLAIMER**
 > Please only use this tool on systems you have permission to access.
@@ -59,26 +59,26 @@ One your `iterator` has been choosen you can then specify a `method` option base
 I've tried to keep an up to date documentation, so please **[READ THE DOC](https://x42en.github.io/sysplant/)**. You will find there many information about the tool's usages and a complete description of the classes and methods.  
 
 Some specifics usages are described:
-  - [Sysplant as a CLI tool](https://x42en.github.io/sysplant/usage/cli)
-  - [Sysplant as a Python's module](https://x42en.github.io/sysplant/usage/lib)
+     - [Sysplant as a CLI tool](https://x42en.github.io/sysplant/usage/cli)
+     - [Sysplant as a Python's module](https://x42en.github.io/sysplant/usage/lib)
 
 ## Credits
 Massive shout-out to these useful projects that helps me during this journey, or individuals for their reviews
-  - [@alice blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
-  - [@redops blogpost about direct vs indirect syscalls](https://redops.at/en/blog/direct-syscalls-a-journey-from-high-to-low)
-  - [@Jackson_T & @modexpblog for Syswhispers2](https://github.com/jthuraisamy/SysWhispers2)
-  - [@klezvirus for syswhispers3](https://github.com/klezVirus/SysWhispers3)
+     - [@alice blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
+     - [@redops blogpost about direct vs indirect syscalls](https://redops.at/en/blog/direct-syscalls-a-journey-from-high-to-low)
+     - [@Jackson_T & @modexpblog for Syswhispers2](https://github.com/jthuraisamy/SysWhispers2)
+     - [@klezvirus for syswhispers3](https://github.com/klezVirus/SysWhispers3)
 
 ## :construction: TODO
 This project is really in WIP state...  
 Some PR & reviews are more than welcome :tada: !
-  - [x] Add internal names randomization
-  - [x] Setup documentation
-  - [x] Setup tests
-  - [ ] Add x86 support
-  - [ ] Add WoW64 support
-  - [x] Setup C templates
-  - [ ] Setup Go? / CPP? / C#? / Rust? / Whatever templates
+     - [x] Add internal names randomization
+     - [x] Setup documentation
+     - [x] Setup tests
+     - [ ] Add x86 support
+     - [ ] Add WoW64 support
+     - [x] Setup C templates
+     - [ ] Setup Go? / CPP? / C#? / Rust? / Whatever templates
 
 ## License
 This project is licensed under the [GPLv3 License](https://www.gnu.org/licenses/quick-guide-gplv3.en.html), for individuals only. If you want to integrate this work in your commercial project please contact me through `0x42en[at]gmail.com`
