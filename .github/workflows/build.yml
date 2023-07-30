@@ -56,5 +56,3 @@ jobs:
           files: ./report.xml
           flags: unittest
           name: sysplant
-          fixes:
-            - "home/runner/work/::"
