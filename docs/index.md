@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="https://x42en.github.io/sysplant/assets/canterlot.jpeg" alt="Canterlot's Gate"/>
+  <img src="http://sysplant.readthedocs.io/en/main/assets/canterlot.jpeg" alt="Canterlot's Gate"/>
 </p>
 
 [![PyPI version](https://img.shields.io/pypi/v/sysplant.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/sysplant/)
@@ -56,11 +56,11 @@ One your `iterator` has been choosen you can then specify a `method` option base
 
 
 ## Documentation
-I've tried to keep an up to date documentation, so please **[READ THE DOC](https://x42en.github.io/sysplant/)**. You will find there many information about the tool's usages and a complete description of the classes and methods.  
+I've tried to keep an up to date documentation, so please **[READ THE DOC](http://sysplant.readthedocs.io/en/main/)**. You will find there many information about the tool's usages and a complete description of the classes and methods.  
 
 Some specifics usages are described:
-     - [Sysplant as a CLI tool](https://x42en.github.io/sysplant/usage/cli)
-     - [Sysplant as a Python's module](https://x42en.github.io/sysplant/usage/lib)
+     - [Sysplant as a CLI tool](http://sysplant.readthedocs.io/en/main/usage/cli)
+     - [Sysplant as a Python's module](http://sysplant.readthedocs.io/en/main/usage/lib)
 
 ## Credits
 Massive shout-out to these useful projects that helps me during this journey, or individuals for their reviews
