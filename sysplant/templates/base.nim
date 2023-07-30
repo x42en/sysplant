@@ -15,8 +15,9 @@ import winim
 
 type
     Syscall = object
-        ssn: int
-        address: int64
+        ssn: DWORD
+        address: PVOID
+        syscallAddress: PVOID
 
     IMAGE_RUNTIME_FUNCTION_ENTRY_UNION {.pure, union.} = object
         UnwindInfoAddress: DWORD
@@ -31,7 +32,7 @@ type
 
 ##__SPT_DEBUG__##
 ##__SPT_SEED__##
-var ssdt: Table[DWORD, Syscall]
+var ssdt: Table[int32, Syscall]
 
 ## utils from https://github.com/khchen/memlib/blob/master/memlib.nim
 template `++`[T](p: var ptr T) =
@@ -86,9 +87,27 @@ proc `[]`*[T; S: SomeInteger](p: ptr T, offset: S): var T =
     return (p + offset)[]
 ##
 
-proc SPT_HashSyscallName(name: string): DWORD =
+proc SPT_HashSyscallName(name: string): int32 =
     let hash = getMD5(&"{SPT_SEED}{name[2 .. ^1]}")
-    return cast[DWORD](parseHexInt(hash[0 .. ^25]))
+    return cast[int32](parseHexInt(hash[0 .. ^25]))
+
+proc SPT_DetectPadding(address: PBYTE): int =
+    var syscall_code: seq[byte]
+    if defined(amd64):
+        # If the process is 64-bit on a 64-bit OS, we need to search for syscall
+        syscall_code = @[byte 0x0f, 0x05, 0xc3]
+    else:
+        # If the process is 32-bit on a 32-bit OS, we need to search for sysenter
+        syscall_code = @[byte 0x0f, 0x34, 0xc3]
+    
+    # Calculate jmp address avoiding EDR hooks
+    while (address{result}[] != syscall_code[0]) and (address{result + 1}[] != syscall_code[1]and (address{result + 2}[] != syscall_code[2])):
+        result += 1
+        # Windows stubs are quite small, don't waste time
+        if result > 0x22:
+            return 0x0
+    return result
+
 
 ##__SPT_ITERATOR__##
 
