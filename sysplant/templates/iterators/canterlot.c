@@ -1,25 +1,3 @@
-WORD SPT_DetectPadding(PBYTE address) {
-#if defined(_WIN64)
-    // If the process is 64-bit on a 64-bit OS, we need to search for syscall
-    BYTE syscall_code[] = {0x0f, 0x05, 0xc3};
-#else
-    // If the process is 32-bit on a 32-bit OS, we need to search for sysenter
-    BYTE syscall_code[] = {0x0f, 0x34, 0xc3};
-#endif
-
-    WORD padding = 0x0;
-    // Search padding size until next syscall instruction
-    while (memcmp((PVOID)syscall_code, SPT_RVA2VA(PVOID, address, padding), sizeof(syscall_code))) {
-        padding++;
-        // Windows stubs are quite small, don't waste time
-        if(padding > 0x22){
-            return 0x0;
-        };
-    }
-    
-    return padding;
-}
-
 // Parse Exception Directory and lookup syscall by name (sort by ssn number) https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/
 BOOL SPT_PopulateSyscallList(void)
 {
@@ -81,29 +59,24 @@ BOOL SPT_PopulateSyscallList(void)
     for (DWORD i = 0; RuntimeFunctions[i].BeginAddress; i++) {
         // Search export address table.
         for (DWORD cx = 0; cx < ExportDirectory->NumberOfNames; cx++) {
-            PCHAR name = SPT_RVA2VA(PCHAR, DllBase, Names[cx]);
-            DWORD offset = Functions[Ordinals[cx]];
-            PBYTE address = SPT_RVA2VA(PBYTE, DllBase, offset);
+            PCHAR FunctionName = SPT_RVA2VA(PCHAR, DllBase, Names[cx]);
+            PVOID FunctionAddress = SPT_RVA2VA(PVOID, DllBase, Functions[Ordinals[cx]]);
 
             // begin address rva?
-            if (offset == RuntimeFunctions[i].BeginAddress) {
+            if (Functions[Ordinals[cx]] == RuntimeFunctions[i].BeginAddress) {
                 // Is this a system call?
-                if (*(USHORT*)name == 0x775a)
+                if (*(USHORT*)FunctionName == 0x775a)
                 {
-                    Entries[ssn].Hash = SPT_HashSyscallName(name);
-                    Entries[ssn].Address = SPT_RVA2VA(PVOID, DllBase, offset);
+                    Entries[ssn].Hash = SPT_HashSyscallName(FunctionName);
+                    Entries[ssn].Address = FunctionAddress;
 
                     // All syscall stubs are identical for a Windows version
                     if (padding == 0x0) {
-                        padding = SPT_DetectPadding(address);
+                        padding = SPT_DetectPadding(FunctionAddress);
                     }
 
                     // Set syscall entry with appropriate padding
                     Entries[ssn].SyscallAddress = SPT_RVA2VA(PVOID, Entries[ssn].Address, padding);
-                    if (ssn == 80) {
-                        printf("[%d] DIRECT %s (%lx) -> %p\n", ssn, name, Entries[ssn].Hash, Entries[ssn].Address);
-                        printf("[%d] INDIRECT %s (%lx) -> %p\n", ssn, name, Entries[ssn].Hash, Entries[ssn].SyscallAddress);
-                    }
                     
                     // Increase the ssn value
                     ssn++;

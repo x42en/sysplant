@@ -114,7 +114,7 @@ class TemplateManager(AbstractFactory):
         """
         # Load supported functions prototypes
         data = self.__load_template(pkg_data, "prototypes.json")
-        self.__prototypes : dict = json.loads(data)
+        self.__prototypes: dict = json.loads(data)
 
     def load_stub(self, name) -> str:
         """
@@ -220,7 +220,35 @@ class TemplateManager(AbstractFactory):
 
         return self.data
 
-    def set_resolver(self, name: str) -> str:
+    def set_method(self, name: str) -> str:
+        if name == "direct":
+            # Only Syscall number is required
+            resolver = self.__get_resolver("number")
+        elif name == "indirect":
+            # Only syscall address is required
+            resolver = self.__get_resolver("basic")
+        elif name == "random":
+            # Syscall number and instruction address are required
+            resolver = self.__get_resolver("number")
+            resolver += self.__get_resolver("random")
+        else:
+            raise NotImplementedError("Method not supported.")
+
+        # Set resolver code in template
+        self.replace_tag("SPT_RESOLVER", resolver)
+
+        # Load call stub
+        self.__set_caller(name)
+
+        # Set debug interruption on debug state
+        if self.logger.isDebug():
+            self.replace_tag("DEBUG_INT", "int 3")
+        else:
+            self.remove_tag("DEBUG_INT")
+
+        return self.data
+
+    def __get_resolver(self, name: str) -> str:
         """
         Public method used to retrieve the language specific code of NtFunction resolver based on hash value.
         The selected resolver is then used to replace the SPT_RESOLVER tag in template.
@@ -232,15 +260,11 @@ class TemplateManager(AbstractFactory):
             str: Template content after modification
         """
         # Get resolver template from package
-        data = self.__load_template(pkg_resolvers, f"{name}.{self.__lang}")
-        self.replace_tag("SPT_RESOLVER", data)
+        return self.__load_template(pkg_resolvers, f"{name}.{self.__lang}")
 
-        return self.data
-
-    def set_caller(self, name: str, resolver: str) -> str:
+    def __set_caller(self, name: str) -> str:
         """
         Public method used to retrieve the language specific code of the main call function.
-        The caller code is adapted with correct resolver function name (using FUNCTION_RESOLVE tag)
         The caller code is adapted with correct syscall instruction (using SYSCALL_INT tag)
         The caller code embbed interuption (int 3) in case of DEBUG state (using DUBG_INT tag)
         The selected caller is then used to replace the SPT_CALLER tag in template.
@@ -256,22 +280,8 @@ class TemplateManager(AbstractFactory):
         data = self.__load_template(pkg_stubs, f"{name}_{self.__arch}.{self.__lang}")
         self.replace_tag("SPT_CALLER", data)
 
-        # Replace resolver functions in stub
-        func_resolver = (
-            "SPT_GetRandomSyscallAddress"
-            if resolver == "random"
-            else "SPT_GetSyscallAddress"
-        )
-
         # Adapt caller with proper options
-        self.replace_tag("FUNCTION_RESOLVE", func_resolver)
         self.replace_tag("SYSCALL_INT", self.__syscall)
-
-        # Set debug interruption on debug state
-        if self.logger.isDebug():
-            self.replace_tag("DEBUG_INT", "int 3")
-        else:
-            self.remove_tag("DEBUG_INT")
 
         return self.data
 

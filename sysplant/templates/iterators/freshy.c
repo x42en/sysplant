@@ -43,6 +43,7 @@ BOOL SPT_PopulateSyscallList()
 
     // Populate SPT_SyscallList with unsorted Zw* entries.
     DWORD i = 0;
+    WORD padding = 0x0;
     PSPT_SYSCALL_ENTRY Entries = SPT_SyscallList.Entries;
     do
     {
@@ -53,8 +54,13 @@ BOOL SPT_PopulateSyscallList()
         if (*(USHORT*)FunctionName == 0x775a)
         {
             Entries[i].Hash = SPT_HashSyscallName(FunctionName);
-            Entries[i].Address = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
-            Entries[i].SyscallAddress = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
+            Entries[i].Address = FunctionAddress;
+            // All syscall stubs are identical for a Windows version
+            if (padding == 0x0) {
+                padding = SPT_DetectPadding(Entries[i].Address);
+            }
+
+            Entries[i].SyscallAddress = SPT_RVA2VA(PVOID, Entries[i].Address, padding);
 
             i++;
             if (i == SPT_MAX_ENTRIES) break;

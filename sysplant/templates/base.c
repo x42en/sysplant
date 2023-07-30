@@ -281,24 +281,29 @@ DWORD SPT_HashSyscallName(PCSTR name)
     return Hash;
 }
 
-##__SPT_ITERATOR__##
+WORD SPT_DetectPadding(PVOID address) {
+#if defined(_WIN64)
+    // If the process is 64-bit on a 64-bit OS, we need to search for syscall
+    BYTE syscall_code[] = {0x0f, 0x05, 0xc3};
+#else
+    // If the process is 32-bit on a 32-bit OS, we need to search for sysenter
+    BYTE syscall_code[] = {0x0f, 0x34, 0xc3};
+#endif
 
-EXTERN_C DWORD SPT_GetSyscallNumber(DWORD FunctionHash)
-{
-    // Ensure SPT_SyscallList is populated.
-    if (!SPT_PopulateSyscallList())
-        return -1;
-
-    for (DWORD i = 0; i < SPT_SyscallList.Count; i++)
-    {
-        if (FunctionHash == SPT_SyscallList.Entries[i].Hash)
-        {
-            return i;
-        }
+    WORD padding = 0x0;
+    // Search padding size until next syscall instruction
+    while (memcmp((PVOID)syscall_code, SPT_RVA2VA(PVOID, address, padding), sizeof(syscall_code))) {
+        padding++;
+        // Windows stubs are quite small, don't waste time
+        if(padding > 0x22){
+            return 0x0;
+        };
     }
-
-    return -1;
+    
+    return padding;
 }
+
+##__SPT_ITERATOR__##
 
 ##__SPT_RESOLVER__##
 

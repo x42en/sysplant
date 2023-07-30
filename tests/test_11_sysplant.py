@@ -52,16 +52,18 @@ class TestAbstract(unittest.TestCase):
         self.assertEqual(type(result), set)
         self.assertEqual(result, expected)
 
-    def test_02_generate(self):
+    def test_02_generate_direct(self):
         klass = Sysplant()
-        result = klass.generate("syswhispers", "basic", "direct", "common")
+        result = klass.generate(
+            iterator="syswhispers", method="direct", syscalls="common"
+        )
 
         # Ensure freshy iterator is present
         iterator = pkg_resources.open_text(pkg_iterators, "syswhispers.nim")
         self.assertIn(iterator.read(), result)
 
         # Ensure resolver is present
-        resolver = pkg_resources.open_text(pkg_resolvers, "basic.nim")
+        resolver = pkg_resources.open_text(pkg_resolvers, "number.nim")
         self.assertIn(resolver.read(), result)
 
         # Ensure stub is present
@@ -74,9 +76,59 @@ class TestAbstract(unittest.TestCase):
 
         # Ensure generated content is valid
 
+    def test_02_generate_indirect(self):
+        klass = Sysplant()
+        result = klass.generate(
+            iterator="syswhispers", method="indirect", syscalls="common"
+        )
+
+        # Ensure freshy iterator is present
+        iterator = pkg_resources.open_text(pkg_iterators, "syswhispers.nim")
+        self.assertIn(iterator.read(), result)
+
+        # Ensure resolver is present
+        resolver = pkg_resources.open_text(pkg_resolvers, "basic.nim")
+        self.assertIn(resolver.read(), result)
+
+        # Ensure stub is present
+        stub = pkg_resources.open_text(pkg_stubs, "indirect_x64.nim")
+        # Correct dynamic entries
+        clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
+        clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
+
+        self.assertIn(clean_stub, result)
+
+        # Ensure generated content is valid
+
+    def test_02_generate_random(self):
+        klass = Sysplant()
+        result = klass.generate(
+            iterator="syswhispers", method="random", syscalls="common"
+        )
+
+        # Ensure freshy iterator is present
+        iterator = pkg_resources.open_text(pkg_iterators, "syswhispers.nim")
+        self.assertIn(iterator.read(), result)
+
+        # Ensure resolver is present
+        resolver = pkg_resources.open_text(pkg_resolvers, "number.nim")
+        self.assertIn(resolver.read(), result)
+        resolver = pkg_resources.open_text(pkg_resolvers, "random.nim")
+        self.assertIn(resolver.read(), result)
+
+        # Ensure stub is present
+        stub = pkg_resources.open_text(pkg_stubs, "random_x64.nim")
+        # Correct dynamic entries
+        clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
+        clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
+
+        self.assertIn(clean_stub, result)
+
+        # Ensure generated content is valid
+
     def test_03_scramble_direct(self):
         klass = Sysplant()
-        klass.generate("freshy", "basic", "direct", "common")
+        klass.generate(iterator="freshy", method="direct", syscalls="common")
         result = klass.scramble(True)
 
         for entry in SysPlantConstants.INTERNAL_FUNCTIONS:
@@ -84,7 +136,15 @@ class TestAbstract(unittest.TestCase):
 
     def test_03_scramble_indirect(self):
         klass = Sysplant()
-        klass.generate("canterlot", "random", "indirect", "common")
+        klass.generate(iterator="syswhispers", method="indirect", syscalls="common")
+        result = klass.scramble(True)
+
+        for entry in SysPlantConstants.INTERNAL_FUNCTIONS:
+            self.assertNotIn(entry, result)
+
+    def test_03_scramble_random(self):
+        klass = Sysplant()
+        klass.generate(iterator="canterlot", method="random", syscalls="common")
         result = klass.scramble(True)
 
         for entry in SysPlantConstants.INTERNAL_FUNCTIONS:
@@ -92,7 +152,7 @@ class TestAbstract(unittest.TestCase):
 
     def test_04_output(self):
         klass = Sysplant()
-        klass.generate("canterlot", "basic", "direct", "common")
+        klass.generate(iterator="canterlot", method="direct", syscalls="common")
         (_, filename) = tempfile.mkstemp(text=True)
         result = klass.output(filename)
 

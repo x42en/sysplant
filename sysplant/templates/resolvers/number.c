@@ -1,15 +1,16 @@
-EXTERN_C PVOID SPT_GetSyscallAddress(DWORD FunctionHash)
+EXTERN_C DWORD SPT_GetSyscallNumber(DWORD FunctionHash)
 {
     // Ensure SPT_SyscallList is populated.
-    if (!SPT_PopulateSyscallList()) return NULL;
+    if (!SPT_PopulateSyscallList())
+        return -1;
 
     for (DWORD i = 0; i < SPT_SyscallList.Count; i++)
     {
         if (FunctionHash == SPT_SyscallList.Entries[i].Hash)
         {
-            return SPT_SyscallList.Entries[i].Address;
+            return i;
         }
     }
 
-    return NULL;
+    return -1;
 }

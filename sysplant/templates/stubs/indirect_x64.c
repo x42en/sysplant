@@ -11,17 +11,13 @@ __asm__("SPT_Syscall: \n\
     sub rsp, 0x28 \n\
     mov rcx, r15 \n\
     ##__DEBUG_INT__## \n\
-    call SPT_GetSyscallNumber \n\
-    mov rcx, r15 \n\
-    mov r15, rax \n\
-    call ##__FUNCTION_RESOLVE__## \n\
+    call SPT_GetSyscallAddress \n\
     mov r15, rax \n\
     add rsp, 0x28 \n\
     mov rcx, [rsp +8] \n\
     mov rdx, [rsp+16] \n\
     mov r8, [rsp+24] \n\
     mov r9, [rsp+32] \n\
-    mov r10, rcx \n\
     ##__DEBUG_INT__## \n\
     jmp r15 \n\
 ");
