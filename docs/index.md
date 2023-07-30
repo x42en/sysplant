@@ -31,8 +31,6 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
   - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
   - **Custom** Allows you to choose a generation method (aka: iterator) and a syscall stub (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
 
-*Note: You can also generate your own combinations using the proper options... But be careful some options might not work or even make sense*
-
 > :warning: **DISCLAIMER**
 > Please only use this tool on systems you have permission to access.
 > Usage is restricted to Pentesting or Education only.
@@ -45,14 +43,15 @@ This personal project aims to be a simple tool to better understand & generate d
 SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.
 
 ## What is `iterator` option ?
-Sysplant is based on existing mechanisms for syscall number and addresses retrieval. I do not claim any of their discovery, I just harmonize all this methods in a single tool to be able to generate them easily using templates. These mechanisms are called `iterator`, if you look at the code you'll probably understand why :wink  
+Sysplant is based on existing mechanisms for syscall number and addresses retrieval. I do not claim any of their discovery, I just harmonize all this methods in a single tool to be able to generate them easily using templates. These mechanisms are called `iterator`, if you look at the code you'll probably understand why :wink:  
+
 
 ## What is `method` option ?
 One your `iterator` has been choosen you can then specify a `method` option based on the existing way to call syscalls. All the iterator are supported which let you select whatever you want as a final syscall stub.
 
-  1. Direct: the syscall is made directly in the stubs. You then only need the syscall number but AV/EDR might be see you
-  2. Indirect: the Sysplant stub jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
-  3. Random: the Sysplant stub jump to a random syscall instruction of Ntdll stub. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
+  1. **Direct:** the syscall is made directly in the stubs. You then only need the syscall number but AV/EDR might be see you
+  2. **Indirect:** the Sysplant stub jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
+  3. **Random:** the Sysplant stub jump to a random syscall instruction of Ntdll stub. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
 
 
 ## Documentation
