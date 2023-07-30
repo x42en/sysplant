@@ -12,7 +12,7 @@ proc isClean(address: PBYTE, cw: int32): bool =
     return true
 
 # Parse Export Directory and look for opcode scheme: https://github.com/am0nsec/HellsGate/blob/master/HellsGate/main.c
-iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
+iterator SPT_Iterator(mi: MODULEINFO): (int32, DWORD, PBYTE) =
     # Extract headers
     let codeBase = mi.lpBaseOfDll
     let dosHeader = cast[PIMAGE_DOS_HEADER](codeBase)
@@ -47,8 +47,8 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
 
             if address.isClean(cw):
                 let
-                    hash = SPT_HashSyscallName(name)
-                    found = address{cw}[int64]
+                    hash: int32 = SPT_HashSyscallName(name)
+                    found: PBYTE = address{cw}[PBYTE]
                     
                 # Retrieve the SSN taking care of the endianess 
                 let
@@ -56,7 +56,7 @@ iterator SPT_Iterator(mi: MODULEINFO): (DWORD, int32, int64) =
                     low_b = address{cw + 4}[]
                     ssn: int32 = (high_b shl 8).bitor(low_b)[int32]
                 
-                yield (hash, ssn, found)
+                yield (hash, ssn[DWORD], found)
                 break
             
             cw += 1
@@ -94,8 +94,13 @@ proc SPT_PopulateSyscalls =
     
     handle.GetModuleInformation(me32.hModule, addr mi, cast[DWORD](sizeof(mi)))
 
+    var padding = 0x0
     # Resolve address
     for hash, ssn, address in mi.SPT_Iterator():
-        ssdt[hash] = Syscall(address: address, ssn: ssn)
+        # All syscall stub are identical for a Windows version
+        if padding == 0x0:
+            padding = SPT_DetectPadding(address)
+
+        ssdt[hash] = Syscall(address: address[PVOID], ssn: ssn, syscallAddress: address{padding}[PVOID])
 
     return
