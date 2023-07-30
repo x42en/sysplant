@@ -78,6 +78,16 @@ if __name__ == "__main__":
         default=True,
     )
 
+    ###################### LANGUAGE OPTIONS #######################
+    lang_options = action_generate.add_argument_group("Language options")
+    language = lang_options.add_mutually_exclusive_group()
+    language.add_argument(
+        "-nim", action="store_false", help="Generate NIM code (Default: true)", default=True
+    )
+    language.add_argument(
+        "-c", action="store_true", help="Generate C code", default=False
+    )
+
     ##################### CUSTOM OPTIONS #####################
     parser_custom.add_argument(
         "-i",
@@ -198,7 +208,12 @@ if __name__ == "__main__":
             else:
                 args.syscalls = args.preset
 
-            engine = Sysplant(arch=arch, language="nim")
+            # Set language mode
+            lang_set = "nim" # Default option
+            if args.c:
+                lang_set = "c"
+            
+            engine = Sysplant(arch=arch, language=lang_set)
             engine.generate(
                 iterator=iterator, resolver=resolver, stub=stub, syscalls=args.syscalls
             )

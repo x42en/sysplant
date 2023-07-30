@@ -12,6 +12,7 @@ from sysplant.templates import stubs as pkg_stubs
 from sysplant.constants.sysplantConstants import SysPlantConstants
 from sysplant.abstracts.abstractFactory import AbstractFactory
 from sysplant.managers.nimGenerator import NIMGenerator
+from sysplant.managers.cGenerator import CGenerator
 
 
 class TemplateManager(AbstractFactory):
@@ -46,7 +47,7 @@ class TemplateManager(AbstractFactory):
         # Define language template
         if arch not in ["x86", "x64", "wow"]:
             raise NotImplementedError("Sorry architecture not implemented yet")
-        if language not in ["nim"]:
+        if language not in ["nim", "c"]:
             raise NotImplementedError("Sorry language not supported ... yet ?!")
         if syscall not in ["syscall", "sysenter", "int 0x2h"]:
             raise NotImplementedError(
@@ -60,9 +61,11 @@ class TemplateManager(AbstractFactory):
         # Set coder bot
         if self.__lang == "nim":
             self.__coder = NIMGenerator()
+        elif self.__lang == "c":
+            self.__coder = CGenerator()
 
         try:
-            # Alaways load prototypes & typedefinitions
+            # Always load prototypes & type definitions
             self.__load_prototypes()
         except Exception as err:
             raise SystemError(f"Unable to load prototypes: {err}")
@@ -111,7 +114,7 @@ class TemplateManager(AbstractFactory):
         """
         # Load supported functions prototypes
         data = self.__load_template(pkg_data, "prototypes.json")
-        self.__prototypes = json.loads(data)
+        self.__prototypes : dict = json.loads(data)
 
     def load_stub(self, name) -> str:
         """

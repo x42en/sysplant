@@ -2,8 +2,8 @@
 
 import unittest
 
-from tests.fixtures import nim_output
-from sysplant.managers.nimGenerator import NIMGenerator
+from tests.fixtures import c_output
+from sysplant.managers.cGenerator import CGenerator
 
 
 class TestAbstract(unittest.TestCase):
@@ -11,10 +11,10 @@ class TestAbstract(unittest.TestCase):
         super().__init__(method_name)
 
     def test_00_init(self):
-        NIMGenerator()
+        CGenerator()
 
     def test_01_generate_struct(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         definition = [
             ["PVOID", "NormalContext"],
             ["PVOID", "SystemArgument1"],
@@ -22,10 +22,10 @@ class TestAbstract(unittest.TestCase):
         ]
         result = klass.generate_struct("KNORMAL_ROUTINE", definition)
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.structure)
+        self.assertEqual(result, c_output.structure)
 
     def test_01_generate_struct3(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         definition = [
             ["UCHAR", "WriteOutputOnExit", 1],
             ["UCHAR", "DetectManifest", 1],
@@ -37,57 +37,57 @@ class TestAbstract(unittest.TestCase):
         ]
         result = klass.generate_struct("PS_CREATE_INFO_INIT_STATE_FLAGS", definition)
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.structure3)
+        self.assertEqual(result, c_output.structure3)
 
     def test_02_generate_union(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         definition = [["ULONG_PTR", "Value"], ["PVOID", "ValuePtr"]]
         result = klass.generate_union("PS_ATTRIBUTE_UNION", definition)
 
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.union)
-
+        self.assertEqual(result, c_output.union)
+    
     def test_03_generate_pointer(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         definition = ["PVOID"]
         result = klass.generate_pointer("PPVOID", definition)
 
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.pointer)
+        self.assertEqual(result, c_output.pointer)
 
     def test_04_generate_standard(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         definition = ["WORD"]
         result = klass.generate_standard("LANGID", definition)
 
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.standard)
+        self.assertEqual(result, c_output.standard)
 
     def test_05_generate_enum(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         definition = ["ViewShare = 1", "ViewUnmap = 2"]
         result = klass.generate_enum("SECTION_INHERIT", definition)
 
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.enum)
+        self.assertEqual(result, c_output.enum)
 
     def test_06_generate_debug(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         result = klass.generate_debug(True)
 
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.debug)
+        self.assertEqual(result, c_output.debug)
 
     def test_07_generate_seed(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         seed = 1
         result = klass.generate_seed(seed)
 
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.seed)
+        self.assertEqual(result, c_output.seed)
 
     def test_08_generate_stub(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         params = dict(
             {
                 "type": "NTSTATUS",
@@ -120,10 +120,10 @@ class TestAbstract(unittest.TestCase):
         result = klass.generate_stub("NtOpenProcessToken", params, 0x5B50179B)
 
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.stub)
+        self.assertEqual(result, c_output.stub)
 
     def test_08_generate_definitions(self):
-        klass = NIMGenerator()
+        klass = CGenerator()
         params = dict(
             {
                 "type": "NTSTATUS",
@@ -171,4 +171,4 @@ class TestAbstract(unittest.TestCase):
         result = klass.generate_definitions()
 
         self.assertEqual(type(result), str)
-        self.assertEqual(result, nim_output.definitions)
+        self.assertEqual(result, c_output.definitions)

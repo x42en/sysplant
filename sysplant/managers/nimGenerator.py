@@ -18,56 +18,12 @@ class NIMGenerator(AbstractGenerator):
     def __init__(self) -> None:
         super().__init__()
 
-        self.__definitions: dict = {}
-        self.__winimdef = ""
-
         try:
-            # Alaways load prototypes & typedefinitions
-            self.__load_definitions()
-            self.__load_winimdef()
+            # load the winim library file responsible for type definition. This prevent duplicate definitions.
+            # This file might be updated regularly until all the types are integrated inside Winim library (PR to do)
+            self.set_extra_definitions("windef.nim")
         except Exception as err:
             raise SystemError(f"Unable to load mandatory data in NIM Generator: {err}")
-
-    def __load_template(self, pkg_module: str, name: str) -> str:
-        """Private method used to retrieve specific data file from package module
-
-        Args:
-            pkg_module (str): The package module containing filename to request
-            name (str): Filename to request
-
-        Raises:
-            ValueError: Error raised if name is None
-            ValueError: Error raised if name contains forbidden chars
-
-        Returns:
-            str: Return the file content (text mode)
-        """
-        if name is None:
-            raise ValueError("Template name can not be null")
-
-        # Check only extension dot is set
-        if not name.replace(".", "", 1).isalpha():
-            raise ValueError("Invalid template name")
-
-        # Adapt module based on what to load
-        raw = pkg_resources.open_text(pkg_module, name)
-        return raw.read()
-
-    def __load_definitions(self) -> None:
-        """
-        Private method used to load the definitions file containing all the windows type definitions not set by NIM or winim
-        """
-        # Load supported functions definitions
-        data = self.__load_template(pkg_data, "definitions.json")
-        self.__definitions = json.loads(data)
-
-    def __load_winimdef(self) -> None:
-        """
-        Private method used to load the winim library file responsible for type definition. This prevent duplicate definitions.
-        This file might be updated regularly until all the types are integrated inside Winim library (PR to do)
-        """
-        # Load supported functions definitions
-        self.__winimdef = self.__load_template(pkg_data, "windef.nim")
 
     def generate_struct(self, name: str, definition: list) -> str:
         """
@@ -241,90 +197,3 @@ class NIMGenerator(AbstractGenerator):
         stub += f'{SysPlantConstants.NIM_TAB}"""\n'
 
         return stub
-
-    def __generate_typedefs(self, name: str, entry: dict) -> str:
-        """
-        Private method used to generate appropriate definition code based on entry type
-
-        Args:
-            name (str): Object name to define
-            entry (dict): Entry associated with requested name from definitions.json that gives details about the object to generate
-
-        Raises:
-            NotImplementedError: Error raised if name is None
-            NotImplementedError: Error raised if entry type is not supported. Not in : structure|enum|union|pointer|standard
-
-        Returns:
-            str: NIM code for object declaration
-        """
-        typedef_code = ""
-        dependencies = entry.get("dependencies", [])
-
-        # Resolve dependencies first
-        if len(dependencies) > 0:
-            for dep in dependencies:
-                # Avoid duplicate generation
-                if self.is_generated(dep):
-                    continue
-                # Avoid defining external types
-                if self.__definitions.get(dep) is not None:
-                    typedef_code += self.__generate_typedefs(
-                        dep, self.__definitions.get(dep)
-                    )
-
-        # Generate correct entry type
-        type_ = entry.get("type")
-        if type_ == "struct":
-            typedef_code += self.generate_struct(name, entry.get("definition", []))
-        elif type_ == "enum":
-            typedef_code += self.generate_enum(name, entry.get("definition", []))
-        elif type_ == "union":
-            typedef_code += self.generate_union(name, entry.get("definition", []))
-        elif type_ == "pointer":
-            typedef_code += self.generate_pointer(name, entry.get("definition", []))
-        elif type_ == "standard":
-            typedef_code += self.generate_standard(name, entry.get("definition", []))
-        elif type_ is None:
-            raise NotImplementedError(f"Missing {name} type")
-        else:
-            raise NotImplementedError("Unsupported definition type")
-
-        # Register definitions generated
-        self.register_definition(name)
-
-        return typedef_code
-
-    def generate_definitions(self) -> str:
-        """
-        Public method used to generate all required definitions by hooked syscall.
-        It will first loop through the required functions to hook, extract all parameters type to declare
-        and call the private __generate_typedefs function to generate the associated code block.
-        Once all chained it will return the complete code block to integrate in template
-
-        Returns:
-            str: NIM code for template integration
-        """
-        code = ""
-        for name in self.type_set:
-            # If Winim already share this structure
-            if f"{name}*" in self.__winimdef:
-                continue
-
-            entry = self.__definitions.get(name)
-
-            # Search pointer definition
-            if entry is None:
-                name = name[1:]
-                entry = self.__definitions.get(name)
-
-            # Still nothing... it might be a standard struct then
-            if entry is None:
-                continue
-
-            # Avoid duplicate generation
-            if self.is_generated(name):
-                continue
-
-            code += self.__generate_typedefs(name, entry)
-
-        return code
