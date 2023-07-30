@@ -71,6 +71,7 @@ BOOL SPT_PopulateSyscallList(void)
 		// Quick and dirty fix in case the function has been hooked
         WORD cw = 0;
         int ssn = -1;
+        WORD padding = 0x0;
         while (TRUE) {
             // check if syscall, in this case we are too far
             if (*((PBYTE)FunctionAddress + cw) == 0x0f && *((PBYTE)FunctionAddress + cw + 1) == 0x05)
@@ -83,12 +84,14 @@ BOOL SPT_PopulateSyscallList(void)
             ssn = isClean((PBYTE)FunctionAddress, cw);
             if (ssn > -1) {
                 Entries[ssn].Hash = SPT_HashSyscallName(FunctionName);
-                Entries[ssn].Address = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
-                Entries[ssn].SyscallAddress = SPT_RVA2VA(PVOID, DllBase, FunctionAddress);
-
-                if (ssn == 472) {
-                    printf("[%p] HELL %s -> %d\n", Entries[ssn].SyscallAddress, FunctionName, ssn);
+                Entries[ssn].Address = FunctionAddress;
+                
+                // All syscall stubs are identical for a Windows version
+                if (padding == 0x0) {
+                    padding = SPT_DetectPadding(Entries[ssn].Address);
                 }
+
+                Entries[ssn].SyscallAddress = SPT_RVA2VA(PVOID, Entries[ssn].Address, padding);
 
                 // Save total number of system calls found.
                 if (ssn > SPT_SyscallList.Count) {
