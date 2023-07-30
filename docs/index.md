@@ -19,6 +19,7 @@
 [![Code Quality](https://www.codefactor.io/repository/github/x42en/sysplant/badge)](https://www.codefactor.io/repository/github/x42en/sysplant)
 [![Code Coverage](https://codecov.io/gh/x42en/sysplant/branch/main/graph/badge.svg)](https://codecov.io/gh/x42en/sysplant)
 [![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
+[![Documentation Status](https://readthedocs.org/projects/sysplant/badge/?version=latest)](https://sysplant.readthedocs.io/en/latest/?badge=latest)
 
 
 SysPlant is a python generation tool of the currently known syscall hooking methods. It currently supports following gates:
