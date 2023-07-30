@@ -65,7 +65,7 @@ class TemplateManager(AbstractFactory):
             self.__coder = CGenerator()
 
         try:
-            # Alaways load prototypes & typedefinitions
+            # Always load prototypes & type definitions
             self.__load_prototypes()
         except Exception as err:
             raise SystemError(f"Unable to load prototypes: {err}")
