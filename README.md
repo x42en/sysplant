@@ -45,14 +45,14 @@ SysPlant has been developped for Linux users, some stuff might be broken within 
 
 ## What is `iterator` option ?
 Sysplant is based on existing mechanisms for syscall number and addresses retrieval. I do not claim any of their discovery, I just harmonize all this methods in a single tool to be able to generate them easily using templates. These mechanisms are called `iterator`, if you look at the code you'll probably understand why :wink:  
-
+If you want to go further in the explanations of *what is a syscall ?* you should check [@Alice Climent blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
 
 ## What is `method` option ?
 One your `iterator` has been choosen you can then specify a `method` option based on the existing way to call syscalls. All the iterator are supported which let you select whatever you want as a final syscall stub.
 
-  1. **Direct:** the syscall is made directly in the stubs. You then only need the syscall number but AV/EDR might be see you
-  2. **Indirect:** the Sysplant stub jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
-  3. **Random:** the Sysplant stub jump to a random syscall instruction of Ntdll stub. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
+  1. **Direct:** the syscall is made directly in the Sysplant ASM call. You only need the syscall number but AV/EDR might see you...
+  2. **Indirect:** the Sysplant ASM call jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
+  3. **Random:** the Sysplant ASM call jump to a random syscall instruction of Ntdll stubs. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
 
 
 ## Documentation
