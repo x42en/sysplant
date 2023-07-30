@@ -3,11 +3,18 @@ proc SPT_GetRandomSyscallAddress(hash: DWORD): ULONG_PTR =
     SPT_PopulateSyscalls()
     
     let entries = toSeq(ssdt.values)
-    # Pickup random non-hooked syscall to JUMP to
-    var entry: Syscall = entries.sample()
     
-    # Avoid random bad luck...
-    while entry.ssn == ssdt[hash].ssn:
+    var entry: Syscall
+    while true:
+        # Pickup random non-hooked syscall to JUMP to
         entry = entries.sample()
+        # Avoid random bad luck...
+        if entry.ssn == ssdt[hash].ssn:
+            continue
+        # Do not choose hooked functions
+        if entry.syscallAddress == entry.address:
+            continue
+        # Otherwise it's all good
+        break
 
     return cast[ULONG_PTR](entry.syscallAddress)
