@@ -27,7 +27,7 @@ typedef struct{
     uint32_t buffer[4];   // Current accumulation of hash
     uint8_t input[64];    // Input to be used in the next step
     uint8_t digest[16];   // Result of algorithm
-}MD5Context;
+}SPT_HashContext;
 
 // Typedefs are prefixed to avoid pollution.
 typedef struct _SPT_SYSCALL_ENTRY
@@ -113,10 +113,10 @@ uint32_t rotateLeft(uint32_t x, uint32_t n){
     return (x << n) | (x >> (32 - n));
 }
 
-void md5Init(MD5Context *ctx);
-void md5Update(MD5Context *ctx, uint8_t *input, size_t input_len);
-void md5Finalize(MD5Context *ctx);
-void md5Step(uint32_t *buffer, uint32_t *input);
+void SPT_HashInit(SPT_HashContext *ctx);
+void SPT_HashUpdate(SPT_HashContext *ctx, uint8_t *input, size_t input_len);
+void SPT_HashFinalize(SPT_HashContext *ctx);
+void SPT_HashStep(uint32_t *buffer, uint32_t *input);
 DWORD SPT_HashSyscallName(PCSTR FunctionName);
 EXTERN_C DWORD SPT_GetSyscallNumber(DWORD FunctionHash);
 
@@ -133,7 +133,7 @@ EXTERN_C DWORD SPT_GetSyscallNumber(DWORD FunctionHash);
 ##__TYPE_DEFINITIONS__##
 #endif
 
-MD5Context ctx;
+SPT_HashContext ctx;
 SPT_SYSCALL_LIST SPT_SyscallList;
 
 /*
@@ -142,7 +142,7 @@ SPT_SYSCALL_LIST SPT_SyscallList;
 /*
  * Initialize a context
  */
-void md5Init(MD5Context *ctx){
+void SPT_HashInit(SPT_HashContext *ctx){
     ctx->size = (uint64_t)0;
 
     ctx->buffer[0] = (uint32_t)A;
@@ -154,10 +154,10 @@ void md5Init(MD5Context *ctx){
 /*
  * Add some amount of input to the context
  *
- * If the input fills out a block of 512 bits, apply the algorithm (md5Step)
+ * If the input fills out a block of 512 bits, apply the algorithm (SPT_HashStep)
  * and save the result in the buffer. Also updates the overall size.
  */
-void md5Update(MD5Context *ctx, uint8_t *input_buffer, size_t input_len){
+void SPT_HashUpdate(SPT_HashContext *ctx, uint8_t *input_buffer, size_t input_len){
     uint32_t input[16];
     unsigned int offset = ctx->size % 64;
     ctx->size += (uint64_t)input_len;
@@ -172,7 +172,7 @@ void md5Update(MD5Context *ctx, uint8_t *input_buffer, size_t input_len){
                            (uint32_t)(ctx->input[(j * 4) + 1]) <<  8 |
                            (uint32_t)(ctx->input[(j * 4)]);
             }
-            md5Step(ctx->buffer, input);
+            SPT_HashStep(ctx->buffer, input);
             offset = 0;
         }
     }
@@ -182,13 +182,13 @@ void md5Update(MD5Context *ctx, uint8_t *input_buffer, size_t input_len){
  * Pad the current input to get to 448 bytes, append the size in bits to the very end,
  * and save the result of the final iteration into digest.
  */
-void md5Finalize(MD5Context *ctx){
+void SPT_HashFinalize(SPT_HashContext *ctx){
     uint32_t input[16];
     unsigned int offset = ctx->size % 64;
     unsigned int padding_length = offset < 56 ? 56 - offset : (56 + 64) - offset;
 
     // Fill in the padding and undo the changes to size that resulted from the update
-    md5Update(ctx, PADDING, padding_length);
+    SPT_HashUpdate(ctx, PADDING, padding_length);
     ctx->size -= (uint64_t)padding_length;
 
     // Do a final update (internal to this function)
@@ -202,7 +202,7 @@ void md5Finalize(MD5Context *ctx){
     input[14] = (uint32_t)(ctx->size * 8);
     input[15] = (uint32_t)((ctx->size * 8) >> 32);
 
-    md5Step(ctx->buffer, input);
+    SPT_HashStep(ctx->buffer, input);
 
     // Move the result into digest (convert from little-endian)
     for(unsigned int i = 0; i < 4; ++i){
@@ -216,7 +216,7 @@ void md5Finalize(MD5Context *ctx){
 /*
  * Step on 512 bits of input with the main MD5 algorithm.
  */
-void md5Step(uint32_t *buffer, uint32_t *input){
+void SPT_HashStep(uint32_t *buffer, uint32_t *input){
     uint32_t AA = buffer[0];
     uint32_t BB = buffer[1];
     uint32_t CC = buffer[2];
@@ -268,9 +268,9 @@ DWORD SPT_HashSyscallName(PCSTR name)
 
     sprintf(string_to_hash, "%u%s", SPT_SEED, &name[2]);
 
-    md5Init(&ctx);
-    md5Update(&ctx, (uint8_t *)string_to_hash, strlen(string_to_hash));
-    md5Finalize(&ctx);
+    SPT_HashInit(&ctx);
+    SPT_HashUpdate(&ctx, (uint8_t *)string_to_hash, strlen(string_to_hash));
+    SPT_HashFinalize(&ctx);
 
     memcpy(md5_hash, ctx.digest, 16);
 
