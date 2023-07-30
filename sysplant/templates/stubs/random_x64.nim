@@ -1,15 +1,16 @@
 proc SPT_Syscall {.asmNoStackFrame.} = 
     asm """
         pop rax
-        pop rax
+        pop r15
         mov [rsp +8], rcx
         mov [rsp+16], rdx
         mov [rsp+24], r8
         mov [rsp+32], r9
         sub rsp, 0x28
-        mov rcx, rax
+        mov rcx, r15
         ##__DEBUG_INT__##
         call `SPT_GetSyscallNumber`
+        mov rcx, r15
         mov r15, rax
         call `SPT_GetRandomSyscallAddress`
         xchg r15, rax
