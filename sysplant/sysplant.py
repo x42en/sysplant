@@ -68,7 +68,7 @@ class Sysplant:
         return results
 
     def generate(
-        self, iterator: str, resolver: str, stub: str, syscalls: Union[str, list]
+        self, iterator: str, method: str, syscalls: Union[str, list]
     ) -> str:
         """
         Public method defining the generation algorithm. This method does not touch any code directly.
@@ -77,8 +77,7 @@ class Sysplant:
 
         Args:
             iterator (str): Iterator name to use (hell, halo, tartarus, freshy, syswhispers, canterlot)
-            resolver (str): Resolver name to use (basic, random)
-            stub (str): Stub type name to use (direct, indirect)
+            method (str): Stub type to use (direct, indirect, random)
             syscalls (Union[str, list]): NtFunctions list names to hook, or preset name (all|common|donut)
 
         Raises:
@@ -104,13 +103,9 @@ class Sysplant:
         self.logger.info(f"\t. Selected syscall iterator: {iterator}", stripped=True)
         self.__engine.set_iterator(iterator)
 
-        # Set resolver
-        self.logger.info(f"\t. Selected syscall resolver: {resolver}", stripped=True)
-        self.__engine.set_resolver(resolver)
-
-        # Generate caller
-        self.logger.info(f"\t. Selected syscall caller stub: {stub}", stripped=True)
-        self.__engine.set_caller(stub, resolver)
+        # Generate stub call method
+        self.logger.info(f"\t. Selected syscall caller stub: {method}", stripped=True)
+        self.__engine.set_method(method)
 
         # Generate stubs
         if syscalls == "all":
@@ -167,9 +162,7 @@ class Sysplant:
 
         # Write file
         clean_path = (
-            output_path
-            if output_path.endswith(f".{ext}")
-            else f"{output_path}.{ext}"
+            output_path if output_path.endswith(f".{ext}") else f"{output_path}.{ext}"
         )
         with open(clean_path, "w") as o:
             o.write(str(self.__engine))
