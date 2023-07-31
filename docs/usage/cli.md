@@ -9,7 +9,6 @@ Install the project as you would do for any GitHub project.
 ```sh
 git clone https://github.com/x42en/sysplant && cd sysplant
 poetry shell
-poetry install
 ./main.py -h
 ```
 
