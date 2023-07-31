@@ -13,25 +13,27 @@ poetry add sysplant
 
 ### Usage
 ```python
-from sysplant import Sysplant
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
 
-if __name__ == "__main__":
-    # Initialize the class
-    bot = Sysplant(
-        arch="x64",
-        syscall="syscall",
-        language="nim"
-    )
-    # Generate code
-    bot.generate(
-        iterator="canterlot",
-        method="random",
-        syscalls="common"
-    )
-    # Optionally randomize internal names
-    bot.scramble()
-    # Generate file
-    bot.output("/tmp/syscall")
+from sysplant import sysplant
+
+# Initialize the class
+bot = sysplant.Sysplant(
+    arch="x64",
+    syscall="syscall",
+    language="nim"
+)
+# Generate code
+bot.generate(
+    iterator="canterlot",
+    method="random",
+    syscalls="common"
+)
+# Optionally randomize internal names
+bot.scramble()
+# Generate file
+bot.output("/tmp/syscall")
 ```
 
 ### Documentation

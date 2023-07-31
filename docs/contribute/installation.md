@@ -30,3 +30,20 @@ cd /path/to/project
 poetry shell
 poetry install
 ```
+
+## Test publication
+  - Add repository to poetry config
+```sh
+poetry config repositories.test-pypi https://test.pypi.org/legacy/
+```
+
+  - Get token from https://test.pypi.org/manage/account/token/
+  - store token
+```sh
+poetry config pypi-token.test-pypi  pypi-YYYYYYYY
+```
+
+  - Each time you need to publish
+```sh
+poetry publish -r test-pypi
+```
