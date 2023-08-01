@@ -22,7 +22,7 @@
 [![Documentation Status](https://readthedocs.org/projects/sysplant/badge/?version=latest)](https://sysplant.readthedocs.io/en/latest/?badge=latest)
 
 
-SysPlant is a python generation tool of the currently known syscall hooking methods. It currently supports following gates:
+SysPlant is a python generation tool of the currently known syscall hooking methods. It currently supports following gates (aka: iterators):
   - [Hell's Gate](https://github.com/am0nsec/HellsGate) : Lookup syscall by first opcodes
   - [Halos's Gate](https://blog.sektor7.net/#!res/2021/halosgate.md) : Lookup syscall by first opcodes and search nearby if first instruction is a JMP
   - [Tartarus' Gate](https://github.com/trickster0/TartarusGate) : Lookup syscall by first opcodes and search nearby if first or third instruction is a JMP
@@ -30,7 +30,7 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
   - [SysWhispers2](https://github.com/jthuraisamy/SysWhispers2) : Lookup syscall by name (start with Zw), sort addresses to retrieve syscall number
   - [SysWhispers3](https://github.com/klezVirus/SysWhispers3) : SysWhispers2 style but introduce direct/indirect/random jump with static offset
   - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
-  - **Custom** Allows you to choose a generation method (aka: iterator) and a syscall stub (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
+  - **Custom** Allows you to choose an iterator and a syscall stub method (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
 
 > :warning: **DISCLAIMER**
 > Please only use this tool on systems you have permission to access.
@@ -54,6 +54,8 @@ One your `iterator` has been choosen you can then specify a `method` option base
   2. **Indirect:** the Sysplant ASM call jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
   3. **Random:** the Sysplant ASM call jump to a random syscall instruction of Ntdll stubs. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
 
+
+[![Sysplant Stubs](http://sysplant.readthedocs.io/en/main/assets/sysplant_stubs.png)](http://sysplant.readthedocs.io/en/main/assets/sysplant_stubs.png)
 
 ## Documentation
 I've tried to keep an up to date documentation, so please **[READ THE DOC](http://sysplant.readthedocs.io/en/main/)**. You will find there many information about the tool's usages and a complete description of the classes and methods.  
