@@ -32,9 +32,9 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
     - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
     - **Custom** Allows you to choose an iterator and a syscall stub method (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
 
-> :warning: **DISCLAIMER**
-> Please only use this tool on systems you have permission to access.
-> Usage is restricted to Pentesting or Education only.
+> :warning: **DISCLAIMER**  
+> Please only use this tool on systems you have permission to access.  
+> Usage is restricted to Pentesting or Education only.  
 > All credits are based on my own research, please feel free to claim any method if I made mistakes...
 
 ---
@@ -48,7 +48,7 @@ Sysplant is based on existing mechanisms for syscall number and addresses retrie
 If you want to go further in the explanations of *what is a syscall ?* you should check [@Alice Climent blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
 
 ## What is `method` option ?
-One your `iterator` has been choosen you can then specify a `method` option based on the existing way to call syscalls. All the iterator are supported which let you select whatever you want as a final syscall stub.
+Once your `iterator` has been choosen you can then specify a `method` option based on the existing way to call syscalls. All the iterator are supported which let you select whatever you want as a final syscall stub.
 
   1. **Direct:** the syscall is made directly in the Sysplant ASM call. You only need the syscall number but AV/EDR might see you...
   2. **Indirect:** the Sysplant ASM call jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
