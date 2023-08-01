@@ -32,9 +32,9 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
   - **Canterlot's Gate ! :unicorn: :rainbow:** *(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name* : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
   - **Custom** Allows you to choose an iterator and a syscall stub method (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
 
-> :warning: **DISCLAIMER**
-> Please only use this tool on systems you have permission to access.
-> Usage is restricted to Pentesting or Education only.
+> :warning: **DISCLAIMER**  
+> Please only use this tool on systems you have permission to access.  
+> Usage is restricted to Pentesting or Education only.  
 > All credits are based on my own research, please feel free to claim any method if I made mistakes...
 
 ---
