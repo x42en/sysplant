@@ -18,13 +18,13 @@ Tools to generate your doc are strongly advised except if you like to do this ma
 - mkdocs-awesome-pages-plugin in order to have a beautiful theme :wink:
 
 ## Code Style
-This project use [BLACK code rules](/contribute/code_rules) as code style, please respect this.
+This project use [BLACK code rules](https://sysplant.readthedocs.io/en/main/contribute/code_rules/) as code style, please respect this.
 
 ## Adapt code exceptions
 If you are using vscode along with poetry you can find inside `pyproject.toml` some exclusion on Black style code. If you need to add some extras ones [here](http://www.pydocstyle.org/en/6.2.2/error_codes.html) is the Error codes.
 
 ## Install project
-Once your [prerequises](contribute/prerequise) are met, you should then launch poetry and install dependencies
+Once your [prerequises](https://sysplant.readthedocs.io/en/main/contribute/prerequise/) are met, you should then launch poetry and install dependencies
 ```bash
 cd /path/to/project
 poetry shell
