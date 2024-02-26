@@ -1,0 +1,1215 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/x42en/sysplant/usage/cli/">
+      
+      
+        <link rel="prev" href="../../install/uninstall/">
+      
+      
+        <link rel="next" href="../lib/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Cli - SysPlant</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-sysplant-as-a-cli-tool" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SysPlant" class="md-header__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SysPlant
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cli
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SysPlant" class="md-nav__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SysPlant
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Contribute
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Contribute" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Contribute
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/code_rules/" class="md-nav__link">
+        The _Black_ code style
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/poetry/" class="md-nav__link">
+        Poetry cheat-sheet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/prerequise/" class="md-nav__link">
+        Prerequise
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/tests/" class="md-nav__link">
+        Tests
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/abstracts.abstractFactory/" class="md-nav__link">
+        abstracts.abstractFactory
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/abstracts.abstractGenerator/" class="md-nav__link">
+        abstracts.abstractGenerator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/abstracts/" class="md-nav__link">
+        Abstracts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/constants/" class="md-nav__link">
+        Constants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/constants.sysplantConstants/" class="md-nav__link">
+        constants.sysplantConstants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/data/" class="md-nav__link">
+        Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/managers.cGenerator/" class="md-nav__link">
+        managers.cGenerator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/managers/" class="md-nav__link">
+        Managers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/managers.nimGenerator/" class="md-nav__link">
+        managers.nimGenerator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/managers.templateManager/" class="md-nav__link">
+        managers.templateManager
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/sysplant/" class="md-nav__link">
+        Sysplant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/templates.iterators/" class="md-nav__link">
+        Templates.iterators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/templates.resolvers/" class="md-nav__link">
+        Templates.resolvers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/templates.stubs/" class="md-nav__link">
+        Templates.stubs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/utils.loggerSingleton/" class="md-nav__link">
+        utils.loggerSingleton
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/utils.singleton/" class="md-nav__link">
+        Utils.singleton
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" tabindex="0" aria-expanded="false">
+          Install
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Install
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/prerequise/" class="md-nav__link">
+        Prerequise
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/uninstall/" class="md-nav__link">
+        Uninstall
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" tabindex="0" aria-expanded="true">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Cli
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Cli
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-sysplant-as-a-cli-tool" class="md-nav__link">
+    Using Sysplant as a CLI tool
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Sysplant as a CLI tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-action" class="md-nav__link">
+    List action
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-action" class="md-nav__link">
+    Generate action
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hells-gate-generation" class="md-nav__link">
+    Hell's Gate generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#halos-gate-generation" class="md-nav__link">
+    Halo's Gate generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tartaruss-gate-generation" class="md-nav__link">
+    Tartarus's Gate generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freshycall-generation" class="md-nav__link">
+    FreshyCall generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#syswhispers2-like-generation" class="md-nav__link">
+    Syswhispers2 like generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#syswhispers3-like-generation" class="md-nav__link">
+    Syswhispers3 like generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#canterlots-gate-generation" class="md-nav__link">
+    Canterlot's Gate generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-generation" class="md-nav__link">
+    Custom generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-c-code-using-canterlots-gate-for-donut-functions" class="md-nav__link">
+    Generate C Code using Canterlot's Gate for Donut functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-world-injection" class="md-nav__link">
+    Real world Injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lib/" class="md-nav__link">
+        Lib
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-sysplant-as-a-cli-tool" class="md-nav__link">
+    Using Sysplant as a CLI tool
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Sysplant as a CLI tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-action" class="md-nav__link">
+    List action
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-action" class="md-nav__link">
+    Generate action
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hells-gate-generation" class="md-nav__link">
+    Hell's Gate generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#halos-gate-generation" class="md-nav__link">
+    Halo's Gate generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tartaruss-gate-generation" class="md-nav__link">
+    Tartarus's Gate generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freshycall-generation" class="md-nav__link">
+    FreshyCall generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#syswhispers2-like-generation" class="md-nav__link">
+    Syswhispers2 like generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#syswhispers3-like-generation" class="md-nav__link">
+    Syswhispers3 like generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#canterlots-gate-generation" class="md-nav__link">
+    Canterlot's Gate generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-generation" class="md-nav__link">
+    Custom generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-c-code-using-canterlots-gate-for-donut-functions" class="md-nav__link">
+    Generate C Code using Canterlot's Gate for Donut functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-world-injection" class="md-nav__link">
+    Real world Injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Cli</h1>
+
+<h2 id="using-sysplant-as-a-cli-tool">Using Sysplant as a CLI tool</h2>
+<p>This project can be used as a simple command line tool.</p>
+<h3 id="installation">Installation</h3>
+<blockquote>
+<p><em>Requirements: Pyton 3.8+</em></p>
+</blockquote>
+<p>This is a python project that will generate NIM/C/etc... source code (bit weird hu ?! :grin:). So you can use it inside your python project as an external module or directly on your device as a tool.<br />
+Install the project as you would do for any GitHub project.</p>
+<pre><code class="language-sh">git clone https://github.com/x42en/sysplant &amp;&amp; cd sysplant
+poetry shell
+./main.py -h
+</code></pre>
+<h3 id="usage">Usage</h3>
+<p>This tool comes with various options that should be self-explanatory using the standard <code>-h</code> flag</p>
+<pre><code class="language-bash">$ ./main.py -h
+usage: main.py [-h] [--debug | --verbose | --quiet] {list,generate} ...
+
+..:: SysPlant - Your Syscall Factory ::..
+
+positional arguments:
+  {list,generate}
+
+optional arguments:
+  -h, --help       show this help message and exit
+
+Output options:
+  --debug          Display all DEBUG messages upon execution
+  --verbose        Display all INFO messages upon execution
+  --quiet          Remove all messages upon execution
+</code></pre>
+<p>By now only two actions are supported <code>list</code> (that will parse file or directory to find NtFunction usage) and <code>generate</code> that will generate a syscall hooking file to import into your project</p>
+<h4 id="list-action">List action</h4>
+<p>In order to use the list action you could check the associated help <code>./main.py list -h</code></p>
+<pre><code class="language-bash">$ ./main.py list -h
+usage: main.py list [-h] path
+
+positional arguments:
+  path        Path to search for NtFunction, could be a file or a directory
+
+optional arguments:
+  -h, --help  show this help message and exit
+</code></pre>
+<h4 id="generate-action">Generate action</h4>
+<p>In order to use the generate action you could check the associated help <code>./main.py generate -h</code></p>
+<pre><code class="language-bash">$ ./main.py generate -h
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom} ...
+
+positional arguments:
+  {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -x, --scramble        Randomize internal function names to evade static analysis
+  -o OUTPUT, --output OUTPUT
+                        Output path for NIM generated file
+
+Architecture options:
+  -x86                  Set mode to 32bits
+  -wow                  Set mode to WoW64 (execution of 32bits on 64bits)
+  -x64                  Set mode to 64bits (Default True)
+
+Language options:
+  -nim                  Generate NIM code (Default: true)
+  -c                    Generate C code
+
+Syscall options:
+  -p {all,donut,common}, --preset {all,donut,common}
+                        Preset functions to generate (Default: common)
+  -f FUNCTIONS, --functions FUNCTIONS
+                        Comma-separated functions
+</code></pre>
+<h3 id="examples">Examples</h3>
+<p>Here are some usage examples that will generate common NtFunctions only.<br />
+This tool is not restricted to them, please <strong><a href="https://x42en.github.io/sysplant/">READ THE DOC</a></strong></p>
+<h4 id="hells-gate-generation">Hell's Gate generation</h4>
+<pre><code class="language-bash">$ ./main.py generate -o syscall hell
+</code></pre>
+<h4 id="halos-gate-generation">Halo's Gate generation</h4>
+<pre><code class="language-bash">$ ./main.py generate -o syscall halo
+</code></pre>
+<h4 id="tartaruss-gate-generation">Tartarus's Gate generation</h4>
+<pre><code class="language-bash">$ ./main.py generate -o syscall tartarus
+</code></pre>
+<h4 id="freshycall-generation">FreshyCall generation</h4>
+<pre><code class="language-bash">$ ./main.py generate -o syscall freshy
+</code></pre>
+<h4 id="syswhispers2-like-generation">Syswhispers2 like generation</h4>
+<pre><code class="language-bash">$ ./main.py generate -o syscall syswhispers
+</code></pre>
+<h4 id="syswhispers3-like-generation">Syswhispers3 like generation</h4>
+<pre><code class="language-bash">$ ./main.py generate -o syscall syswhispers3
+</code></pre>
+<h4 id="canterlots-gate-generation">Canterlot's Gate generation</h4>
+<pre><code class="language-bash">$ ./main.py generate -o syscall canterlot
+</code></pre>
+<h4 id="custom-generation">Custom generation</h4>
+<pre><code class="language-bash">$ ./main.py generate -o syscall custom -i canterlot -m direct
+</code></pre>
+<h4 id="generate-c-code-using-canterlots-gate-for-donut-functions">Generate C Code using Canterlot's Gate for <a href="https://github.com/TheWover/donut">Donut</a> functions</h4>
+<pre><code class="language-bash">$ ./main.py generate -c -o syscall -p donut canterlot
+</code></pre>
+<h4 id="real-world-injection">Real world Injection</h4>
+<p>A simple example (launching calc.exe) is accessible using <code>inject.nim</code>.<br />
+  1. Be sure to install <a href="https://github.com/khchen/winim">winim</a> library first: <code>nimble install winim</code>
+  2. Generate the <code>syscall.nim</code> file with <code>./main.py -o example/syscall.nim canterlot</code>
+  3. Compile the injection template file with <code>nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=app.exe example/inject.nim</code> on Linux (be sure to have mingw installed)
+  4. Copy the <code>app.exe</code> generated on your Windows device.</p>
+<h3 id="documentation">Documentation</h3>
+<p>The API documentation and associated options is available <a href="https://x42en.github.io/sysplant/documentation/">here</a></p>
+<p>Happy Hacking :beach: !</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../../search/main.js"></script>
+      
+    
+  </body>
+</html>
