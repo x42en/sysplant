@@ -79,6 +79,7 @@ Some PR & reviews are more than welcome :tada: !
   - [x] Setup tests
   - [ ] Add x86 support
   - [ ] Add WoW64 support
+  - [x] Setup NIM templates
   - [x] Setup C templates
   - [ ] Setup Go? / CPP? / C#? / Rust? / Whatever templates
 
