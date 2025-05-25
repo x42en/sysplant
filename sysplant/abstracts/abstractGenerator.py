@@ -33,7 +33,7 @@ class AbstractGenerator(ABC):
             self.__load_definitions()
         except Exception as err:
             raise SystemError(f"Unable to load mandatory data in C Generator: {err}")
-    
+
     def __load_template(self, pkg_module: str, name: str) -> str:
         """Private method used to retrieve specific data file from package module
 
@@ -55,9 +55,9 @@ class AbstractGenerator(ABC):
         if not name.replace(".", "", 1).isalpha():
             raise ValueError("Invalid template name")
 
-        # Adapt module based on what to load
-        raw = pkg_resources.open_text(pkg_module, name)
-        return raw.read()
+        # Use the new files() API instead of open_text
+        with pkg_resources.files(pkg_module).joinpath(name).open("r") as f:
+            return f.read()
 
     def __load_definitions(self) -> None:
         """
@@ -66,7 +66,7 @@ class AbstractGenerator(ABC):
         # Load supported functions definitions
         data = self.__load_template(pkg_data, "definitions.json")
         self.__definitions = json.loads(data)
-    
+
     def set_extra_definitions(self, name: str) -> None:
         self.__extra_definitions = self.__load_template(pkg_data, name)
 

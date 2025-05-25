@@ -59,20 +59,26 @@ class TestAbstract(unittest.TestCase):
         )
 
         # Ensure freshy iterator is present
-        iterator = pkg_resources.open_text(pkg_iterators, "syswhispers.nim")
-        self.assertIn(iterator.read(), result)
+        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.nim").open(
+            "r"
+        ) as iterator:
+            self.assertIn(iterator.read(), result)
 
         # Ensure resolver is present
-        resolver = pkg_resources.open_text(pkg_resolvers, "number.nim")
-        self.assertIn(resolver.read(), result)
+        with pkg_resources.files(pkg_resolvers).joinpath("number.nim").open(
+            "r"
+        ) as resolver:
+            self.assertIn(resolver.read(), result)
 
         # Ensure stub is present
-        stub = pkg_resources.open_text(pkg_stubs, "direct_x64.nim")
-        # Correct dynamic entries
-        clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
-        clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
+        with pkg_resources.files(pkg_stubs).joinpath("direct_x64.nim").open(
+            "r"
+        ) as stub:
+            # Correct dynamic entries
+            clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
+            clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
 
-        self.assertIn(clean_stub, result)
+            self.assertIn(clean_stub, result)
 
         # Ensure generated content is valid
 
@@ -83,20 +89,26 @@ class TestAbstract(unittest.TestCase):
         )
 
         # Ensure freshy iterator is present
-        iterator = pkg_resources.open_text(pkg_iterators, "syswhispers.nim")
-        self.assertIn(iterator.read(), result)
+        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.nim").open(
+            "r"
+        ) as iterator:
+            self.assertIn(iterator.read(), result)
 
         # Ensure resolver is present
-        resolver = pkg_resources.open_text(pkg_resolvers, "basic.nim")
-        self.assertIn(resolver.read(), result)
+        with pkg_resources.files(pkg_resolvers).joinpath("basic.nim").open(
+            "r"
+        ) as resolver:
+            self.assertIn(resolver.read(), result)
 
         # Ensure stub is present
-        stub = pkg_resources.open_text(pkg_stubs, "indirect_x64.nim")
-        # Correct dynamic entries
-        clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
-        clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
+        with pkg_resources.files(pkg_stubs).joinpath("indirect_x64.nim").open(
+            "r"
+        ) as stub:
+            # Correct dynamic entries
+            clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
+            clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
 
-        self.assertIn(clean_stub, result)
+            self.assertIn(clean_stub, result)
 
         # Ensure generated content is valid
 
@@ -107,22 +119,31 @@ class TestAbstract(unittest.TestCase):
         )
 
         # Ensure freshy iterator is present
-        iterator = pkg_resources.open_text(pkg_iterators, "syswhispers.nim")
-        self.assertIn(iterator.read(), result)
+        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.nim").open(
+            "r"
+        ) as iterator:
+            self.assertIn(iterator.read(), result)
 
         # Ensure resolver is present
-        resolver = pkg_resources.open_text(pkg_resolvers, "number.nim")
-        self.assertIn(resolver.read(), result)
-        resolver = pkg_resources.open_text(pkg_resolvers, "random.nim")
-        self.assertIn(resolver.read(), result)
+        with pkg_resources.files(pkg_resolvers).joinpath("number.nim").open(
+            "r"
+        ) as resolver:
+            self.assertIn(resolver.read(), result)
+
+        with pkg_resources.files(pkg_resolvers).joinpath("random.nim").open(
+            "r"
+        ) as resolver:
+            self.assertIn(resolver.read(), result)
 
         # Ensure stub is present
-        stub = pkg_resources.open_text(pkg_stubs, "random_x64.nim")
-        # Correct dynamic entries
-        clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
-        clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
+        with pkg_resources.files(pkg_stubs).joinpath("random_x64.nim").open(
+            "r"
+        ) as stub:
+            # Correct dynamic entries
+            clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
+            clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
 
-        self.assertIn(clean_stub, result)
+            self.assertIn(clean_stub, result)
 
         # Ensure generated content is valid
 
