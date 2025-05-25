@@ -19,8 +19,8 @@ class TestAbstract(unittest.TestCase):
     def test_01_str(self):
         klass = TemplateManager(language="nim")
 
-        raw = pkg_resources.open_text(pkg_templates, "base.nim")
-        self.assertEqual(str(klass), raw.read())
+        with pkg_resources.files(pkg_templates).joinpath("base.nim").open("r") as file:
+            self.assertEqual(str(klass), file.read())
 
     def test_02_load_stub(self):
         klass = TemplateManager(language="nim")

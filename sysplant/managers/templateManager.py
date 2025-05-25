@@ -103,9 +103,9 @@ class TemplateManager(AbstractFactory):
         if not name.replace(".", "", 1).replace(f"_{self.__arch}", "", 1).isalnum():
             raise ValueError("Invalid template name")
 
-        # Adapt module based on what to load
-        raw = pkg_resources.open_text(pkg_module, name)
-        return raw.read()
+        # Use the new files() API instead of open_text
+        with pkg_resources.files(pkg_module).joinpath(name).open("r") as f:
+            return f.read()
 
     def __load_prototypes(self) -> None:
         """
