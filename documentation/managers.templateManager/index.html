@@ -1,0 +1,1471 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/x42en/sysplant/documentation/managers.templateManager/">
+      
+      
+        <link rel="prev" href="../managers.nimGenerator/">
+      
+      
+        <link rel="next" href="../sysplant/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>managers.templateManager - SysPlant</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bcfcd587.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#module-managerstemplatemanager" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SysPlant" class="md-header__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SysPlant
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              managers.templateManager
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SysPlant" class="md-nav__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SysPlant
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Contribute
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Contribute
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/code_rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Black code style
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/poetry/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Poetry cheat-sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/prerequise/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prerequise
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../abstracts.abstractFactory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    abstracts.abstractFactory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../abstracts.abstractGenerator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    abstracts.abstractGenerator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../abstracts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abstracts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../constants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Constants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../constants.sysplantConstants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    constants.sysplantConstants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../managers.cGenerator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    managers.cGenerator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../managers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Managers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../managers.nimGenerator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    managers.nimGenerator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    managers.templateManager
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    managers.templateManager
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#class-templatemanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      class TemplateManager
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="class TemplateManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#method-__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      method __init__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-generate_stubs" class="md-nav__link">
+    <span class="md-ellipsis">
+      method generate_stubs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-list_common_syscalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      method list_common_syscalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-list_donut_syscalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      method list_donut_syscalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-list_supported_syscalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      method list_supported_syscalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-load_stub" class="md-nav__link">
+    <span class="md-ellipsis">
+      method load_stub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-scramble" class="md-nav__link">
+    <span class="md-ellipsis">
+      method scramble
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-set_debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      method set_debug
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-set_iterator" class="md-nav__link">
+    <span class="md-ellipsis">
+      method set_iterator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-set_method" class="md-nav__link">
+    <span class="md-ellipsis">
+      method set_method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-set_seed" class="md-nav__link">
+    <span class="md-ellipsis">
+      method set_seed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sysplant/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sysplant
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates.iterators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates.iterators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates.resolvers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates.resolvers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates.stubs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates.stubs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils.loggerSingleton/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    utils.loggerSingleton
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Utils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils.singleton/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Utils.singleton
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Install
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Install
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/prerequise/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prerequise
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/uninstall/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Uninstall
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cli/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cli
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/lib/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lib
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#class-templatemanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      class TemplateManager
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="class TemplateManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#method-__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      method __init__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-generate_stubs" class="md-nav__link">
+    <span class="md-ellipsis">
+      method generate_stubs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-list_common_syscalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      method list_common_syscalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-list_donut_syscalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      method list_donut_syscalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-list_supported_syscalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      method list_supported_syscalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-load_stub" class="md-nav__link">
+    <span class="md-ellipsis">
+      method load_stub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-scramble" class="md-nav__link">
+    <span class="md-ellipsis">
+      method scramble
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-set_debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      method set_debug
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-set_iterator" class="md-nav__link">
+    <span class="md-ellipsis">
+      method set_iterator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-set_method" class="md-nav__link">
+    <span class="md-ellipsis">
+      method set_method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-set_seed" class="md-nav__link">
+    <span class="md-ellipsis">
+      method set_seed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<!-- markdownlint-disable -->
+
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h1 id="module-managerstemplatemanager"><kbd>module</kbd> <code>managers.templateManager</code></h1>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L18"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h2 id="class-templatemanager"><kbd>class</kbd> <code>TemplateManager</code></h2>
+<p>Main class responsible for template handling: tag replacement or erase with content generated by __coder bot </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>AbstractFactory</code></b> (<em>type</em>):  AbstractClass defining useful functions potentially reusable by other classes </li>
+</ul>
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L26"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-__init__"><kbd>method</kbd> <code>__init__</code></h3>
+<pre><code class="language-python">__init__(
+    arch: str = 'x64',
+    syscall: str = 'syscall',
+    language: str = 'nim'
+) → None
+</code></pre>
+<p>Init method. Will instanciate appropriate self.__coder var depending on the language selected responsible for code generation </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>arch</code></b> (str, optional):  Code architecture to generate. Defaults to "x64". </li>
+<li><b><code>syscall</code></b> (str, optional):  Syscall instruction to use. Defaults to "syscall". </li>
+<li><b><code>language</code></b> (str, optional):  Language type used by code generator. Defaults to "nim". </li>
+</ul>
+<p><strong>Raises:</strong></p>
+<ul>
+<li><b><code>NotImplementedError</code></b>:  Error raised when using unsupported architecture </li>
+<li><b><code>NotImplementedError</code></b>:  Error raised when using unsupported syscall instruction </li>
+<li><b><code>NotImplementedError</code></b>:  Error raised when using unsupported language </li>
+<li><b><code>SystemError</code></b>:  Error raised when unable to load protoypes.json </li>
+<li><b><code>SystemError</code></b>:  Error raised when unable to load base template for language specify </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L301"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-generate_stubs"><kbd>method</kbd> <code>generate_stubs</code></h3>
+<pre><code class="language-python">generate_stubs(names: list) → str
+</code></pre>
+<p>Public method used to generate stubs for all the NtFunctions to hook. Once generated a call is made to self.__generate_definitions() for automated type definitions. Generated code is then used to replace the SPT_STUBS tag in template. </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>names</code></b> (list):  List of NtFunctions to hook </li>
+</ul>
+<p><strong>Raises:</strong></p>
+<ul>
+<li><b><code>NotImplementedError</code></b>:  Error raised if NtFunction is not supported </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>str</code></b>:  Template content after modification </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L149"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-list_common_syscalls"><kbd>method</kbd> <code>list_common_syscalls</code></h3>
+<pre><code class="language-python">list_common_syscalls() → list
+</code></pre>
+<p>Public method used to retrieve most common functions names defined in prototypes.json </p>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>list</code></b>:  List of NtFunctions names </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L158"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-list_donut_syscalls"><kbd>method</kbd> <code>list_donut_syscalls</code></h3>
+<pre><code class="language-python">list_donut_syscalls() → list
+</code></pre>
+<p>Public method used to retrieve functions names defined in prototypes.json used by Donut project (stay tuned for HOMER project ... ;) ) </p>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>list</code></b>:  List of NtFunctions names </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L140"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-list_supported_syscalls"><kbd>method</kbd> <code>list_supported_syscalls</code></h3>
+<pre><code class="language-python">list_supported_syscalls() → list
+</code></pre>
+<p>Public method used to retrieve all supported functions names defined in prototypes.json </p>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>list</code></b>:  List of NtFunctions names </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L119"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-load_stub"><kbd>method</kbd> <code>load_stub</code></h3>
+<pre><code class="language-python">load_stub(name) → str
+</code></pre>
+<p>Public method used to load stub pattern file from package </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>name</code></b> (<em>type</em>):  Stub name to use </li>
+</ul>
+<p><strong>Raises:</strong></p>
+<ul>
+<li><b><code>SystemError</code></b>:  Error raised if filename does not exists </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>str</code></b>:  File content (text mode) </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L342"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-scramble"><kbd>method</kbd> <code>scramble</code></h3>
+<pre><code class="language-python">scramble() → str
+</code></pre>
+<p>Public method used to randomize fixed internal function names to avoid static analysis by EDR/AV. Note: The concept behind this method is to let another project randomize the NtFunctions names as Sysplant as no view of the code using it. </p>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>str</code></b>:  Template content after modification </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L167"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-set_debug"><kbd>method</kbd> <code>set_debug</code></h3>
+<pre><code class="language-python">set_debug() → str
+</code></pre>
+<p>Public method used to generate the language specific code of DEBUG flag definition. Is debug is not set it will erase the tag from template. The debug definition code is then used to replace the SPT_DEBUG tag in template. </p>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>str</code></b>:  Template content after modification </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L206"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-set_iterator"><kbd>method</kbd> <code>set_iterator</code></h3>
+<pre><code class="language-python">set_iterator(name: str) → str
+</code></pre>
+<p>Public method used to retrieve the language specific code of Syscall retrieval iterator. The selected iterator is then used to replace the SPT_ITERATOR tag in template. </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>name</code></b> (str):  Iterator name to use </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>str</code></b>:  Template content after modification </li>
+</ul>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L223"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-set_method"><kbd>method</kbd> <code>set_method</code></h3>
+<pre><code class="language-python">set_method(name: str) → str
+</code></pre>
+<hr />
+<p><a href="https://github.com/x42en/sysplant/blob/master/sysplant/managers/templateManager.py#L185"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-set_seed"><kbd>method</kbd> <code>set_seed</code></h3>
+<pre><code class="language-python">set_seed(seed: int = 0) → str
+</code></pre>
+<p>Public method used to generate the language specific code of SEED value definition. The seed parameter is optional and if omitted it will be automatically generated with a random value. The seed definition code is then used to replace the SPT_SEED tag in template. </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>seed</code></b> (int, optional):  Seed value. Defaults to 0. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>str</code></b>:  Template content after modification </li>
+</ul>
+<hr />
+<p><em>This file was automatically generated via <a href="https://github.com/ml-tooling/lazydocs">lazydocs</a>.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+        <script src="../../search/main.js"></script>
+      
+    
+  </body>
+</html>

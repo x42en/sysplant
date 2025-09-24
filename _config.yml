@@ -1,0 +1,3 @@
+plugins:
+  - jekyll-remote-theme
+remote_theme: carlosperate/jekyll-theme-rtd

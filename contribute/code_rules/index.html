@@ -1,0 +1,1905 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/x42en/sysplant/contribute/code_rules/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../installation/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>The Black code style - SysPlant</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bcfcd587.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-black-code-style" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SysPlant" class="md-header__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SysPlant
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Black code style
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SysPlant" class="md-nav__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SysPlant
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Contribute
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Contribute
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    The Black code style
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    The Black code style
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#code-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code style
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code style">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-black-wraps-lines" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Black wraps lines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line length
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Line length">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flake8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flake8
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empty-lines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Empty lines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trailing-commas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trailing commas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numeric-literals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Numeric literals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-breaks-binary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line breaks &amp; binary operators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Slices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parentheses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call chains
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typing-stub-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typing stub files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-endings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line endings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pragmatism" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pragmatism
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pragmatism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-magic-trailing-comma" class="md-nav__link">
+    <span class="md-ellipsis">
+      The magic trailing comma
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rstrings-and-rstrings" class="md-nav__link">
+    <span class="md-ellipsis">
+      r"strings" and R"strings"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ast-before-and-after-formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      AST before and after formatting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../poetry/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Poetry cheat-sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequise/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prerequise
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/abstracts.abstractFactory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    abstracts.abstractFactory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/abstracts.abstractGenerator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    abstracts.abstractGenerator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/abstracts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abstracts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/constants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Constants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/constants.sysplantConstants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    constants.sysplantConstants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/managers.cGenerator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    managers.cGenerator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/managers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Managers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/managers.nimGenerator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    managers.nimGenerator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/managers.templateManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    managers.templateManager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/sysplant/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sysplant
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/templates.iterators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates.iterators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/templates.resolvers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates.resolvers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/templates.stubs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates.stubs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/utils.loggerSingleton/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    utils.loggerSingleton
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/utils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Utils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/utils.singleton/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Utils.singleton
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Install
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Install
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/prerequise/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prerequise
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/uninstall/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Uninstall
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cli/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cli
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/lib/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lib
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#code-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code style
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code style">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-black-wraps-lines" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Black wraps lines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line length
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Line length">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flake8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flake8
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empty-lines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Empty lines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trailing-commas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trailing commas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numeric-literals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Numeric literals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-breaks-binary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line breaks &amp; binary operators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Slices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parentheses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call chains
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typing-stub-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typing stub files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-endings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line endings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pragmatism" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pragmatism
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pragmatism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-magic-trailing-comma" class="md-nav__link">
+    <span class="md-ellipsis">
+      The magic trailing comma
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rstrings-and-rstrings" class="md-nav__link">
+    <span class="md-ellipsis">
+      r"strings" and R"strings"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ast-before-and-after-formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      AST before and after formatting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="the-black-code-style">The <em>Black</em> code style</h1>
+<h2 id="code-style">Code style</h2>
+<p><em>Black</em> aims for consistency, generality, readability and reducing git diffs. Similar
+language constructs are formatted with similar rules. Style configuration options are
+deliberately limited and rarely added. Previous formatting is taken into account as
+little as possible, with rare exceptions like the magic trailing comma. The coding style
+used by <em>Black</em> can be viewed as a strict subset of PEP 8.</p>
+<p><em>Black</em> reformats entire files in place. It doesn't reformat lines that end with
+<code># fmt: skip</code> or blocks that start with <code># fmt: off</code> and end with <code># fmt: on</code>.
+<code># fmt: on/off</code> must be on the same level of indentation and in the same block, meaning
+no unindents beyond the initial indentation level between them. It also recognizes
+<a href="https://github.com/google/yapf">YAPF</a>'s block comments to the same effect, as a
+courtesy for straddling code.</p>
+<p>The rest of this document describes the current formatting style. If you're interested
+in trying out where the style is heading, see <a href="./future_style.md">future style</a> and try
+running <code>black --preview</code>.</p>
+<h3 id="how-black-wraps-lines">How <em>Black</em> wraps lines</h3>
+<p><em>Black</em> ignores previous formatting and applies uniform horizontal and vertical
+whitespace to your code. The rules for horizontal whitespace can be summarized as: do
+whatever makes <code>pycodestyle</code> happy.</p>
+<p>As for vertical whitespace, <em>Black</em> tries to render one full expression or simple
+statement per line. If this fits the allotted line length, great.</p>
+<pre><code class="language-py3"># in:
+
+j = [1,
+     2,
+     3
+]
+
+# out:
+
+j = [1, 2, 3]
+</code></pre>
+<p>If not, <em>Black</em> will look at the contents of the first outer matching brackets and put
+that in a separate indented line.</p>
+<pre><code class="language-py3"># in:
+
+ImportantClass.important_method(exc, limit, lookup_lines, capture_locals, extra_argument)
+
+# out:
+
+ImportantClass.important_method(
+    exc, limit, lookup_lines, capture_locals, extra_argument
+)
+</code></pre>
+<p>If that still doesn't fit the bill, it will decompose the internal expression further
+using the same rule, indenting matching brackets every time. If the contents of the
+matching brackets pair are comma-separated (like an argument list, or a dict literal,
+and so on) then <em>Black</em> will first try to keep them on the same line with the matching
+brackets. If that doesn't work, it will put all of them in separate lines.</p>
+<pre><code class="language-py3"># in:
+
+def very_important_function(template: str, *variables, file: os.PathLike, engine: str, header: bool = True, debug: bool = False):
+    &quot;&quot;&quot;Applies `variables` to the `template` and writes to `file`.&quot;&quot;&quot;
+    with open(file, 'w') as f:
+        ...
+
+# out:
+
+def very_important_function(
+    template: str,
+    *variables,
+    file: os.PathLike,
+    engine: str,
+    header: bool = True,
+    debug: bool = False,
+):
+    &quot;&quot;&quot;Applies `variables` to the `template` and writes to `file`.&quot;&quot;&quot;
+    with open(file, &quot;w&quot;) as f:
+        ...
+</code></pre>
+<p>If a data structure literal (tuple, list, set, dict) or a line of "from" imports cannot
+fit in the allotted length, it's always split into one element per line. This minimizes
+diffs as well as enables readers of code to find which commit introduced a particular
+entry. This also makes <em>Black</em> compatible with
+<a href="../guides/using_black_with_other_tools.md#isort">isort</a> with the ready-made <code>black</code>
+profile or manual configuration.</p>
+<p>You might have noticed that closing brackets are always dedented and that a trailing
+comma is always added. Such formatting produces smaller diffs; when you add or remove an
+element, it's always just one line. Also, having the closing bracket dedented provides a
+clear delimiter between two distinct sections of the code that otherwise share the same
+indentation level (like the arguments list and the docstring in the example above).</p>
+<p>(labels/why-no-backslashes)=</p>
+<p><em>Black</em> prefers parentheses over backslashes, and will remove backslashes if found.</p>
+<pre><code class="language-py3"># in:
+
+if some_short_rule1 \
+  and some_short_rule2:
+      ...
+
+# out:
+
+if some_short_rule1 and some_short_rule2:
+  ...
+
+
+# in:
+
+if some_long_rule1 \
+  and some_long_rule2:
+    ...
+
+# out:
+
+if (
+    some_long_rule1
+    and some_long_rule2
+):
+    ...
+
+</code></pre>
+<p>Backslashes and multiline strings are one of the two places in the Python grammar that
+break significant indentation. You never need backslashes, they are used to force the
+grammar to accept breaks that would otherwise be parse errors. That makes them confusing
+to look at and brittle to modify. This is why <em>Black</em> always gets rid of them.</p>
+<p>If you're reaching for backslashes, that's a clear signal that you can do better if you
+slightly refactor your code. I hope some of the examples above show you that there are
+many ways in which you can do it.</p>
+<p>(labels/line-length)=</p>
+<h3 id="line-length">Line length</h3>
+<p>You probably noticed the peculiar default line length. <em>Black</em> defaults to 88 characters
+per line, which happens to be 10% over 80. This number was found to produce
+significantly shorter files than sticking with 80 (the most popular), or even 79 (used
+by the standard library). In general,
+<a href="https://youtu.be/wf-BqAjZb8M?t=260">90-ish seems like the wise choice</a>.</p>
+<p>If you're paid by the line of code you write, you can pass <code>--line-length</code> with a lower
+number. <em>Black</em> will try to respect that. However, sometimes it won't be able to without
+breaking other rules. In those rare cases, auto-formatted code will exceed your allotted
+limit.</p>
+<p>You can also increase it, but remember that people with sight disabilities find it
+harder to work with line lengths exceeding 100 characters. It also adversely affects
+side-by-side diff review on typical screen resolutions. Long lines also make it harder
+to present code neatly in documentation or talk slides.</p>
+<h4 id="flake8">Flake8</h4>
+<p>If you use Flake8, you have a few options:</p>
+<ol>
+<li>Recommended is using <a href="https://github.com/PyCQA/flake8-bugbear">Bugbear</a> and enabling
+   its B950 check instead of using Flake8's E501, because it aligns with Black's 10%
+   rule. Install Bugbear and use the following config:</li>
+</ol>
+<p><code>ini
+   [flake8]
+   max-line-length = 80
+   ...
+   select = C,E,F,W,B,B950
+   extend-ignore = E203, E501</code></p>
+<p>The rationale for E950 is explained in
+   <a href="https://github.com/PyCQA/flake8-bugbear#opinionated-warnings">Bugbear's documentation</a>.</p>
+<ol>
+<li>For a minimally compatible config:</li>
+</ol>
+<p><code>ini
+   [flake8]
+   max-line-length = 88
+   extend-ignore = E203</code></p>
+<p>An explanation of why E203 is disabled can be found in the <a href="#slices">Slices section</a> of
+this page.</p>
+<h3 id="empty-lines">Empty lines</h3>
+<p><em>Black</em> avoids spurious vertical whitespace. This is in the spirit of PEP 8 which says
+that in-function vertical whitespace should only be used sparingly.</p>
+<p><em>Black</em> will allow single empty lines inside functions, and single and double empty
+lines on module level left by the original editors, except when they're within
+parenthesized expressions. Since such expressions are always reformatted to fit minimal
+space, this whitespace is lost. The other exception is that it will remove any empty
+lines immediately following a statement that introduces a new indentation level.</p>
+<pre><code class="language-python"># in:
+
+def foo():
+
+    print(&quot;All the newlines above me should be deleted!&quot;)
+
+
+if condition:
+
+    print(&quot;No newline above me!&quot;)
+
+    print(&quot;There is a newline above me, and that's OK!&quot;)
+
+
+class Point:
+
+    x: int
+    y: int
+
+# out:
+
+def foo():
+    print(&quot;All the newlines above me should be deleted!&quot;)
+
+
+if condition:
+    print(&quot;No newline above me!&quot;)
+
+    print(&quot;There is a newline above me, and that's OK!&quot;)
+
+
+class Point:
+    x: int
+    y: int
+</code></pre>
+<p>It will also insert proper spacing before and after function definitions. It's one line
+before and after inner functions and two lines before and after module-level functions
+and classes. <em>Black</em> will not put empty lines between function/class definitions and
+standalone comments that immediately precede the given function/class.</p>
+<p><em>Black</em> will enforce single empty lines between a class-level docstring and the first
+following field or method. This conforms to
+<a href="https://www.python.org/dev/peps/pep-0257/#multi-line-docstrings">PEP 257</a>.</p>
+<p><em>Black</em> won't insert empty lines after function docstrings unless that empty line is
+required due to an inner function starting immediately after.</p>
+<h3 id="comments">Comments</h3>
+<p><em>Black</em> does not format comment contents, but it enforces two spaces between code and a
+comment on the same line, and a space before the comment text begins. Some types of
+comments that require specific spacing rules are respected: doc comments (<code>#: comment</code>),
+section comments with long runs of hashes, and Spyder cells. Non-breaking spaces after
+hashes are also preserved. Comments may sometimes be moved because of formatting
+changes, which can break tools that assign special meaning to them. See
+<a href="#ast-before-and-after-formatting">AST before and after formatting</a> for more discussion.</p>
+<h3 id="trailing-commas">Trailing commas</h3>
+<p><em>Black</em> will add trailing commas to expressions that are split by comma where each
+element is on its own line. This includes function signatures.</p>
+<p>One exception to adding trailing commas is function signatures containing <code>*</code>, <code>*args</code>,
+or <code>**kwargs</code>. In this case a trailing comma is only safe to use on Python 3.6. <em>Black</em>
+will detect if your file is already 3.6+ only and use trailing commas in this situation.
+If you wonder how it knows, it looks for f-strings and existing use of trailing commas
+in function signatures that have stars in them. In other words, if you'd like a trailing
+comma in this situation and <em>Black</em> didn't recognize it was safe to do so, put it there
+manually and <em>Black</em> will keep it.</p>
+<p>A pre-existing trailing comma informs <em>Black</em> to always explode contents of the current
+bracket pair into one item per line. Read more about this in the
+<a href="#pragmatism">Pragmatism</a> section below.</p>
+<p>(labels/strings)=</p>
+<h3 id="strings">Strings</h3>
+<p><em>Black</em> prefers double quotes (<code>"</code> and <code>"""</code>) over single quotes (<code>'</code> and <code>'''</code>). It
+will replace the latter with the former as long as it does not result in more backslash
+escapes than before.</p>
+<p><em>Black</em> also standardizes string prefixes. Prefix characters are made lowercase with the
+exception of <a href="#rstrings-and-rstrings">capital "R" prefixes</a>, unicode literal markers
+(<code>u</code>) are removed because they are meaningless in Python 3, and in the case of multiple
+characters "r" is put first as in spoken language: "raw f-string".</p>
+<p>The main reason to standardize on a single form of quotes is aesthetics. Having one kind
+of quotes everywhere reduces reader distraction. It will also enable a future version of
+<em>Black</em> to merge consecutive string literals that ended up on the same line (see
+<a href="https://github.com/psf/black/issues/26">#26</a> for details).</p>
+<p>Why settle on double quotes? They anticipate apostrophes in English text. They match the
+docstring standard described in
+<a href="https://www.python.org/dev/peps/pep-0257/#what-is-a-docstring">PEP 257</a>. An empty
+string in double quotes (<code>""</code>) is impossible to confuse with a one double-quote
+regardless of fonts and syntax highlighting used. On top of this, double quotes for
+strings are consistent with C which Python interacts a lot with.</p>
+<p>On certain keyboard layouts like US English, typing single quotes is a bit easier than
+double quotes. The latter requires use of the Shift key. My recommendation here is to
+keep using whatever is faster to type and let <em>Black</em> handle the transformation.</p>
+<p>If you are adopting <em>Black</em> in a large project with pre-existing string conventions
+(like the popular
+<a href="https://stackoverflow.com/a/56190">"single quotes for data, double quotes for human-readable strings"</a>),
+you can pass <code>--skip-string-normalization</code> on the command line. This is meant as an
+adoption helper, avoid using this for new projects.</p>
+<p><em>Black</em> also processes docstrings. Firstly the indentation of docstrings is corrected
+for both quotations and the text within, although relative indentation in the text is
+preserved. Superfluous trailing whitespace on each line and unnecessary new lines at the
+end of the docstring are removed. All leading tabs are converted to spaces, but tabs
+inside text are preserved. Whitespace leading and trailing one-line docstrings is
+removed.</p>
+<h3 id="numeric-literals">Numeric literals</h3>
+<p><em>Black</em> standardizes most numeric literals to use lowercase letters for the syntactic
+parts and uppercase letters for the digits themselves: <code>0xAB</code> instead of <code>0XAB</code> and
+<code>1e10</code> instead of <code>1E10</code>.</p>
+<h3 id="line-breaks-binary-operators">Line breaks &amp; binary operators</h3>
+<p><em>Black</em> will break a line before a binary operator when splitting a block of code over
+multiple lines. This is so that <em>Black</em> is compliant with the recent changes in the
+<a href="https://www.python.org/dev/peps/pep-0008/#should-a-line-break-before-or-after-a-binary-operator">PEP 8</a>
+style guide, which emphasizes that this approach improves readability.</p>
+<p>Almost all operators will be surrounded by single spaces, the only exceptions are unary
+operators (<code>+</code>, <code>-</code>, and <code>~</code>), and power operators when both operands are simple. For
+powers, an operand is considered simple if it's only a NAME, numeric CONSTANT, or
+attribute access (chained attribute access is allowed), with or without a preceding
+unary operator.</p>
+<pre><code class="language-python"># For example, these won't be surrounded by whitespace
+a = x**y
+b = config.base**5.2
+c = config.base**runtime.config.exponent
+d = 2**5
+e = 2**~5
+
+# ... but these will be surrounded by whitespace
+f = 2 ** get_exponent()
+g = get_x() ** get_y()
+h = config['base'] ** 2
+</code></pre>
+<h3 id="slices">Slices</h3>
+<p>PEP 8
+<a href="https://www.python.org/dev/peps/pep-0008/#whitespace-in-expressions-and-statements">recommends</a>
+to treat <code>:</code> in slices as a binary operator with the lowest priority, and to leave an
+equal amount of space on either side, except if a parameter is omitted (e.g.
+<code>ham[1 + 1 :]</code>). It recommends no spaces around <code>:</code> operators for "simple expressions"
+(<code>ham[lower:upper]</code>), and extra space for "complex expressions"
+(<code>ham[lower : upper + offset]</code>). <em>Black</em> treats anything more than variable names as
+"complex" (<code>ham[lower : upper + 1]</code>). It also states that for extended slices, both <code>:</code>
+operators have to have the same amount of spacing, except if a parameter is omitted
+(<code>ham[1 + 1 ::]</code>). <em>Black</em> enforces these rules consistently.</p>
+<p>This behaviour may raise <code>E203 whitespace before ':'</code> warnings in style guide
+enforcement tools like Flake8. Since <code>E203</code> is not PEP 8 compliant, you should tell
+Flake8 to ignore these warnings.</p>
+<h3 id="parentheses">Parentheses</h3>
+<p>Some parentheses are optional in the Python grammar. Any expression can be wrapped in a
+pair of parentheses to form an atom. There are a few interesting cases:</p>
+<ul>
+<li><code>if (...):</code></li>
+<li><code>while (...):</code></li>
+<li><code>for (...) in (...):</code></li>
+<li><code>assert (...), (...)</code></li>
+<li><code>from X import (...)</code></li>
+<li>assignments like:</li>
+<li><code>target = (...)</code></li>
+<li><code>target: type = (...)</code></li>
+<li><code>some, *un, packing = (...)</code></li>
+<li><code>augmented += (...)</code></li>
+</ul>
+<p>In those cases, parentheses are removed when the entire statement fits in one line, or
+if the inner expression doesn't have any delimiters to further split on. If there is
+only a single delimiter and the expression starts or ends with a bracket, the
+parentheses can also be successfully omitted since the existing bracket pair will
+organize the expression neatly anyway. Otherwise, the parentheses are added.</p>
+<p>Please note that <em>Black</em> does not add or remove any additional nested parentheses that
+you might want to have for clarity or further code organization. For example those
+parentheses are not going to be removed:</p>
+<pre><code class="language-py3">return not (this or that)
+decision = (maybe.this() and values &gt; 0) or (maybe.that() and values &lt; 0)
+</code></pre>
+<h3 id="call-chains">Call chains</h3>
+<p>Some popular APIs, like ORMs, use call chaining. This API style is known as a
+<a href="https://en.wikipedia.org/wiki/Fluent_interface">fluent interface</a>. <em>Black</em> formats
+those by treating dots that follow a call or an indexing operation like a very low
+priority delimiter. It's easier to show the behavior than to explain it. Look at the
+example:</p>
+<pre><code class="language-py3">def example(session):
+    result = (
+        session.query(models.Customer.id)
+        .filter(
+            models.Customer.account_id == account_id,
+            models.Customer.email == email_address,
+        )
+        .order_by(models.Customer.id.asc())
+        .all()
+    )
+</code></pre>
+<h3 id="typing-stub-files">Typing stub files</h3>
+<p>PEP 484 describes the syntax for type hints in Python. One of the use cases for typing
+is providing type annotations for modules which cannot contain them directly (they might
+be written in C, or they might be third-party, or their implementation may be overly
+dynamic, and so on).</p>
+<p>To solve this,
+<a href="https://www.python.org/dev/peps/pep-0484/#stub-files">stub files with the <code>.pyi</code> file extension</a>
+can be used to describe typing information for an external module. Those stub files omit
+the implementation of classes and functions they describe, instead they only contain the
+structure of the file (listing globals, functions, and classes with their members). The
+recommended code style for those files is more terse than PEP 8:</p>
+<ul>
+<li>prefer <code>...</code> on the same line as the class/function signature;</li>
+<li>avoid vertical whitespace between consecutive module-level functions, names, or
+  methods and fields within a single class;</li>
+<li>use a single blank line between top-level class definitions, or none if the classes
+  are very small.</li>
+</ul>
+<p><em>Black</em> enforces the above rules. There are additional guidelines for formatting <code>.pyi</code>
+file that are not enforced yet but might be in a future version of the formatter:</p>
+<ul>
+<li>prefer <code>...</code> over <code>pass</code>;</li>
+<li>avoid using string literals in type annotations, stub files support forward references
+  natively (like Python 3.7 code with <code>from __future__ import annotations</code>);</li>
+<li>use variable annotations instead of type comments, even for stubs that target older
+  versions of Python.</li>
+</ul>
+<h3 id="line-endings">Line endings</h3>
+<p><em>Black</em> will normalize line endings (<code>\n</code> or <code>\r\n</code>) based on the first line ending of
+the file.</p>
+<h2 id="pragmatism">Pragmatism</h2>
+<p>Early versions of <em>Black</em> used to be absolutist in some respects. They took after its
+initial author. This was fine at the time as it made the implementation simpler and
+there were not many users anyway. Not many edge cases were reported. As a mature tool,
+<em>Black</em> does make some exceptions to rules it otherwise holds. This section documents
+what those exceptions are and why this is the case.</p>
+<p>(labels/magic-trailing-comma)=</p>
+<h3 id="the-magic-trailing-comma">The magic trailing comma</h3>
+<p><em>Black</em> in general does not take existing formatting into account.</p>
+<p>However, there are cases where you put a short collection or function call in your code
+but you anticipate it will grow in the future.</p>
+<p>For example:</p>
+<pre><code class="language-py3">TRANSLATIONS = {
+    &quot;en_us&quot;: &quot;English (US)&quot;,
+    &quot;pl_pl&quot;: &quot;polski&quot;,
+}
+</code></pre>
+<p>Early versions of <em>Black</em> used to ruthlessly collapse those into one line (it fits!).
+Now, you can communicate that you don't want that by putting a trailing comma in the
+collection yourself. When you do, <em>Black</em> will know to always explode your collection
+into one item per line.</p>
+<p>How do you make it stop? Just delete that trailing comma and <em>Black</em> will collapse your
+collection into one line if it fits.</p>
+<p>If you must, you can recover the behaviour of early versions of <em>Black</em> with the option
+<code>--skip-magic-trailing-comma</code> / <code>-C</code>.</p>
+<h3 id="rstrings-and-rstrings">r"strings" and R"strings"</h3>
+<p><em>Black</em> normalizes string quotes as well as string prefixes, making them lowercase. One
+exception to this rule is r-strings. It turns out that the very popular
+<a href="https://github.com/MagicStack/MagicPython/">MagicPython</a> syntax highlighter, used by
+default by (among others) GitHub and Visual Studio Code, differentiates between
+r-strings and R-strings. The former are syntax highlighted as regular expressions while
+the latter are treated as true raw strings with no special semantics.</p>
+<p>(labels/ast-changes)=</p>
+<h3 id="ast-before-and-after-formatting">AST before and after formatting</h3>
+<p>When run with <code>--safe</code> (the default), <em>Black</em> checks that the code before and after is
+semantically equivalent. This check is done by comparing the AST of the source with the
+AST of the target. There are three limited cases in which the AST does differ:</p>
+<ol>
+<li>
+<p><em>Black</em> cleans up leading and trailing whitespace of docstrings, re-indenting them if
+   needed. It's been one of the most popular user-reported features for the formatter to
+   fix whitespace issues with docstrings. While the result is technically an AST
+   difference, due to the various possibilities of forming docstrings, all real-world
+   uses of docstrings that we're aware of sanitize indentation and leading/trailing
+   whitespace anyway.</p>
+</li>
+<li>
+<p><em>Black</em> manages optional parentheses for some statements. In the case of the <code>del</code>
+   statement, presence of wrapping parentheses or lack of thereof changes the resulting
+   AST but is semantically equivalent in the interpreter.</p>
+</li>
+<li>
+<p><em>Black</em> might move comments around, which includes type comments. Those are part of
+   the AST as of Python 3.8. While the tool implements a number of special cases for
+   those comments, there is no guarantee they will remain where they were in the source.
+   Note that this doesn't change runtime behavior of the source code.</p>
+</li>
+</ol>
+<p>To put things in perspective, the code equivalence check is a feature of <em>Black</em> which
+other formatters don't implement at all. It is of crucial importance to us to ensure
+code behaves the way it did before it got reformatted. We treat this as a feature and
+there are no plans to relax this in the future. The exceptions enumerated above stem
+from either user feedback or implementation details of the tool. In each case we made
+due diligence to ensure that the AST divergence is of no practical consequence.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+        <script src="../../search/main.js"></script>
+      
+    
+  </body>
+</html>
