@@ -14,7 +14,7 @@ pip3 install sysplant
 To also install the optional [MCP server](../usage/mcp.md) support:
 
 ```bash
-pip3 install sysplant "mcp[cli]>=1.0"
+pip3 install sysplant[mcp]
 ```
 
 ## Install with Poetry (recommended for development)

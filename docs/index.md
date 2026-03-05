@@ -17,7 +17,7 @@
 [![Project Licence](https://img.shields.io/github/license/x42en/sysplant.svg)](https://github.com/x42en/sysplant/blob/main/LICENSE)
 [![PyPI downloads](https://img.shields.io/pypi/dm/sysplant.svg)](https://pypistats.org/packages/sysplant)
 [![Code Quality](https://www.codefactor.io/repository/github/x42en/sysplant/badge)](https://www.codefactor.io/repository/github/x42en/sysplant)
-[![Code Coverage](https://codecov.io/gh/x42en/sysplant/branch/main/graph/badge.svg)](https://codecov.io/gh/x42en/sysplant)
+[![MCP Server](https://img.shields.io/badge/MCP-Server-blueviolet)](https://modelcontextprotocol.io)
 [![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
 [![Documentation Status](https://readthedocs.org/projects/sysplant/badge/?version=latest)](https://sysplant.readthedocs.io/en/latest/?badge=latest)
 
