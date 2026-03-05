@@ -41,8 +41,16 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
 
 ## Introduction
 
-This personal project aims to be a simple tool to better understand & generate different syscall retrieval methods, and being able to play with direct / indirect syscall stub. The first goal was to get my hands into NIM and then it overflow :wink: ...  
+This personal project aims to be a simple tool to better understand & generate different syscall retrieval methods, and being able to play with direct / indirect syscall stub. The first goal was to get my hands into NIM and then it overflow to C and Rust :wink: ...  
 SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.
+
+### Supported Languages
+
+| Language | Status                    | Cross-compile from Linux                     |
+| -------- | ------------------------- | -------------------------------------------- |
+| NIM      | :white_check_mark: Stable | `nim c -d=mingw --cpu=amd64`                 |
+| C        | :white_check_mark: Stable | `x86_64-w64-mingw32-gcc`                     |
+| Rust     | :white_check_mark: Stable | `cargo build --target x86_64-pc-windows-gnu` |
 
 ## What is `iterator` option ?
 
@@ -90,7 +98,7 @@ Some PR & reviews are more than welcome :tada: !
 - [x] Setup NIM templates
 - [x] Setup C templates
 - [x] Setup Rust templates
-- [ ] Setup Go / CPP? / C#? / Whatever templates
+- [ ] Setup Go / CPP / C# / Whatever templates
 
 ## License
 

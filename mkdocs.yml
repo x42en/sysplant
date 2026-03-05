@@ -1,8 +1,26 @@
 site_name: SysPlant
 site_url: https://github.com/x42en/sysplant
 site_dir: public
-theme: readthedocs
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: deep purple
+    accent: purple
+  features:
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
 
 plugins:
   - search
   - awesome-pages
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+            heading_level: 2
+            members_order: source

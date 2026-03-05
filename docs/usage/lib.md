@@ -1,17 +1,25 @@
 ## Using Sysplant as a Python Library
+
 This project has been designed so it can be embedded in your project as a simple external module.
 
 ### Installation
+
 If you are using standard pip3 package manager
+
 ```bash
 pip3 install sysplant
 ```
-If you are more likely to use virtual environments *(you should!)* this project is based on [Poetry](https://python-poetry.org/) virtual env.
+
+If you are more likely to use virtual environments _(you should!)_ this project is based on [Poetry](https://python-poetry.org/) virtual env.
+
 ```bash
 poetry add sysplant
 ```
 
 ### Usage
+
+#### NIM (default)
+
 ```python
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
@@ -36,5 +44,32 @@ bot.scramble()
 bot.output("/tmp/syscall")
 ```
 
+#### C
+
+```python
+bot = sysplant.Sysplant(
+    arch="x64",
+    syscall="syscall",
+    language="c"
+)
+bot.generate(iterator="canterlot", method="random", syscalls="common")
+bot.scramble()
+bot.output("/tmp/syscall")
+```
+
+#### Rust
+
+```python
+bot = sysplant.Sysplant(
+    arch="x64",
+    syscall="syscall",
+    language="rust"
+)
+bot.generate(iterator="canterlot", method="random", syscalls="common")
+bot.scramble()
+bot.output("/tmp/syscall")
+```
+
 ### Documentation
+
 A more precise documentation and associated options is available [here](https://x42en.github.io/sysplant/documentation/)

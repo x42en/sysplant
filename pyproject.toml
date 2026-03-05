@@ -1,21 +1,22 @@
-[tool.poetry]
+[project]
 name = "sysplant"
 version = "0.3.1"
 description = "SysPlant - Your syscall factory"
-authors = ["Ben Mz <x42en@users.noreply.github.com>"]
-license = "MIT"
+authors = [
+    {name = "Ben Mz", email = "x42en@users.noreply.github.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.9"
-
+requires-python = ">=3.10,<4"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"
+pytest = "^8.3.0"
+mkdocs = "^1.6.0"
 mkdocs-awesome-pages-plugin = "^2.9.1"
-lazydocs = "^0.4.8"
-poetry-bumpversion = "^0.3.1"
-pytest-cov = "^4.1.0"
+mkdocstrings = {version = "^1.0.0", extras = ["python"]}
+mkdocs-material = "^9.5.0"
+poetry-bumpversion = "^0.3.3"
+pytest-cov = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core"]

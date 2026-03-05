@@ -51,7 +51,7 @@ class AbstractFactory(ABC):
             name (str): the tag name to remove
         """
         self.data = re.sub(
-            f"\s*{SysPlantConstants.TAG_START}{name}{SysPlantConstants.TAG_END}.*",
+            rf"\s*{SysPlantConstants.TAG_START}{name}{SysPlantConstants.TAG_END}.*",
             "",
             self.data,
         )
