@@ -13,145 +13,100 @@ from sysplant.sysplant import Sysplant
 from sysplant.constants.sysplantConstants import SysPlantConstants
 
 
-class TestAbstract(unittest.TestCase):
+class TestSysplantRust(unittest.TestCase):
     def __init__(self, method_name):
         super().__init__(method_name)
 
     def test_00_init(self):
-        Sysplant()
-
-    def test_01_list(self):
-        klass = Sysplant()
-        result = klass.list(os.path.join("example", "inject.nim"))
-        expected = set(
-            {
-                "NtCreateThread",
-                "NtProtectVirtualMemory",
-                "NtCreateThreadEx",
-                "NtAllocateVirtualMemory",
-                "NtOpenProcess",
-                "NtWriteVirtualMemory",
-            }
-        )
-        self.assertEqual(type(result), set)
-        self.assertEqual(result, expected)
-
-    def test_01_list_dir(self):
-        klass = Sysplant()
-        result = klass.list("example")
-        # Only root-level example files are committed (inject.c, inject.nim, inject.rs).
-        # Subdirectories like rust-inject/ are generated artifacts (.gitignore'd),
-        # so we check that the expected core set is always found.
-        expected = set(
-            {
-                "NtCreateThread",
-                "NtProtectVirtualMemory",
-                "NtCreateThreadEx",
-                "NtAllocateVirtualMemory",
-                "NtOpenProcess",
-                "NtWriteVirtualMemory",
-            }
-        )
-        self.assertEqual(type(result), set)
-        self.assertTrue(expected.issubset(result))
+        Sysplant(language="rust")
 
     def test_02_generate_direct(self):
-        klass = Sysplant()
+        klass = Sysplant(language="rust")
         result = klass.generate(
             iterator="syswhispers", method="direct", syscalls="common"
         )
 
-        # Ensure freshy iterator is present
-        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.nim").open(
+        # Ensure syswhispers iterator is present
+        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.rs").open(
             "r"
         ) as iterator:
             self.assertIn(iterator.read(), result)
 
         # Ensure resolver is present
-        with pkg_resources.files(pkg_resolvers).joinpath("number.nim").open(
+        with pkg_resources.files(pkg_resolvers).joinpath("number.rs").open(
             "r"
         ) as resolver:
             self.assertIn(resolver.read(), result)
 
         # Ensure stub is present
-        with pkg_resources.files(pkg_stubs).joinpath("direct_x64.nim").open(
-            "r"
-        ) as stub:
+        with pkg_resources.files(pkg_stubs).joinpath("direct_x64.rs").open("r") as stub:
             # Correct dynamic entries
             clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
-            clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
+            clean_stub = clean_stub.replace("    ##__DEBUG_INT__##\n", "")
 
             self.assertIn(clean_stub, result)
 
-        # Ensure generated content is valid
-
     def test_02_generate_indirect(self):
-        klass = Sysplant()
+        klass = Sysplant(language="rust")
         result = klass.generate(
             iterator="syswhispers", method="indirect", syscalls="common"
         )
 
-        # Ensure freshy iterator is present
-        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.nim").open(
+        # Ensure syswhispers iterator is present
+        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.rs").open(
             "r"
         ) as iterator:
             self.assertIn(iterator.read(), result)
 
         # Ensure resolver is present
-        with pkg_resources.files(pkg_resolvers).joinpath("basic.nim").open(
+        with pkg_resources.files(pkg_resolvers).joinpath("basic.rs").open(
             "r"
         ) as resolver:
             self.assertIn(resolver.read(), result)
 
         # Ensure stub is present
-        with pkg_resources.files(pkg_stubs).joinpath("indirect_x64.nim").open(
+        with pkg_resources.files(pkg_stubs).joinpath("indirect_x64.rs").open(
             "r"
         ) as stub:
             # Correct dynamic entries
             clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
-            clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
+            clean_stub = clean_stub.replace("    ##__DEBUG_INT__##\n", "")
 
             self.assertIn(clean_stub, result)
 
-        # Ensure generated content is valid
-
     def test_02_generate_random(self):
-        klass = Sysplant()
+        klass = Sysplant(language="rust")
         result = klass.generate(
             iterator="syswhispers", method="random", syscalls="common"
         )
 
-        # Ensure freshy iterator is present
-        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.nim").open(
+        # Ensure syswhispers iterator is present
+        with pkg_resources.files(pkg_iterators).joinpath("syswhispers.rs").open(
             "r"
         ) as iterator:
             self.assertIn(iterator.read(), result)
 
         # Ensure resolver is present
-        with pkg_resources.files(pkg_resolvers).joinpath("number.nim").open(
+        with pkg_resources.files(pkg_resolvers).joinpath("number.rs").open(
             "r"
         ) as resolver:
             self.assertIn(resolver.read(), result)
 
-        with pkg_resources.files(pkg_resolvers).joinpath("random.nim").open(
+        with pkg_resources.files(pkg_resolvers).joinpath("random.rs").open(
             "r"
         ) as resolver:
             self.assertIn(resolver.read(), result)
 
         # Ensure stub is present
-        with pkg_resources.files(pkg_stubs).joinpath("random_x64.nim").open(
-            "r"
-        ) as stub:
+        with pkg_resources.files(pkg_stubs).joinpath("random_x64.rs").open("r") as stub:
             # Correct dynamic entries
             clean_stub = stub.read().replace("##__SYSCALL_INT__##", "syscall")
-            clean_stub = clean_stub.replace("        ##__DEBUG_INT__##\n", "")
+            clean_stub = clean_stub.replace("    ##__DEBUG_INT__##\n", "")
 
             self.assertIn(clean_stub, result)
 
-        # Ensure generated content is valid
-
     def test_03_scramble_direct(self):
-        klass = Sysplant()
+        klass = Sysplant(language="rust")
         klass.generate(iterator="freshy", method="direct", syscalls="common")
         result = klass.scramble(True)
 
@@ -159,7 +114,7 @@ class TestAbstract(unittest.TestCase):
             self.assertNotIn(entry, result)
 
     def test_03_scramble_indirect(self):
-        klass = Sysplant()
+        klass = Sysplant(language="rust")
         klass.generate(iterator="syswhispers", method="indirect", syscalls="common")
         result = klass.scramble(True)
 
@@ -167,7 +122,7 @@ class TestAbstract(unittest.TestCase):
             self.assertNotIn(entry, result)
 
     def test_03_scramble_random(self):
-        klass = Sysplant()
+        klass = Sysplant(language="rust")
         klass.generate(iterator="canterlot", method="random", syscalls="common")
         result = klass.scramble(True)
 
@@ -175,10 +130,10 @@ class TestAbstract(unittest.TestCase):
             self.assertNotIn(entry, result)
 
     def test_04_output(self):
-        klass = Sysplant()
+        klass = Sysplant(language="rust")
         klass.generate(iterator="canterlot", method="direct", syscalls="common")
         (_, filename) = tempfile.mkstemp(text=True)
         result = klass.output(filename)
 
-        with open(f"{filename}.nim", "r") as raw:
+        with open(f"{filename}.rs", "r") as raw:
             self.assertEqual(result, raw.read())

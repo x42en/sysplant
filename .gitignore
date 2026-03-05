@@ -240,3 +240,6 @@ report.xml
 
 # Avoid trash commit
 trash/
+
+# Remove Rust example project
+example/rust-inject
