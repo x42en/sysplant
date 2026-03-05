@@ -240,3 +240,8 @@ report.xml
 
 # Avoid trash commit
 trash/
+
+# Remove build examples
+example/rust-inject
+example/inject.exe
+example/syscall.*

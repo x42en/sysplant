@@ -90,6 +90,9 @@ if __name__ == "__main__":
     language.add_argument(
         "-c", action="store_true", help="Generate C code", default=False
     )
+    language.add_argument(
+        "-rust", action="store_true", help="Generate Rust code", default=False
+    )
 
     ##################### CUSTOM OPTIONS #####################
     parser_custom.add_argument(
@@ -200,6 +203,10 @@ if __name__ == "__main__":
             lang_set = "nim"  # Default option
             if args.c:
                 lang_set = "c"
+            elif args.rust:
+                lang_set = "rust"
+            elif args.rust:
+                lang_set = "rust"
 
             engine = Sysplant(arch=arch, language=lang_set)
             engine.generate(iterator=iterator, method=method, syscalls=args.syscalls)

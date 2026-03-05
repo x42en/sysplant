@@ -13,6 +13,7 @@ from sysplant.constants.sysplantConstants import SysPlantConstants
 from sysplant.abstracts.abstractFactory import AbstractFactory
 from sysplant.managers.nimGenerator import NIMGenerator
 from sysplant.managers.cGenerator import CGenerator
+from sysplant.managers.rustGenerator import RustGenerator
 
 
 class TemplateManager(AbstractFactory):
@@ -47,7 +48,7 @@ class TemplateManager(AbstractFactory):
         # Define language template
         if arch not in ["x86", "x64", "wow"]:
             raise NotImplementedError("Sorry architecture not implemented yet")
-        if language not in ["nim", "c"]:
+        if language not in SysPlantConstants.LANG_EXT:
             raise NotImplementedError("Sorry language not supported ... yet ?!")
         if syscall not in ["syscall", "sysenter", "int 0x2h"]:
             raise NotImplementedError(
@@ -55,6 +56,7 @@ class TemplateManager(AbstractFactory):
             )
 
         self.__lang = language
+        self.__ext = SysPlantConstants.LANG_EXT[language]
         self.__arch = arch
         self.__syscall = syscall
 
@@ -63,6 +65,8 @@ class TemplateManager(AbstractFactory):
             self.__coder = NIMGenerator()
         elif self.__lang == "c":
             self.__coder = CGenerator()
+        elif self.__lang == "rust":
+            self.__coder = RustGenerator()
 
         try:
             # Always load prototypes & type definitions
@@ -72,7 +76,7 @@ class TemplateManager(AbstractFactory):
 
         try:
             # Always load initial template
-            self.data = self.__load_template(pkg_templates, f"base.{self.__lang}")
+            self.data = self.__load_template(pkg_templates, f"base.{self.__ext}")
         except Exception as err:
             raise SystemError(f"Unable to load base template: {err}")
 
@@ -131,7 +135,7 @@ class TemplateManager(AbstractFactory):
         """
         try:
             # Load initial stub template
-            self.data = self.__load_template(pkg_stubs, f"{name}.{self.__lang}")
+            self.data = self.__load_template(pkg_stubs, f"{name}.{self.__ext}")
         except Exception as err:
             raise SystemError(f"Unable to load {name} stub: {err}")
 
@@ -215,7 +219,7 @@ class TemplateManager(AbstractFactory):
             str: Template content after modification
         """
         # Get iterator template from package
-        data = self.__load_template(pkg_iterators, f"{name}.{self.__lang}")
+        data = self.__load_template(pkg_iterators, f"{name}.{self.__ext}")
         self.replace_tag("SPT_ITERATOR", data)
 
         return self.data
@@ -242,7 +246,10 @@ class TemplateManager(AbstractFactory):
 
         # Set debug interruption on debug state
         if self.logger.isDebug():
-            self.replace_tag("DEBUG_INT", "int 3")
+            if self.__lang == "rust":
+                self.replace_tag("DEBUG_INT", '"int 3",')
+            else:
+                self.replace_tag("DEBUG_INT", "int 3")
         else:
             self.remove_tag("DEBUG_INT")
 
@@ -260,7 +267,7 @@ class TemplateManager(AbstractFactory):
             str: Template content after modification
         """
         # Get resolver template from package
-        return self.__load_template(pkg_resolvers, f"{name}.{self.__lang}")
+        return self.__load_template(pkg_resolvers, f"{name}.{self.__ext}")
 
     def __set_caller(self, name: str) -> str:
         """
@@ -277,7 +284,7 @@ class TemplateManager(AbstractFactory):
             str: Template content after modification
         """
         # Get caller function from package
-        data = self.__load_template(pkg_stubs, f"{name}_{self.__arch}.{self.__lang}")
+        data = self.__load_template(pkg_stubs, f"{name}_{self.__arch}.{self.__ext}")
         self.replace_tag("SPT_CALLER", data)
 
         # Adapt caller with proper options

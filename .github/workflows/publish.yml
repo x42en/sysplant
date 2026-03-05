@@ -5,12 +5,22 @@ on:
 jobs:
   pypi:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - run: python3 -m pip install --upgrade build && python3 -m build
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build package
+        run: python3 -m pip install --upgrade build && python3 -m build
+
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@release/v1
         with:

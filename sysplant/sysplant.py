@@ -67,9 +67,7 @@ class Sysplant:
 
         return results
 
-    def generate(
-        self, iterator: str, method: str, syscalls: Union[str, list]
-    ) -> str:
+    def generate(self, iterator: str, method: str, syscalls: Union[str, list]) -> str:
         """
         Public method defining the generation algorithm. This method does not touch any code directly.
         It should only call TemplateManager methods in specific order.
@@ -154,11 +152,7 @@ class Sysplant:
             str: Template content
         """
         # Set extension
-        ext = None
-        if self.__language == "nim":
-            ext = "nim"
-        elif self.__language == "c":
-            ext = "h"
+        ext = SysPlantConstants.OUTPUT_EXT.get(self.__language)
 
         # Write file
         clean_path = (

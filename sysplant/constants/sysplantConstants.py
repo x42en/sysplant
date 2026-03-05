@@ -7,11 +7,14 @@ class SysPlantConstants:
 
     """
 
-    SEARCH_EXT = (".h", ".c", ".cpp", ".nim")
+    SEARCH_EXT = (".h", ".c", ".cpp", ".nim", ".rs")
     NIM_TAB = "    "
     C_TAB = "    "
+    RUST_TAB = "    "
     TAG_START = "##__"
     TAG_END = "__##"
+    LANG_EXT = {"nim": "nim", "c": "c", "rust": "rs"}
+    OUTPUT_EXT = {"nim": "nim", "c": "h", "rust": "rs"}
     RANDOM_WORD_SIZE = 8
     INTERNAL_FUNCTIONS = [
         "SPT_HEADER_H_",
@@ -33,7 +36,7 @@ class SysPlantConstants:
         "SPT_HashInit",
         "SPT_HashUpdate",
         "SPT_HashFinalize",
-        "SPT_HashStep"
+        "SPT_HashStep",
     ]
     DONUT_SYSCALLS = [
         "NtCreateSection",
