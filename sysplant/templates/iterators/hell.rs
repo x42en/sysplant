@@ -31,7 +31,7 @@ unsafe fn SPT_PopulateSyscallList() -> BOOL {
     let mut dll_base: PVOID = ptr::null_mut();
 
     // Get the DllBase address of NTDLL.dll.
-    let mut ldr_entry = (*ldr).InMemoryOrderModuleList.Flink as *mut SPT_LDR_DATA_TABLE_ENTRY;
+    let mut ldr_entry = (*ldr).Reserved2[1] as *mut SPT_LDR_DATA_TABLE_ENTRY;
     while !(*ldr_entry).DllBase.is_null() {
         dll_base = (*ldr_entry).DllBase;
         let dos_header = dll_base as *const IMAGE_DOS_HEADER;
@@ -39,7 +39,7 @@ unsafe fn SPT_PopulateSyscallList() -> BOOL {
         let data_directory = (*nt_headers).OptionalHeader.DataDirectory.as_ptr();
         let va = (*data_directory.add(IMAGE_DIRECTORY_ENTRY_EXPORT)).VirtualAddress;
         if va == 0 {
-            ldr_entry = (*ldr_entry).InMemoryOrderLinks.Flink as *mut SPT_LDR_DATA_TABLE_ENTRY;
+            ldr_entry = (*ldr_entry).Reserved1[0] as *mut SPT_LDR_DATA_TABLE_ENTRY;
             continue;
         }
 
@@ -48,13 +48,13 @@ unsafe fn SPT_PopulateSyscallList() -> BOOL {
         // If this is NTDLL.dll, exit loop.
         let dll_name = SPT_RVA2VA!(*const u8, dll_base, (*export_directory).Name);
         if (*(dll_name as *const u32) | 0x20202020) != 0x6c64746e {
-            ldr_entry = (*ldr_entry).InMemoryOrderLinks.Flink as *mut SPT_LDR_DATA_TABLE_ENTRY;
+            ldr_entry = (*ldr_entry).Reserved1[0] as *mut SPT_LDR_DATA_TABLE_ENTRY;
             continue;
         }
         if (*(dll_name.add(4) as *const u32) | 0x20202020) == 0x6c642e6c {
             break;
         }
-        ldr_entry = (*ldr_entry).InMemoryOrderLinks.Flink as *mut SPT_LDR_DATA_TABLE_ENTRY;
+        ldr_entry = (*ldr_entry).Reserved1[0] as *mut SPT_LDR_DATA_TABLE_ENTRY;
     }
 
     if export_directory.is_null() {

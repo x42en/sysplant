@@ -241,5 +241,7 @@ report.xml
 # Avoid trash commit
 trash/
 
-# Remove Rust example project
+# Remove build examples
 example/rust-inject
+example/inject.exe
+example/syscall.*

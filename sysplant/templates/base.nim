@@ -1,8 +1,7 @@
 {.passC:"-masm=intel".}
 
 # Import internal libs
-import std/md5
-import std/bitops
+import checksums/md5
 import std/tables
 import std/random
 import std/sequtils
@@ -68,16 +67,16 @@ proc `{}`[T](p: T, x: SomeInteger): T {.inline.} =
 
 ## Avoid ptr_math dependency from https://github.com/kaushalmodi/ptr_math/blob/main/src/ptr_math.nim
 proc `-`*[T; S: SomeInteger](p: ptr T, offset: S): ptr T =
-    return cast[ptr T](cast[ByteAddress](p) -% (int(offset) * sizeof(T)))
+    return cast[ptr T](cast[uint](p) -% (uint(offset) * uint(sizeof(T))))
 
 proc `-`*[S: SomeInteger](p: pointer, offset: S): pointer =
-    return cast[pointer](cast[ByteAddress](p) -% int(offset))
+    return cast[pointer](cast[uint](p) -% uint(offset))
 
 proc `+`*[T; S: SomeInteger](p: ptr T, offset: S): ptr T =
-    return cast[ptr T](cast[ByteAddress](p) +% (int(offset) * sizeof(T)))
+    return cast[ptr T](cast[uint](p) +% (uint(offset) * uint(sizeof(T))))
 
 proc `+`*[S: SomeInteger](p: pointer, offset: S): pointer =
-    return cast[pointer](cast[ByteAddress](p) +% int(offset))
+    return cast[pointer](cast[uint](p) +% uint(offset))
 
 proc `[]=`*[T; S: SomeInteger](p: ptr T, offset: S, val: T) =
     (p + offset)[] = val

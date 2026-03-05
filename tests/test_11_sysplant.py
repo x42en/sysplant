@@ -25,12 +25,12 @@ class TestAbstract(unittest.TestCase):
         result = klass.list(os.path.join("example", "inject.nim"))
         expected = set(
             {
+                "NtCreateSection",
                 "NtCreateThread",
-                "NtProtectVirtualMemory",
+                "NtMapViewOfSection",
+                "NtUnmapViewOfSection",
                 "NtCreateThreadEx",
-                "NtAllocateVirtualMemory",
                 "NtOpenProcess",
-                "NtWriteVirtualMemory",
             }
         )
         self.assertEqual(type(result), set)
@@ -44,12 +44,11 @@ class TestAbstract(unittest.TestCase):
         # so we check that the expected core set is always found.
         expected = set(
             {
-                "NtCreateThread",
-                "NtProtectVirtualMemory",
+                "NtCreateSection",
+                "NtMapViewOfSection",
+                "NtUnmapViewOfSection",
                 "NtCreateThreadEx",
-                "NtAllocateVirtualMemory",
                 "NtOpenProcess",
-                "NtWriteVirtualMemory",
             }
         )
         self.assertEqual(type(result), set)
