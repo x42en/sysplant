@@ -1,6 +1,6 @@
 [project]
 name = "sysplant"
-version = "0.4.0"
+version = "0.5.0"
 description = "SysPlant - Your syscall factory"
 authors = [
     {name = "Ben Mz", email = "x42en@users.noreply.github.com"}
@@ -8,6 +8,9 @@ authors = [
 license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.10,<4"
+
+[project.optional-dependencies]
+mcp = ["mcp[cli]>=1.0"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.0"
@@ -33,11 +36,6 @@ build-backend = "poetry.core.masonry.api"
 files = ["__metadata.py"]
 search = '__version__ = "{current_version}"'
 replace = '__version__ = "{new_version}"'
-
-[[tool.poetry_bumpversion.replacements]]
-files = ["README.md", "docs/index.md"]
-search = 'Version: {current_version}'
-replace = 'Version: {new_version}'
 
 [tool.pytest.ini_options]
 # Also see

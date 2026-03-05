@@ -15,7 +15,7 @@ The MCP server requires the optional `mcp` dependency group:
 poetry install --with mcp
 
 # Or via pip
-pip install sysplant "mcp[cli]>=1.0"
+pip install sysplant[mcp]
 ```
 
 ---
@@ -194,9 +194,9 @@ cargo build --release --target x86_64-pc-windows-gnu
 
 ### Troubleshooting
 
-| Issue                            | Solution                                                                                 |
-| -------------------------------- | ---------------------------------------------------------------------------------------- |
-| `ModuleNotFoundError: mcp`       | Install the mcp dependency: `poetry install --with mcp` or `pip install "mcp[cli]>=1.0"` |
-| SSE/HTTP transport fails to bind | Check that the port is available: `--port 9090`                                          |
-| `DBusError` during install       | Set `PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring` before `poetry install`       |
-| Generated code doesn't compile   | Verify you are using the recommended compilation flags for your language                 |
+| Issue                            | Solution                                                                               |
+| -------------------------------- | -------------------------------------------------------------------------------------- |
+| `ModuleNotFoundError: mcp`       | Install the mcp dependency: `poetry install --with mcp` or `pip install sysplant[mcp]` |
+| SSE/HTTP transport fails to bind | Check that the port is available: `--port 9090`                                        |
+| `DBusError` during install       | Set `PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring` before `poetry install`     |
+| Generated code doesn't compile   | Verify you are using the recommended compilation flags for your language               |
