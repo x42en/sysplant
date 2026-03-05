@@ -18,6 +18,12 @@ mkdocs-material = "^9.5.0"
 poetry-bumpversion = "^0.3.3"
 pytest-cov = "^6.0.0"
 
+[tool.poetry.group.mcp]
+optional = true
+
+[tool.poetry.group.mcp.dependencies]
+mcp = {version = ">=1.0", extras = ["cli"]}
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -1,49 +1,75 @@
-# Installation
-You want to contribute to this project ? :tada:  
-You are more than welcome, but before you head-start, please read the few instructions below...
+# Contributor Installation
 
-## OS supported
-- Debian 10
-- Debian 11
-- Ubuntu 20.04
-- Ubuntu 22.04
+You want to contribute to this project? :tada:  
+You are more than welcome! Please read the instructions below before getting started.
 
-## Setup a virtual environment
-Python Virtual Environment is **strongly** suggested in order to avoid dependecy conflicts on your system. The [poetry](https://python-poetry.org/) project is used for development.  
+---
 
-Tools to generate your doc are strongly advised except if you like to do this manually. This project use
+## Supported OS
 
-- lazydoc to auto-generate markdown doc from DocString
-- mkdocs to auto-generate html page from basic markdown structure and lazydoc output
-- mkdocs-awesome-pages-plugin in order to have a beautiful theme :wink:
+- Debian 13 / 12
+- Ubuntu 24.04 / 22.04
+
+## Setup a Virtual Environment
+
+A Python virtual environment is **strongly** recommended to avoid dependency conflicts. This project uses [Poetry](https://python-poetry.org/) for development.
 
 ## Code Style
-This project use [BLACK code rules](https://sysplant.readthedocs.io/en/main/contribute/code_rules/) as code style, please respect this.
 
-## Adapt code exceptions
-If you are using vscode along with poetry you can find inside `pyproject.toml` some exclusion on Black style code. If you need to add some extras ones [here](http://www.pydocstyle.org/en/6.2.2/error_codes.html) is the Error codes.
+This project follows [Black code rules](code_rules.md). Please respect this convention.
 
-## Install project
-Once your [prerequises](https://sysplant.readthedocs.io/en/main/contribute/prerequise/) are met, you should then launch poetry and install dependencies
+If you are using VS Code with Poetry, some Black exclusions are defined in `pyproject.toml`. To add more, see the [pydocstyle error codes](http://www.pydocstyle.org/en/6.2.2/error_codes.html).
+
+## Documentation Tooling
+
+The documentation stack is:
+
+- **[mkdocstrings](https://mkdocstrings.github.io/)** — Auto-generates API docs from Python docstrings (Google-style)
+- **[mkdocs-material](https://squidfunk.github.io/mkdocs-material/)** — Material theme for mkdocs
+- **[awesome-pages](https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin)** — Navigation ordering via `.pages` files
+
+See [Tests & Documentation](tests.md) for the full workflow.
+
+## Install the Project
+
+Once your [prerequisites](prerequise.md) are met:
+
 ```bash
-cd /path/to/project
+cd /path/to/sysplant
 poetry shell
 poetry install
 ```
 
-## Test publication
-  - Add repository to poetry config
-```sh
+To also install MCP server dependencies for development:
+
+```bash
+poetry install --with mcp
+```
+
+!!! tip
+If you encounter a `DBusError` during install, set:
+`bash
+    export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+    `
+
+## Test Publication
+
+### Configure test PyPI
+
+```bash
 poetry config repositories.test-pypi https://test.pypi.org/legacy/
 ```
 
-  - Get token from https://test.pypi.org/manage/account/token/
-  - store token
-```sh
-poetry config pypi-token.test-pypi  pypi-YYYYYYYY
+### Store your token
+
+Get a token from [https://test.pypi.org/manage/account/token/](https://test.pypi.org/manage/account/token/) then:
+
+```bash
+poetry config pypi-token.test-pypi pypi-YYYYYYYY
 ```
 
-  - Each time you need to publish
-```sh
+### Publish
+
+```bash
 poetry publish -r test-pypi
 ```

@@ -1,0 +1,5 @@
+title: Usage
+nav:
+  - CLI Tool: cli.md
+  - Python Library: lib.md
+  - MCP Server: mcp.md

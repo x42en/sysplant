@@ -1,0 +1,7 @@
+title: Contribute
+nav:
+  - Prerequisites: prerequise.md
+  - Installation: installation.md
+  - Code Rules: code_rules.md
+  - Tests: tests.md
+  - Poetry: poetry.md

@@ -118,7 +118,7 @@ Create a Cargo project and configure dependencies:
 cargo init --name inject example/rust-inject
 ```
 
-Edit `example/rust-inject/Cargo.toml` to add the required dependencies:
+Edit `example/rust-inject/Cargo.toml` to add the required dependencies and release profile:
 
 ```toml
 [package]
@@ -138,6 +138,13 @@ windows-sys = { version = "0.59", features = [
     "Win32_Security",
     "Win32_Foundation",
 ]}
+
+[profile.release]
+strip = true             # Strip all symbols
+lto = true               # Link-time optimization
+codegen-units = 1        # Single codegen unit for better optimization
+panic = "abort"          # No unwinding overhead
+overflow-checks = false  # Disable runtime overflow checks
 ```
 
 Configure the linker for cross-compilation by creating `example/rust-inject/.cargo/config.toml`:

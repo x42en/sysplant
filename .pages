@@ -1,14 +1,19 @@
 nav:
   - Home: index.md
-  - Contribute:
-      - Code rules: contribute/code_rules.md
-      - Installation: contribute/installation.md
-      - Prerequise: contribute/prerequise.md
-      - Tests: contribute/tests.md
   - Install:
+      - Prerequisites: install/prerequise.md
       - Installation: install/installation.md
-      - Prerequise: install/prerequise.md
       - Uninstall: install/uninstall.md
+  - Usage:
+      - CLI: usage/cli.md
+      - Python Library: usage/lib.md
+      - MCP Server: usage/mcp.md
   - Documentation:
-    - Overview: documentation/README.md
-    - ...
+      - Overview: documentation/README.md
+      - ...
+  - Contribute:
+      - Prerequisites: contribute/prerequise.md
+      - Installation: contribute/installation.md
+      - Code Rules: contribute/code_rules.md
+      - Tests: contribute/tests.md
+      - Poetry: contribute/poetry.md

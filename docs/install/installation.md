@@ -1,22 +1,46 @@
 # Installation
-Here are all the steps needed to install sysplant project. For more informations on how to use it see: [usage](index#usage)
 
-## Install it as dependency
+Here are all the steps needed to install the SysPlant project.
+For usage instructions see: [CLI usage](../usage/cli.md), [Python library](../usage/lib.md) or [MCP server](../usage/mcp.md).
+
+---
+
+## Install as a pip dependency
+
 ```bash
 pip3 install sysplant
 ```
 
-## Install it as tool
-- On Linux, MacOS based systems
-```
-git clone https://github.com/x42en/sysplant
-cd sysplant
-python3 ./main.py -h
+To also install the optional [MCP server](../usage/mcp.md) support:
+
+```bash
+pip3 install sysplant "mcp[cli]>=1.0"
 ```
 
-- On Windows based systems
+## Install with Poetry (recommended for development)
+
+```bash
+git clone https://github.com/x42en/sysplant && cd sysplant
+poetry install
+
+# Optional: include MCP server dependencies
+poetry install --with mcp
 ```
-C:\> git clone https://github.com/x42en/sysplant.git
-C:\> cd sysplant
-C:\> python .\main.py --help
-```
+
+## Install as a standalone tool
+
+=== "Linux / macOS"
+
+    ```bash
+    git clone https://github.com/x42en/sysplant
+    cd sysplant
+    python3 ./main.py -h
+    ```
+
+=== "Windows"
+
+    ```cmd
+    git clone https://github.com/x42en/sysplant.git
+    cd sysplant
+    python .\main.py --help
+    ```
