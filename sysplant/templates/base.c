@@ -14,20 +14,21 @@
 
 ##__SPT_DEBUG__##
 
-##__SPT_SEED__##
+    ##__SPT_SEED__##
 #define A 0x67452301
 #define B 0xefcdab89
 #define C 0x98badcfe
 #define D 0x10325476
 #define SPT_MAX_ENTRIES 500
-#define SPT_RVA2VA(Type, DllBase, Rva) (Type)((ULONG_PTR) DllBase + Rva)
+#define SPT_RVA2VA(Type, DllBase, Rva) (Type)((ULONG_PTR)DllBase + Rva)
 
-typedef struct{
-    uint64_t size;        // Size of input in bytes
-    uint32_t buffer[4];   // Current accumulation of hash
-    uint8_t input[64];    // Input to be used in the next step
-    uint8_t digest[16];   // Result of algorithm
-}SPT_HashContext;
+    typedef struct
+{
+    uint64_t size;      // Size of input in bytes
+    uint32_t buffer[4]; // Current accumulation of hash
+    uint8_t input[64];  // Input to be used in the next step
+    uint8_t digest[16]; // Result of algorithm
+} SPT_HashContext;
 
 // Typedefs are prefixed to avoid pollution.
 typedef struct _SPT_SYSCALL_ENTRY
@@ -43,29 +44,32 @@ typedef struct _SPT_SYSCALL_LIST
     SPT_SYSCALL_ENTRY Entries[SPT_MAX_ENTRIES];
 } SPT_SYSCALL_LIST, *PSPT_SYSCALL_LIST;
 
-typedef struct _SPT_PEB_LDR_DATA {
-	BYTE Reserved1[8];
-	PVOID Reserved2[3];
-	LIST_ENTRY InMemoryOrderModuleList;
+typedef struct _SPT_PEB_LDR_DATA
+{
+    BYTE Reserved1[8];
+    PVOID Reserved2[3];
+    LIST_ENTRY InMemoryOrderModuleList;
 } SPT_PEB_LDR_DATA, *PSPT_PEB_LDR_DATA;
 
-typedef struct _SPT_LDR_DATA_TABLE_ENTRY {
-	PVOID Reserved1[2];
-	LIST_ENTRY InMemoryOrderLinks;
-	PVOID Reserved2[2];
-	PVOID DllBase;
+typedef struct _SPT_LDR_DATA_TABLE_ENTRY
+{
+    PVOID Reserved1[2];
+    LIST_ENTRY InMemoryOrderLinks;
+    PVOID Reserved2[2];
+    PVOID DllBase;
 } SPT_LDR_DATA_TABLE_ENTRY, *PSPT_LDR_DATA_TABLE_ENTRY;
 
-typedef struct _SPT_PEB {
-	BYTE Reserved1[2];
-	BYTE BeingDebugged;
-	BYTE Reserved2[1];
-	PVOID Reserved3[2];
-	PSPT_PEB_LDR_DATA Ldr;
+typedef struct _SPT_PEB
+{
+    BYTE Reserved1[2];
+    BYTE BeingDebugged;
+    BYTE Reserved2[1];
+    PVOID Reserved3[2];
+    PSPT_PEB_LDR_DATA Ldr;
 } SPT_PEB, *PSPT_PEB;
 
 static uint32_t S[] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
-                       5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,
+                       5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
                        4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
                        6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21};
 
@@ -109,7 +113,8 @@ static uint8_t PADDING[] = {0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 /*
  * Rotates a 32-bit word left by n bits
  */
-uint32_t rotateLeft(uint32_t x, uint32_t n){
+uint32_t rotateLeft(uint32_t x, uint32_t n)
+{
     return (x << n) | (x >> (32 - n));
 }
 
@@ -121,28 +126,30 @@ DWORD SPT_HashSyscallName(PCSTR FunctionName);
 EXTERN_C DWORD SPT_GetSyscallNumber(DWORD FunctionHash);
 
 #ifndef InitializeObjectAttributes
-#define InitializeObjectAttributes( p, n, a, r, s ) { \
-	(p)->Length = sizeof( OBJECT_ATTRIBUTES );        \
-	(p)->RootDirectory = r;                           \
-	(p)->Attributes = a;                              \
-	(p)->ObjectName = n;                              \
-	(p)->SecurityDescriptor = s;                      \
-	(p)->SecurityQualityOfService = NULL;             \
-}
+#define InitializeObjectAttributes(p, n, a, r, s) \
+    {                                             \
+        (p)->Length = sizeof(OBJECT_ATTRIBUTES);  \
+        (p)->RootDirectory = r;                   \
+        (p)->Attributes = a;                      \
+        (p)->ObjectName = n;                      \
+        (p)->SecurityDescriptor = s;              \
+        (p)->SecurityQualityOfService = NULL;     \
+    }
 #endif
 ##__TYPE_DEFINITIONS__##
 #endif
 
-SPT_HashContext ctx;
+    SPT_HashContext ctx;
 SPT_SYSCALL_LIST SPT_SyscallList;
 
 /*
-* MD5 algorithm shamelessly stolen from https://github.com/Zunawe/md5-c 
-*/
+ * MD5 algorithm shamelessly stolen from https://github.com/Zunawe/md5-c
+ */
 /*
  * Initialize a context
  */
-void SPT_HashInit(SPT_HashContext *ctx){
+void SPT_HashInit(SPT_HashContext *ctx)
+{
     ctx->size = (uint64_t)0;
 
     ctx->buffer[0] = (uint32_t)A;
@@ -157,19 +164,23 @@ void SPT_HashInit(SPT_HashContext *ctx){
  * If the input fills out a block of 512 bits, apply the algorithm (SPT_HashStep)
  * and save the result in the buffer. Also updates the overall size.
  */
-void SPT_HashUpdate(SPT_HashContext *ctx, uint8_t *input_buffer, size_t input_len){
+void SPT_HashUpdate(SPT_HashContext *ctx, uint8_t *input_buffer, size_t input_len)
+{
     uint32_t input[16];
     unsigned int offset = ctx->size % 64;
     ctx->size += (uint64_t)input_len;
 
     // Copy each byte in input_buffer into the next space in our context input
-    for(unsigned int i = 0; i < input_len; ++i){
+    for (unsigned int i = 0; i < input_len; ++i)
+    {
         ctx->input[offset++] = (uint8_t)*(input_buffer + i);
-        if(offset % 64 == 0){
-            for(unsigned int j = 0; j < 16; ++j){
+        if (offset % 64 == 0)
+        {
+            for (unsigned int j = 0; j < 16; ++j)
+            {
                 input[j] = (uint32_t)(ctx->input[(j * 4) + 3]) << 24 |
                            (uint32_t)(ctx->input[(j * 4) + 2]) << 16 |
-                           (uint32_t)(ctx->input[(j * 4) + 1]) <<  8 |
+                           (uint32_t)(ctx->input[(j * 4) + 1]) << 8 |
                            (uint32_t)(ctx->input[(j * 4)]);
             }
             SPT_HashStep(ctx->buffer, input);
@@ -182,7 +193,8 @@ void SPT_HashUpdate(SPT_HashContext *ctx, uint8_t *input_buffer, size_t input_le
  * Pad the current input to get to 448 bytes, append the size in bits to the very end,
  * and save the result of the final iteration into digest.
  */
-void SPT_HashFinalize(SPT_HashContext *ctx){
+void SPT_HashFinalize(SPT_HashContext *ctx)
+{
     uint32_t input[16];
     unsigned int offset = ctx->size % 64;
     unsigned int padding_length = offset < 56 ? 56 - offset : (56 + 64) - offset;
@@ -193,10 +205,11 @@ void SPT_HashFinalize(SPT_HashContext *ctx){
 
     // Do a final update (internal to this function)
     // Last two 32-bit words are the two halves of the size (converted from bytes to bits)
-    for(unsigned int j = 0; j < 14; ++j){
+    for (unsigned int j = 0; j < 14; ++j)
+    {
         input[j] = (uint32_t)(ctx->input[(j * 4) + 3]) << 24 |
                    (uint32_t)(ctx->input[(j * 4) + 2]) << 16 |
-                   (uint32_t)(ctx->input[(j * 4) + 1]) <<  8 |
+                   (uint32_t)(ctx->input[(j * 4) + 1]) << 8 |
                    (uint32_t)(ctx->input[(j * 4)]);
     }
     input[14] = (uint32_t)(ctx->size * 8);
@@ -205,9 +218,10 @@ void SPT_HashFinalize(SPT_HashContext *ctx){
     SPT_HashStep(ctx->buffer, input);
 
     // Move the result into digest (convert from little-endian)
-    for(unsigned int i = 0; i < 4; ++i){
+    for (unsigned int i = 0; i < 4; ++i)
+    {
         ctx->digest[(i * 4) + 0] = (uint8_t)((ctx->buffer[i] & 0x000000FF));
-        ctx->digest[(i * 4) + 1] = (uint8_t)((ctx->buffer[i] & 0x0000FF00) >>  8);
+        ctx->digest[(i * 4) + 1] = (uint8_t)((ctx->buffer[i] & 0x0000FF00) >> 8);
         ctx->digest[(i * 4) + 2] = (uint8_t)((ctx->buffer[i] & 0x00FF0000) >> 16);
         ctx->digest[(i * 4) + 3] = (uint8_t)((ctx->buffer[i] & 0xFF000000) >> 24);
     }
@@ -216,7 +230,8 @@ void SPT_HashFinalize(SPT_HashContext *ctx){
 /*
  * Step on 512 bits of input with the main MD5 algorithm.
  */
-void SPT_HashStep(uint32_t *buffer, uint32_t *input){
+void SPT_HashStep(uint32_t *buffer, uint32_t *input)
+{
     uint32_t AA = buffer[0];
     uint32_t BB = buffer[1];
     uint32_t CC = buffer[2];
@@ -226,24 +241,26 @@ void SPT_HashStep(uint32_t *buffer, uint32_t *input){
 
     unsigned int j;
 
-    for(unsigned int i = 0; i < 64; ++i){
-        switch(i / 16){
-            case 0:
-                E = F(BB, CC, DD);
-                j = i;
-                break;
-            case 1:
-                E = G(BB, CC, DD);
-                j = ((i * 5) + 1) % 16;
-                break;
-            case 2:
-                E = H(BB, CC, DD);
-                j = ((i * 3) + 5) % 16;
-                break;
-            default:
-                E = I(BB, CC, DD);
-                j = (i * 7) % 16;
-                break;
+    for (unsigned int i = 0; i < 64; ++i)
+    {
+        switch (i / 16)
+        {
+        case 0:
+            E = F(BB, CC, DD);
+            j = i;
+            break;
+        case 1:
+            E = G(BB, CC, DD);
+            j = ((i * 5) + 1) % 16;
+            break;
+        case 2:
+            E = H(BB, CC, DD);
+            j = ((i * 3) + 5) % 16;
+            break;
+        default:
+            E = I(BB, CC, DD);
+            j = (i * 7) % 16;
+            break;
         }
 
         uint32_t temp = DD;
@@ -274,14 +291,12 @@ DWORD SPT_HashSyscallName(PCSTR name)
 
     memcpy(md5_hash, ctx.digest, 16);
 
-    Hash = ((DWORD) md5_hash[3] << 0)
-        | ((DWORD) md5_hash[2] << 8)
-        | ((DWORD) md5_hash[1] << 16)
-        | ((DWORD) md5_hash[0] << 24);
+    Hash = ((DWORD)md5_hash[3] << 0) | ((DWORD)md5_hash[2] << 8) | ((DWORD)md5_hash[1] << 16) | ((DWORD)md5_hash[0] << 24);
     return Hash;
 }
 
-WORD SPT_DetectPadding(PVOID address) {
+WORD SPT_DetectPadding(PVOID address)
+{
 #if defined(_WIN64)
     // If the process is 64-bit on a 64-bit OS, we need to search for syscall
     BYTE syscall_code[] = {0x0f, 0x05, 0xc3};
@@ -292,23 +307,27 @@ WORD SPT_DetectPadding(PVOID address) {
 
     WORD padding = 0x0;
     // Search padding size until next syscall instruction
-    while (memcmp((PVOID)syscall_code, SPT_RVA2VA(PVOID, address, padding), sizeof(syscall_code))) {
+    while (memcmp((PVOID)syscall_code, SPT_RVA2VA(PVOID, address, padding), sizeof(syscall_code)))
+    {
         padding++;
         // Windows stubs are quite small, don't waste time
-        if(padding > 0x22){
+        if (padding > 0x22)
+        {
             return 0x0;
         };
     }
-    
+
     return padding;
 }
 
 ##__SPT_ITERATOR__##
 
-##__SPT_RESOLVER__##
+    ##__SPT_RESOLVER__##
 
-##__SPT_CALLER__##
+    ##__SPT_SANITIZER__##
+
+    ##__SPT_CALLER__##
 
 #if defined(__GNUC__)
-##__SPT_STUBS__##
+    ##__SPT_STUBS__##
 #endif

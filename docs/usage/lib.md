@@ -70,6 +70,22 @@ bot.scramble()
 bot.output("/tmp/syscall")
 ```
 
+#### Egg Hunter (any language)
+
+The `egg_hunter` method replaces inline `syscall` instructions with random marker bytes.  
+At runtime, call `SPT_SanitizeSyscalls()` **before any Nt\* function** to patch them back.
+
+```python
+bot = sysplant.Sysplant(
+    arch="x64",
+    syscall="syscall",
+    language="c"
+)
+bot.generate(iterator="canterlot", method="egg_hunter", syscalls="common")
+bot.scramble()
+bot.output("/tmp/syscall")
+```
+
 ### Documentation
 
 A more precise documentation and associated options is available [here](https://x42en.github.io/sysplant/documentation/)

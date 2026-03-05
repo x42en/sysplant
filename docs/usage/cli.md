@@ -4,7 +4,7 @@ This project can be used as a simple command line tool.
 
 ### Installation
 
-> _Requirements: Pyton 3.8+_
+> _Requirements: Python 3.10+_
 
 This is a python project that will generate NIM/C/etc... source code (bit weird hu ?! :grin:). So you can use it inside your python project as an external module or directly on your device as a tool.  
 Install the project as you would do for any GitHub project.
@@ -62,7 +62,7 @@ In order to use the generate action you could check the associated help `./main.
 
 ```bash
 $ ./main.py generate -h
-usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom} ...
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c | -rust] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom} ...
 
 positional arguments:
   {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
@@ -81,6 +81,7 @@ Architecture options:
 Language options:
   -nim                  Generate NIM code (Default: true)
   -c                    Generate C code
+  -rust                 Generate Rust code
   -rust                 Generate Rust code
 
 Syscall options:
@@ -141,6 +142,15 @@ $ ./main.py generate -o syscall canterlot
 
 ```bash
 $ ./main.py generate -o syscall custom -i canterlot -m direct
+```
+
+#### Custom generation with Egg Hunter
+
+The egg_hunter method replaces inline `syscall` instructions with random marker bytes.
+At runtime, call `SPT_SanitizeSyscalls()` **before any Nt\* function** to patch them back.
+
+```bash
+$ ./main.py generate -c -o syscall custom -i canterlot -m egg_hunter
 ```
 
 #### Generate C Code using Canterlot's Gate for [Donut](https://github.com/TheWover/donut) functions

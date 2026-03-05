@@ -30,7 +30,7 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
 - [SysWhispers2](https://github.com/jthuraisamy/SysWhispers2) : Lookup syscall by name (start with Zw), sort addresses to retrieve syscall number
 - [SysWhispers3](https://github.com/klezVirus/SysWhispers3) : SysWhispers2 style but introduce direct/indirect/random jump with static offset
 - **Canterlot's Gate ! :unicorn: :rainbow:** _(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name_ : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
-- **Custom** Allows you to choose an iterator and a syscall stub method (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
+- **Custom** Allows you to choose an iterator and a syscall stub method (direct / indirect / random / egg_hunter) which describe the way your NtFunctions will be effectively called.
 
 > :warning: **DISCLAIMER**  
 > Please only use this tool on systems you have permission to access.  
@@ -41,7 +41,7 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
 
 ## Introduction
 
-This personal project aims to be a simple tool to better understand & generate different syscall retrieval methods, and being able to play with direct / indirect syscall stub. The first goal was to get my hands into NIM and then it overflow to C and Rust :wink: ...  
+This personal project aims to be a simple tool to better understand & generate different syscall retrieval methods, and being able to play with direct / indirect / egg_hunter syscall stub. The first goal was to get my hands into NIM and then it overflow to C and Rust :wink: ...  
 SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.
 
 ### Supported Languages
@@ -159,6 +159,7 @@ One your `iterator` has been choosen you can then specify a `method` option base
 1. **Direct:** the syscall is made directly in the Sysplant ASM call. You only need the syscall number but AV/EDR might see you...
 2. **Indirect:** the Sysplant ASM call jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
 3. **Random:** the Sysplant ASM call jump to a random syscall instruction of Ntdll stubs. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
+4. **Egg Hunter:** the inline `syscall` instruction is replaced by a random 8-byte marker (the _egg_). At runtime, call `SPT_SanitizeSyscalls()` **before any Nt\* function** to scan the `.text` section and patch every egg back to `syscall; ret`. This avoids static signatures on the `0F 05` opcode while keeping direct-call performance.
 
 [![Sysplant Stubs](http://sysplant.readthedocs.io/en/main/assets/sysplant_stubs.png)](http://sysplant.readthedocs.io/en/main/assets/sysplant_stubs.png)
 

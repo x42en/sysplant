@@ -114,7 +114,7 @@ if __name__ == "__main__":
         "-m",
         "--method",
         help="Select syscall stub (Default: direct)",
-        choices=["direct", "indirect", "random"],
+        choices=["direct", "indirect", "random", "egg_hunter"],
         default="direct",
     )
 

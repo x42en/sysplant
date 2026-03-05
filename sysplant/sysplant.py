@@ -105,6 +105,16 @@ class Sysplant:
         self.logger.info(f"\t. Selected syscall caller stub: {method}", stripped=True)
         self.__engine.set_method(method)
 
+        # Display egg info if egg_hunter method is used
+        egg = self.__engine.get_egg()
+        if egg:
+            egg_hex = ", ".join(f"0x{b:02x}" for b in egg)
+            self.logger.info(f"\t. Egg hunter pattern (x2): [{egg_hex}]", stripped=True)
+            self.logger.info(
+                "\t. IMPORTANT: Call SPT_SanitizeSyscalls() before any Nt* function!",
+                stripped=True,
+            )
+
         # Generate stubs
         if syscalls == "all":
             self.logger.info("\t. All supported functions selected", stripped=True)

@@ -149,6 +149,37 @@ class TestAbstract(unittest.TestCase):
 
         # Ensure generated content is valid
 
+    def test_02_generate_egg_hunter(self):
+        klass = Sysplant()
+        result = klass.generate(
+            iterator="canterlot", method="egg_hunter", syscalls="common"
+        )
+
+        # Ensure iterator is present
+        with pkg_resources.files(pkg_iterators).joinpath("canterlot.nim").open(
+            "r"
+        ) as iterator:
+            self.assertIn(iterator.read(), result)
+
+        # Ensure resolver is present (same as direct: number resolver)
+        with pkg_resources.files(pkg_resolvers).joinpath("number.nim").open(
+            "r"
+        ) as resolver:
+            self.assertIn(resolver.read(), result)
+
+        # Ensure no literal 'syscall' instruction in the output
+        self.assertNotIn("        syscall\n", result)
+
+        # Ensure sanitizer function is present
+        self.assertIn("SPT_SanitizeSyscalls", result)
+
+        # Ensure egg pattern arrays are present
+        self.assertIn("SPT_EGG_PATTERN", result)
+        self.assertIn("SPT_EGG_REPLACE", result)
+
+        # Ensure .byte directives are present (egg marker in stub)
+        self.assertIn(".byte 0x", result)
+
     def test_03_scramble_direct(self):
         klass = Sysplant()
         klass.generate(iterator="freshy", method="direct", syscalls="common")
@@ -168,6 +199,14 @@ class TestAbstract(unittest.TestCase):
     def test_03_scramble_random(self):
         klass = Sysplant()
         klass.generate(iterator="canterlot", method="random", syscalls="common")
+        result = klass.scramble(True)
+
+        for entry in SysPlantConstants.INTERNAL_FUNCTIONS:
+            self.assertNotIn(entry, result)
+
+    def test_03_scramble_egg_hunter(self):
+        klass = Sysplant()
+        klass.generate(iterator="canterlot", method="egg_hunter", syscalls="common")
         result = klass.scramble(True)
 
         for entry in SysPlantConstants.INTERNAL_FUNCTIONS:

@@ -170,6 +170,8 @@ unsafe fn get_peb() -> *mut SPT_PEB {
 
 ##__SPT_RESOLVER__##
 
+##__SPT_SANITIZER__##
+
 ##__SPT_CALLER__##
 
 ##__SPT_STUBS__##

@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 import json
+import random
+import string
 
 import importlib.resources as pkg_resources
 
@@ -103,8 +105,9 @@ class TemplateManager(AbstractFactory):
         if name is None:
             raise ValueError("Template name can not be null")
 
-        # Check only extension dot is set
-        if not name.replace(".", "", 1).replace(f"_{self.__arch}", "", 1).isalnum():
+        # Check only extension dot is set and name contains valid chars
+        sanitized = name.replace(".", "", 1).replace(f"_{self.__arch}", "", 1)
+        if not sanitized.replace("_", "").isalnum():
             raise ValueError("Invalid template name")
 
         # Use the new files() API instead of open_text
@@ -235,11 +238,25 @@ class TemplateManager(AbstractFactory):
             # Syscall number and instruction address are required
             resolver = self.__get_resolver("number")
             resolver += self.__get_resolver("random")
+        elif name == "egg_hunter":
+            # Syscall number is required (same as direct)
+            resolver = self.__get_resolver("number")
         else:
             raise NotImplementedError("Method not supported.")
 
         # Set resolver code in template
         self.replace_tag("SPT_RESOLVER", resolver)
+
+        # Handle egg_hunter sanitizer or remove the tag
+        if name == "egg_hunter":
+            self.__egg = self.__generate_egg()
+            sanitizer = self.__load_template(pkg_stubs, f"sanitizer.{self.__ext}")
+            self.replace_tag("SPT_SANITIZER", sanitizer)
+            # Replace egg bytes placeholder in sanitizer
+            egg_bytes = self.__format_egg_bytes()
+            self.replace_tag("EGG_BYTES", egg_bytes)
+        else:
+            self.remove_tag("SPT_SANITIZER")
 
         # Load call stub
         self.__set_caller(name)
@@ -254,6 +271,44 @@ class TemplateManager(AbstractFactory):
             self.remove_tag("DEBUG_INT")
 
         return self.data
+
+    def __generate_egg(self) -> list:
+        """
+        Private method to generate a random 4-byte egg pattern.
+        Uses two random lowercase ASCII chars separated by null bytes.
+
+        Returns:
+            list: 4-byte egg pattern [char, 0x00, 0x00, char]
+        """
+        c1 = ord(random.choice(string.ascii_lowercase))
+        c2 = ord(random.choice(string.ascii_lowercase))
+        return [c1, 0x00, 0x00, c2]
+
+    def __format_egg_bytes(self) -> str:
+        """
+        Private method to format the egg pattern (repeated twice = 8 bytes) for the target language.
+
+        Returns:
+            str: Formatted egg bytes string for template substitution
+        """
+        # Egg is repeated twice to form an 8-byte marker
+        full_egg = self.__egg + self.__egg
+        if self.__lang == "c":
+            return ", ".join(f"0x{b:02x}" for b in full_egg)
+        elif self.__lang == "nim":
+            return ", ".join(f"0x{b:02X}'u8" for b in full_egg)
+        elif self.__lang == "rust":
+            return ", ".join(f"0x{b:02x}" for b in full_egg)
+        return ""
+
+    def get_egg(self) -> list:
+        """
+        Public method to retrieve the generated egg pattern.
+
+        Returns:
+            list: 4-byte egg pattern, or empty list if not set
+        """
+        return getattr(self, "_TemplateManager__egg", [])
 
     def __get_resolver(self, name: str) -> str:
         """
@@ -273,12 +328,12 @@ class TemplateManager(AbstractFactory):
         """
         Public method used to retrieve the language specific code of the main call function.
         The caller code is adapted with correct syscall instruction (using SYSCALL_INT tag)
+        or with egg marker bytes (using EGG_MARKER tag for egg_hunter method).
         The caller code embbed interuption (int 3) in case of DEBUG state (using DUBG_INT tag)
         The selected caller is then used to replace the SPT_CALLER tag in template.
 
         Args:
             name (str): Caller name to use
-            resolver (str): Resolver name to use
 
         Returns:
             str: Template content after modification
@@ -288,9 +343,36 @@ class TemplateManager(AbstractFactory):
         self.replace_tag("SPT_CALLER", data)
 
         # Adapt caller with proper options
-        self.replace_tag("SYSCALL_INT", self.__syscall)
+        if name == "egg_hunter":
+            egg_marker_asm = self.__format_egg_marker_asm()
+            self.replace_tag("EGG_MARKER", egg_marker_asm)
+        else:
+            self.replace_tag("SYSCALL_INT", self.__syscall)
 
         return self.data
+
+    def __format_egg_marker_asm(self) -> str:
+        """
+        Private method to format the egg marker as inline assembly bytes for the target language.
+        The egg is 4 bytes repeated twice (8 bytes total), replacing the syscall + ret instructions.
+
+        Returns:
+            str: Assembly bytes directive for the egg marker
+        """
+        full_egg = self.__egg + self.__egg
+        if self.__lang == "c":
+            # GCC inline asm: .byte directives
+            byte_lines = " \\n\\\n    ".join(f".byte 0x{b:02x}" for b in full_egg)
+            return byte_lines
+        elif self.__lang == "nim":
+            # NIM inline asm: db directives
+            byte_lines = "\n        ".join(f".byte 0x{b:02x}" for b in full_egg)
+            return byte_lines
+        elif self.__lang == "rust":
+            # Rust global_asm: each .byte as a separate string
+            byte_lines = ",\n    ".join(f'".byte 0x{b:02x}"' for b in full_egg)
+            return byte_lines
+        return ""
 
     def __generate_definitions(self) -> str:
         """
