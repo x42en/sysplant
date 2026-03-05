@@ -4,13 +4,13 @@ This project has been designed so it can be embedded in your project as a simple
 
 ### Installation
 
-If you are using standard pip3 package manager
+Using pip:
 
 ```bash
 pip3 install sysplant
 ```
 
-If you are more likely to use virtual environments _(you should!)_ this project is based on [Poetry](https://python-poetry.org/) virtual env.
+Using Poetry:
 
 ```bash
 poetry add sysplant
@@ -24,34 +24,31 @@ poetry add sysplant
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-from sysplant import sysplant
+from sysplant.sysplant import Sysplant
 
 # Initialize the class
-bot = sysplant.Sysplant(
-    arch="x64",
-    syscall="syscall",
-    language="nim"
-)
+bot = Sysplant(arch="x64", language="nim")
+
 # Generate code
 bot.generate(
     iterator="canterlot",
     method="random",
     syscalls="common"
 )
+
 # Optionally randomize internal names
 bot.scramble()
-# Generate file
+
+# Write to file
 bot.output("/tmp/syscall")
 ```
 
 #### C
 
 ```python
-bot = sysplant.Sysplant(
-    arch="x64",
-    syscall="syscall",
-    language="c"
-)
+from sysplant.sysplant import Sysplant
+
+bot = Sysplant(arch="x64", language="c")
 bot.generate(iterator="canterlot", method="random", syscalls="common")
 bot.scramble()
 bot.output("/tmp/syscall")
@@ -60,11 +57,9 @@ bot.output("/tmp/syscall")
 #### Rust
 
 ```python
-bot = sysplant.Sysplant(
-    arch="x64",
-    syscall="syscall",
-    language="rust"
-)
+from sysplant.sysplant import Sysplant
+
+bot = Sysplant(arch="x64", language="rust")
 bot.generate(iterator="canterlot", method="random", syscalls="common")
 bot.scramble()
 bot.output("/tmp/syscall")
@@ -72,20 +67,53 @@ bot.output("/tmp/syscall")
 
 #### Egg Hunter (any language)
 
-The `egg_hunter` method replaces inline `syscall` instructions with random marker bytes.  
-At runtime, call `SPT_SanitizeSyscalls()` **before any Nt\* function** to patch them back.
+The `egg_hunter` method replaces inline `syscall` instructions with random marker bytes.
+At runtime, a sanitizer auto-patches them back before `main()` is called.
 
 ```python
-bot = sysplant.Sysplant(
-    arch="x64",
-    syscall="syscall",
-    language="c"
-)
+from sysplant.sysplant import Sysplant
+
+bot = Sysplant(arch="x64", language="c")
 bot.generate(iterator="canterlot", method="egg_hunter", syscalls="common")
+bot.scramble(True)  # Returns the generated code as a string
+bot.output("/tmp/syscall")
+```
+
+#### Custom function list
+
+```python
+from sysplant.sysplant import Sysplant
+
+bot = Sysplant(arch="x64", language="nim")
+bot.generate(
+    iterator="canterlot",
+    method="indirect",
+    syscalls=["NtCreateThreadEx", "NtAllocateVirtualMemory", "NtWriteVirtualMemory"]
+)
 bot.scramble()
 bot.output("/tmp/syscall")
 ```
 
+#### Scan for NtFunction usage
+
+```python
+from sysplant.sysplant import Sysplant
+
+bot = Sysplant()
+found = bot.list("/path/to/your/inject.c")
+print(f"Found {len(found)} NtFunctions: {', '.join(sorted(found))}")
+```
+
+### Available Parameters
+
+| Parameter  | Values                                                                           | Default    |
+| ---------- | -------------------------------------------------------------------------------- | ---------- |
+| `arch`     | `x64`, `x86`, `wow`                                                              | `x64`      |
+| `language` | `nim`, `c`, `rust`                                                               | `nim`      |
+| `iterator` | `hell`, `halo`, `tartarus`, `freshy`, `syswhispers`, `syswhispers3`, `canterlot` | —          |
+| `method`   | `direct`, `indirect`, `random`, `egg_hunter`                                     | —          |
+| `syscalls` | `"common"`, `"donut"`, `"all"`, or a list of NtFunction names                    | `"common"` |
+
 ### Documentation
 
-A more precise documentation and associated options is available [here](https://x42en.github.io/sysplant/documentation/)
+The full API documentation is available in the [API Reference](../documentation/README.md) section.

@@ -6,8 +6,7 @@ This project can be used as a simple command line tool.
 
 > _Requirements: Python 3.10+_
 
-This is a python project that will generate NIM/C/etc... source code (bit weird hu ?! :grin:). So you can use it inside your python project as an external module or directly on your device as a tool.  
-Install the project as you would do for any GitHub project.
+SysPlant is a Python project that generates NIM, C and Rust source code for Windows syscall hooking. You can use it inside your Python project as an external module or directly as a standalone tool.
 
 ```sh
 git clone https://github.com/x42en/sysplant && cd sysplant
@@ -17,7 +16,7 @@ poetry shell
 
 ### Usage
 
-This tool comes with various options that should be self-explanatory using the standard `-h` flag
+This tool comes with various options that should be self-explanatory using the standard `-h` flag.
 
 ```bash
 $ ./main.py -h
@@ -28,7 +27,7 @@ usage: main.py [-h] [--debug | --verbose | --quiet] {list,generate} ...
 positional arguments:
   {list,generate}
 
-optional arguments:
+options:
   -h, --help       show this help message and exit
 
 Output options:
@@ -37,13 +36,14 @@ Output options:
   --quiet          Remove all messages upon execution
 ```
 
-By now only two actions are supported `list` (that will parse file or directory to find NtFunction usage) and `generate` that will generate a syscall hooking file to import into your project.
+Two actions are supported:
+
+- **`list`** — Parse a file or directory to find NtFunction usage
+- **`generate`** — Generate a syscall hooking source file to import into your project
 
 Supported output languages are **NIM** (default), **C** and **Rust**.
 
 #### List action
-
-In order to use the list action you could check the associated help `./main.py list -h`
 
 ```bash
 $ ./main.py list -h
@@ -52,26 +52,24 @@ usage: main.py list [-h] path
 positional arguments:
   path        Path to search for NtFunction, could be a file or a directory
 
-optional arguments:
+options:
   -h, --help  show this help message and exit
 ```
 
 #### Generate action
 
-In order to use the generate action you could check the associated help `./main.py generate -h`
-
 ```bash
 $ ./main.py generate -h
-usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c | -rust] [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom} ...
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c | -rust]
+                        [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT
+                        {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
+                        ...
 
-positional arguments:
-  {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
-
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -x, --scramble        Randomize internal function names to evade static analysis
   -o OUTPUT, --output OUTPUT
-                        Output path for NIM generated file
+                        Output path for generated file
 
 Architecture options:
   -x86                  Set mode to 32bits
@@ -81,7 +79,6 @@ Architecture options:
 Language options:
   -nim                  Generate NIM code (Default: true)
   -c                    Generate C code
-  -rust                 Generate Rust code
   -rust                 Generate Rust code
 
 Syscall options:
@@ -93,115 +90,96 @@ Syscall options:
 
 ### Examples
 
-Here are some usage examples that will generate common NtFunctions only.  
-This tool is not restricted to them, please **[READ THE DOC](https://x42en.github.io/sysplant/)**
+All examples below generate the **common** NtFunction preset by default.
 
-#### Hell's Gate generation
+#### Iterator examples
 
 ```bash
+# Hell's Gate
 $ ./main.py generate -o syscall hell
-```
 
-#### Halo's Gate generation
-
-```bash
+# Halo's Gate
 $ ./main.py generate -o syscall halo
-```
 
-#### Tartarus's Gate generation
-
-```bash
+# Tartarus' Gate
 $ ./main.py generate -o syscall tartarus
-```
 
-#### FreshyCall generation
-
-```bash
+# FreshyCalls
 $ ./main.py generate -o syscall freshy
-```
 
-#### Syswhispers2 like generation
-
-```bash
+# SysWhispers2
 $ ./main.py generate -o syscall syswhispers
-```
 
-#### Syswhispers3 like generation
-
-```bash
+# SysWhispers3
 $ ./main.py generate -o syscall syswhispers3
-```
 
-#### Canterlot's Gate generation
-
-```bash
+# Canterlot's Gate (recommended)
 $ ./main.py generate -o syscall canterlot
 ```
 
-#### Custom generation
+#### Custom iterator + method
 
 ```bash
+# Direct syscall with Canterlot resolver
 $ ./main.py generate -o syscall custom -i canterlot -m direct
+
+# Indirect syscall
+$ ./main.py generate -o syscall custom -i canterlot -m indirect
+
+# Random indirect syscall
+$ ./main.py generate -o syscall custom -i canterlot -m random
 ```
 
-#### Custom generation with Egg Hunter
+#### Egg Hunter method
 
-The egg_hunter method replaces inline `syscall` instructions with random marker bytes.
-At runtime, call `SPT_SanitizeSyscalls()` **before any Nt\* function** to patch them back.
+The `egg_hunter` method replaces inline `syscall` instructions with random marker bytes.
+At runtime, a sanitizer function patches them back before `main()` is called.
 
 ```bash
 $ ./main.py generate -c -o syscall custom -i canterlot -m egg_hunter
 ```
 
-#### Generate C Code using Canterlot's Gate for [Donut](https://github.com/TheWover/donut) functions
+#### Language-specific examples
 
 ```bash
+# Generate C code for Donut shellcode functions
 $ ./main.py generate -c -o syscall -p donut canterlot
-```
 
-#### Generate Rust Code using Canterlot's Gate
-
-```bash
+# Generate Rust code
 $ ./main.py generate -rust -o syscall.rs canterlot
-```
 
-#### Generate Rust Code with scramble and specific functions
-
-```bash
+# Generate Rust code with scramble and specific functions
 $ ./main.py generate -rust -x -o syscall.rs -f NtCreateSection,NtMapViewOfSection,NtUnmapViewOfSection,NtCreateThreadEx canterlot
 ```
 
-#### Real world Injection
+### Real World Injection Examples
 
-##### NIM Example
+Working injection examples (launching `calc.exe` as proof of concept) are provided in the `example/` directory.
+See the [examples README](https://github.com/x42en/sysplant/tree/main/example) for detailed compilation instructions.
 
-A simple example (launching calc.exe) is accessible using `inject.nim`.
+#### NIM
 
-1. Be sure to install [winim](https://github.com/khchen/winim) and [checksums](https://github.com/nim-lang/checksums) libraries first: `nimble install winim checksums`
-2. Generate the `syscall.nim` file with `./main.py generate -o example/syscall canterlot`
-3. Compile the injection template file with `nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=app.exe example/inject.nim` on Linux (be sure to have mingw installed)
-4. Copy the `app.exe` generated on your Windows device.
+1. Install [winim](https://github.com/khchen/winim) and [checksums](https://github.com/nim-lang/checksums): `nimble install winim checksums`
+2. Generate: `./main.py generate -o example/syscall canterlot`
+3. Compile: `nim c -d=release -d=danger -d=strip --opt=size -d=mingw --app=console --cpu=amd64 --out=inject.exe example/inject.nim`
+4. Transfer `inject.exe` to your Windows target.
 
-##### Rust Example
+#### C
 
-A simple example (launching calc.exe) is accessible using `inject.rs`.
+1. Install `mingw-w64`: `sudo apt install mingw-w64`
+2. Generate: `./main.py generate -c -o example/syscall canterlot`
+3. Compile: `x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel example/inject.c -o inject.exe`
+4. Transfer `inject.exe` to your Windows target.
 
-1. Be sure to install the Rust cross-compilation toolchain: `rustup target add x86_64-pc-windows-gnu` and have `mingw-w64` installed
-2. Generate the `syscall.rs` file with `./main.py generate -rust -x -o example/rust-inject/src/syscall.rs canterlot`
-3. Compile the injection template with `cd example/rust-inject && cargo build --release --target x86_64-pc-windows-gnu`
-4. Copy the `.exe` generated in `target/x86_64-pc-windows-gnu/release/` on your Windows device.
+#### Rust
 
-##### C Example
-
-A simple example (launching calc.exe) is accessible using `inject.c`.
-
-1. Be sure to have `mingw-w64` installed
-2. Generate the `syscall.c` file with `./main.py generate -c -o example/syscall canterlot`
-3. Compile: `x86_64-w64-mingw32-gcc -O2 -s example/inject.c -o inject.exe`
-4. Copy the `inject.exe` generated on your Windows device.
+1. Install cross-compilation toolchain: `rustup target add x86_64-pc-windows-gnu` + `sudo apt install mingw-w64`
+2. Generate: `./main.py generate -rust -o example/rust-inject/src/syscall.rs canterlot`
+3. Compile: `cd example/rust-inject && cargo build --release --target x86_64-pc-windows-gnu`
+4. Transfer the `.exe` from `target/x86_64-pc-windows-gnu/release/` to your Windows target.
 
 ### Documentation
 
-The API documentation and associated options is available [here](https://x42en.github.io/sysplant/documentation/)
+The full API documentation is available in the [API Reference](../documentation/README.md) section.
 
 Happy Hacking :beach: !

@@ -228,6 +228,22 @@ class TemplateManager(AbstractFactory):
         return self.data
 
     def set_method(self, name: str) -> str:
+        """
+        Set the syscall caller stub method.
+
+        Loads the appropriate resolver(s) and caller stub template based on
+        the chosen method. For egg_hunter, generates a random egg pattern
+        and injects the sanitizer template.
+
+        Args:
+            name (str): Method name — direct, indirect, random, or egg_hunter.
+
+        Raises:
+            NotImplementedError: If the method name is not supported.
+
+        Returns:
+            str: Template content after modification.
+        """
         if name == "direct":
             # Only Syscall number is required
             resolver = self.__get_resolver("number")

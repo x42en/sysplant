@@ -21,7 +21,16 @@
 [![Code style: Black](https://img.shields.io/badge/code%20style-Black-000000.svg)](https://github.com/psf/black)
 [![Documentation Status](https://readthedocs.org/projects/sysplant/badge/?version=latest)](https://sysplant.readthedocs.io/en/latest/?badge=latest)
 
-SysPlant is a python generation tool of the currently known syscall hooking methods. It currently supports following gates (aka: iterators): - [Hell's Gate](https://github.com/am0nsec/HellsGate) : Lookup syscall by first opcodes - [Halos's Gate](https://blog.sektor7.net/#!res/2021/halosgate.md) : Lookup syscall by first opcodes and search nearby if first instruction is a JMP - [Tartarus' Gate](https://github.com/trickster0/TartarusGate) : Lookup syscall by first opcodes and search nearby if first or third instruction is a JMP - [FreshyCalls](https://github.com/crummie5/FreshyCalls) : Lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number - [SysWhispers2](https://github.com/jthuraisamy/SysWhispers2) : Lookup syscall by name (start with Zw), sort addresses to retrieve syscall number - [SysWhispers3](https://github.com/klezVirus/SysWhispers3) : SysWhispers2 style but introduce direct/indirect/random jump with static offset - **Canterlot's Gate ! :unicorn: :rainbow:** _(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name_ : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps. - **Custom** Allows you to choose an iterator and a syscall stub method (direct / indirect / random) which describe the way your NtFunctions will be effectively called.
+SysPlant is a python generation tool of the currently known syscall hooking methods. It currently supports following gates (aka: iterators):
+
+- [Hell's Gate](https://github.com/am0nsec/HellsGate) : Lookup syscall by first opcodes
+- [Halos's Gate](https://blog.sektor7.net/#!res/2021/halosgate.md) : Lookup syscall by first opcodes and search nearby if first instruction is a JMP
+- [Tartarus' Gate](https://github.com/trickster0/TartarusGate) : Lookup syscall by first opcodes and search nearby if first or third instruction is a JMP
+- [FreshyCalls](https://github.com/crummie5/FreshyCalls) : Lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number
+- [SysWhispers2](https://github.com/jthuraisamy/SysWhispers2) : Lookup syscall by name (start with Zw), sort addresses to retrieve syscall number
+- [SysWhispers3](https://github.com/klezVirus/SysWhispers3) : SysWhispers2 style but introduce direct/indirect/random jump with static offset
+- **Canterlot's Gate ! :unicorn: :rainbow:** _(from an initial idea of [MDSEC article](https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/)) but who was missing a pony name_ : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.
+- **Custom** Allows you to choose an iterator and a syscall stub method (direct / indirect / random / egg_hunter) which describe the way your NtFunctions will be effectively called.
 
 > :warning: **DISCLAIMER**  
 > Please only use this tool on systems you have permission to access.  
@@ -32,7 +41,7 @@ SysPlant is a python generation tool of the currently known syscall hooking meth
 
 ## Introduction
 
-This personal project aims to be a simple tool to better understand & generate different syscall retrieval methods, and being able to play with direct / indirect syscall stub. The first goal was to get my hands into NIM and then it overflow to C and Rust :wink: ...  
+This personal project aims to be a simple tool to better understand & generate different syscall retrieval methods, and being able to play with direct / indirect / egg_hunter syscall stub. The first goal was to get my hands into NIM and then it overflow to C and Rust :wink: ...  
 SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.
 
 ### Supported Languages
@@ -42,6 +51,115 @@ SysPlant has been developped for Linux users, some stuff might be broken within 
 | NIM      | :white_check_mark: Stable | `nim c -d=release -d=danger -d=strip --opt=size -d=mingw --cpu=amd64` |
 | C        | :white_check_mark: Stable | `x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel`                 |
 | Rust     | :white_check_mark: Stable | `cargo build --release --target x86_64-pc-windows-gnu`                |
+
+### MCP Server
+
+SysPlant ships with a built-in **[Model Context Protocol (MCP)](https://modelcontextprotocol.io/)** server, allowing AI coding assistants (Claude Code, Cursor, Windsurf, etc.) to generate syscall code directly from their chat interface.
+
+```bash
+# stdio (default — plug into your AI client)
+python bridge_mcp_sysplant.py
+
+# SSE or Streamable HTTP for web-based clients
+python bridge_mcp_sysplant.py --transport sse --port 9090
+```
+
+See the full guide: **[Sysplant as a MCP server](usage/mcp.md)**
+
+### General usage
+
+```
+$ sysplant -h
+
+usage: main.py [-h] [--debug | --verbose | --quiet] {list,generate} ...
+
+..:: SysPlant - Your Syscall Factory ::..
+
+positional arguments:
+  {list,generate}
+
+options:
+  -h, --help       show this help message and exit
+
+Output options:
+  --debug          Display all DEBUG messages upon execution
+  --verbose        Display all INFO messages upon execution
+  --quiet          Remove all messages upon execution
+```
+
+```sh
+$ sysplant generate -h
+
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c | -rust]
+                        [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT
+                        {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
+                        ...
+
+options:
+  -h, --help            show this help message and exit
+  -x, --scramble        Randomize internal function names to evade static analysis
+  -o OUTPUT, --output OUTPUT
+                        Output path for generated file
+
+Architecture options:
+  -x86                  Set mode to 32bits
+  -wow                  Set mode to WoW64 (execution of 32bits on 64bits)
+  -x64                  Set mode to 64bits (Default True)
+
+Language options:
+  -nim                  Generate NIM code (Default: true)
+  -c                    Generate C code
+  -rust                 Generate Rust code
+
+Syscall options:
+  -p {all,donut,common}, --preset {all,donut,common}
+                        Preset functions to generate (Default: common)
+  -f FUNCTIONS, --functions FUNCTIONS
+                        Comma-separated functions
+```
+
+### Example output
+
+Here is an example of C syscall generation using **Canterlot's Gate** iterator:
+
+```sh
+$ sysplant generate -c -o syscalls.c canterlot
+
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠶⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢀⣀⡀⠀⢀⣠⣤⣴⣶⣶⡦⠤⢤⣤⣀⣀⣼⠀⠀⡽⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠈⠫⣯⠙⡟⢿⣿⣿⡿⠁⠀⢠⣾⣿⣿⣿⡿⠀⠀⢹⠘⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⣼⣿⣷⣧⡀⢱⠈⠀⠀⠀⣿⣿⣿⣿⣿⡀⠀⠀⢸⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠀..:: SysPlant - Your Syscall Factory ::..
+⠀⣼⣿⣿⣿⣿⣿⣿⡄⢀⣀⣠⣿⣿⣿⠿⢿⣷⣤⡀⠈⠀⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢠⣿⣿⣿⣿⣿⣿⠿⠛⠉⠉⠀⡇⣾⣿⣦⣀⣿⡄⠀⠀⢰⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀              Sysplant (2023) - 0x42en
+⢸⣿⣿⣿⠿⢯⣷⢄⠀⠀⠀⠀⡄⢻⣿⣯⣻⣿⡧⠄⠀⢸⠀
+⠘⣿⠟⠁⠀⠚⢻⣦⣱⣄⠀⠀⢣⠈⠛⣽⣿⠿⠭⠀⣠⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡤⠶⠶⠶⠶⢤⣄⡀⠀⠀⠀⠀⠀ Canterlot's Gate (2022) - @MDSecLabs
+⠀⠁⠀⠀⠀⠀⠀⠻⣿⣿⠀⠀⠈⠂⠀⠀⢀⣄⣠⣴⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠶⠋⠁⠀⠀⠀⠀⠀⠀⠀⠉⠳⢦⡀⠀                            @0x42en
+⠀⠀⠀⠀⠀⠀⠀⠀⣸⠋⠄⢠⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⡴⠃⠀⣠⣤⣶⣶⣾⣶⣶⣦⣄⠀⠀⠀⠹⣆⠀⠀⠀⠀  Syswhispers3 (2022) - @klezVirus
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⠲⠴⠯⠤⠤⢶⢾⣿⣿⣿⣿⣿⠏⠷⣄⢀⣀⣀⣀⡀⣼⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠸⣧⠀⠀   Syswhispers2 (2021) - @Jackson_T
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠏⠈⠉⣡⣾⣿⠏⠀⢰⣿⠉⣩⠀⠉⢙⣿⡿⠛⠉⠉⠙⠛⢿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⢻⣇⠀                         @modexpblog
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⣿⣿⡿⠋⠀⢀⣾⡿⠀⣉⣀⣇⠘⠋⣿⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⡆⠀⠀⢸⣿⡆ Tartarus' Gate (2021) - @trickster0
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠃⠀⠀⠘⢯⡀⠀⢀⣾⣿⠇⣴⠨⣿⣿⡯⠀⢸⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⡇⠀⠀⢸⣿⣷    Halo's Gate (2021) - @Sektor7net
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡆⠀⠀⠀⠈⠻⢦⣾⣿⠏⠀⠈⢈⣝⡟⠁⣶⣾⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⡇⠀⠀⢸⣿⣿⡀   FreshyCalls (2020) - @crummie5
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡀⢄⣀⡀⠀⠀⠉⠁⠀⠰⣄⠀⠁⠀⠀⢀⡏⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⠃⠀⠀⣸⣿⣿⡇   Hell's Gate (2020) - @RtlMateusz
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⡀⢹⠁⠀⢠⠶⠤⠤⢴⡾⢦⡀⠀⠀⣼⠦⡄⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⣿⣿⣿⠇                        @am0nsec
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣷⠇⠀⠀⢸⡄⠀⠀⠀⠙⢆⠙⢦⡀⠀⠀⠙⣦⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⢰⣿⡿⠋⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⠀⡟⢻⡀⠀⠀⠀⠈⢳⡀⢳⡀⠀⠀⠈⢧⡀⠀⠀⠀⠀⠀⣿⣿⣿⠁⠀⢀⣼⠟⠁⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⡇⠀⢧⠀⠀⠀⠀⠀⢷⠀⢳⠀⠀⠀⠈⢧⠀⠀⠀⠀⢀⣿⣿⡏⢀⣴⠟⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⢸⠇⠀⠸⡆⠀⠀⠀⠀⢸⠀⢸⡇⠀⠀⠀⠘⣧⠀⠀⠀⢸⣿⣿⡷⠛⠁⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⠀⣾⠀⠀⠀⣧⠀⠀⠀⠀⢸⠀⠀⡇⠀⠀⠀⠀⢸⡆⠀⠀⣿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠎⠀⠀⠀⠀⠀⣰⠇⠀⠀⠀⣿⠀⠀⠀⠀⣏⣀⣸⠇⠀⠀⠀⠀⠀⣷⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⠤⣤⣤⣤⡤⠴⠛⠛⠛⠛⠉⠁⠀⠀⠀⠀⠈⠉⢿⣄⣀⣠⣤⡤⠶⠋⠀⠀⠀⠀⠀⠀⠀⠀
+
+
+[+] Summary of params used
+        . Language: C
+        . Architecture: x64
+        . Selected syscall iterator: canterlot
+        . Selected syscall caller stub: random
+        . Common supported functions selected
+        . Randomize internal function: False
+[+] Syscall file written to syscalls.c.h
+```
 
 ## What is `iterator` option ?
 
@@ -55,6 +173,7 @@ Once your `iterator` has been choosen you can then specify a `method` option bas
 1. **Direct:** the syscall is made directly in the Sysplant ASM call. You only need the syscall number but AV/EDR might see you...
 2. **Indirect:** the Sysplant ASM call jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
 3. **Random:** the Sysplant ASM call jump to a random syscall instruction of Ntdll stubs. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.
+4. **Egg Hunter:** the inline `syscall` instruction is replaced by a random 8-byte marker (the _egg_). At runtime, call `SPT_SanitizeSyscalls()` **before any Nt\* function** to scan the `.text` section and patch every egg back to `syscall; ret`. This avoids static signatures on the `0F 05` opcode while keeping direct-call performance.
 
 [![Sysplant Stubs](http://sysplant.readthedocs.io/en/main/assets/sysplant_stubs.png)](http://sysplant.readthedocs.io/en/main/assets/sysplant_stubs.png)
 
@@ -62,16 +181,35 @@ Once your `iterator` has been choosen you can then specify a `method` option bas
 
 I've tried to keep an up to date documentation, so please **[READ THE DOC](http://sysplant.readthedocs.io/en/main/)**. You will find there many information about the tool's usages and a complete description of the classes and methods.
 
-Some specifics usages are described: - [Sysplant as a CLI tool](http://sysplant.readthedocs.io/en/main/usage/cli) - [Sysplant as a Python's module](http://sysplant.readthedocs.io/en/main/usage/lib)
+Some specifics usages are described:
+
+- [Sysplant as a CLI tool](usage/cli.md)
+- [Sysplant as a Python's module](usage/lib.md)
+- [Sysplant as a MCP server](usage/mcp.md)
 
 ## Credits
 
-Massive shout-out to these useful projects that helps me during this journey, or individuals for their reviews - [@alice blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/) - [@redops blogpost about direct vs indirect syscalls](https://redops.at/en/blog/direct-syscalls-a-journey-from-high-to-low) - [@Jackson_T & @modexpblog for Syswhispers2](https://github.com/jthuraisamy/SysWhispers2) - [@klezvirus for syswhispers3](https://github.com/klezVirus/SysWhispers3)
+Massive shout-out to these useful projects that helps me during this journey, or individuals for their reviews
+
+- [@alice blogpost about syscalls techniques](https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/)
+- [@redops blogpost about direct vs indirect syscalls](https://redops.at/en/blog/direct-syscalls-a-journey-from-high-to-low)
+- [@Jackson_T & @modexpblog for Syswhispers2](https://github.com/jthuraisamy/SysWhispers2)
+- [@klezvirus for syswhispers3](https://github.com/klezVirus/SysWhispers3)
 
 ## :construction: TODO
 
-This project is really in WIP state...  
-Some PR & reviews are more than welcome :tada: ! - [x] Add internal names randomization - [x] Setup documentation - [x] Setup tests - [ ] Add x86 support - [ ] Add WoW64 support - [x] Setup NIM templates - [x] Setup C templates - [x] Setup Rust templates - [ ] Setup Go / CPP / C# / Whatever templates
+This project is in WIP state...  
+Some PR & reviews are more than welcome :tada: !
+
+- [x] Add internal names randomization
+- [x] Setup documentation
+- [x] Setup tests
+- [ ] Add x86 support
+- [ ] Add WoW64 support
+- [x] Setup NIM templates
+- [x] Setup C templates
+- [x] Setup Rust templates
+- [ ] Setup Go / CPP / C# / Whatever templates
 
 ## License
 

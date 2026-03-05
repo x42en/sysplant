@@ -1,35 +1,75 @@
-# Tests
-This application should be used as a dependency from other projects. Development has been made using poetry, so you should have it installed.  
-In case you really do not want to use poetry, you coul run test using `pytest` 
+# Tests & Documentation
 
-## Commands
-While using poetry framework you could simply run
+SysPlant uses **pytest** for testing and **mkdocs** + **mkdocstrings** for documentation generation.
+
+---
+
+## Running Tests
+
+With Poetry (recommended):
+
 ```bash
 poetry run pytest
 ```
 
-If you do not want to use poetry you can run
+Or without Poetry:
+
 ```bash
 python3 -m pytest
 ```
 
-## Behaviour
-If everything is right you should generate 1 single file `syscall.nim` using the default command line:
+For verbose output with short tracebacks:
+
 ```bash
-./main.py
+poetry run pytest tests/ -v --tb=short
 ```
 
-Some samples files are stored in `examples-output` so you can compare them with your results.
+## Test Coverage
+
+The project currently has **68 tests** covering:
+
+- Abstract base classes
+- NIM code generation (all iterators × all methods)
+- C code generation (all iterators × all methods)
+- Rust code generation (all iterators × all methods)
+- Scramble mode for each language
+- File output verification
+
+---
 
 ## Documentation
-This project use [mkdocs](https://www.mkdocs.org/getting-started/) associated with [lazydocs](https://github.com/ml-tooling/lazydocs) to auto-generate documentation.  
 
-1. Write your Doc-String by using [AutoDocString](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring) in VSCode
-2. Generate the project documentation using LazyDoc
-```sh
-export PYTHONPATH=$PWD; lazydocs --output-path="./docs/documentation" --overview-file="README.md" --src-base-url="https://github.com/x42en/sysplant/blob/master" sysplant/
-```
-3. Serving local docs for preview using mkdocs
-```sh
+This project uses [mkdocs](https://www.mkdocs.org/) with:
+
+- [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) — Material theme
+- [mkdocstrings](https://mkdocstrings.github.io/) — Auto-generates API docs from Python docstrings
+- [awesome-pages](https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin) — Navigation ordering via `.pages` files
+
+### Writing Docstrings
+
+1. Use **Google-style** docstrings (`Args:`, `Returns:`, `Raises:`).
+2. Optionally use [AutoDocString](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring) in VS Code to scaffold them.
+
+### API Reference
+
+The API reference in `docs/documentation/README.md` uses mkdocstrings `::: module.path` directives.
+They automatically render class and method docs from the source code — no manual generation step needed.
+
+### Local Preview
+
+Install doc dependencies and serve locally:
+
+```bash
+pip install -r docs/requirements.txt
 mkdocs serve
 ```
+
+Then open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+### Build for Production
+
+```bash
+mkdocs build
+```
+
+The generated site will be in the `public/` directory.

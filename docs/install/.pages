@@ -1,0 +1,5 @@
+title: Install
+nav:
+  - Prerequisites: prerequise.md
+  - Installation: installation.md
+  - Uninstall: uninstall.md

@@ -35,6 +35,21 @@ class Sysplant:
         self.__arch = arch
 
     def list(self, search_path: str) -> set:
+        """
+        Scan a file or directory for NtFunction / ZwFunction references.
+
+        Walks source files matching supported extensions (.h, .c, .cpp, .nim, .rs)
+        and detects which Nt/Zw functions are referenced.
+
+        Args:
+            search_path (str): Path to a file or directory to scan.
+
+        Raises:
+            OSError: If the path does not exist.
+
+        Returns:
+            set: Set of NtFunction names found.
+        """
         results = set()
         # Get all supported functions
         patterns = self.__engine.list_supported_syscalls()
@@ -74,12 +89,12 @@ class Sysplant:
         Modifications are let to TemplateManager class.
 
         Args:
-            iterator (str): Iterator name to use (hell, halo, tartarus, freshy, syswhispers, canterlot)
-            method (str): Stub type to use (direct, indirect, random)
+            iterator (str): Iterator name to use (hell, halo, tartarus, freshy, syswhispers, syswhispers3, canterlot)
+            method (str): Stub type to use (direct, indirect, random, egg_hunter)
             syscalls (Union[str, list]): NtFunctions list names to hook, or preset name (all|common|donut)
 
         Raises:
-            ValueError: _description_
+            ValueError: If syscalls is not a valid preset name or a list of function names
 
         Returns:
             str: Template content after generation

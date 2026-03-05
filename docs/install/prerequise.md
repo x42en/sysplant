@@ -1,2 +1,22 @@
-# Prerequise
-This project does not need any extra-lib, so except for the python3 presence nothing is required to run it.
+# Prerequisites
+
+SysPlant requires **Python 3.10+**. The core library has no external runtime dependencies.
+
+## Required
+
+| Dependency   | Version | Purpose            |
+| ------------ | ------- | ------------------ |
+| Python       | >= 3.10 | Runtime            |
+| pip / Poetry | latest  | Package management |
+
+## Optional
+
+| Dependency | Version | Purpose                                              |
+| ---------- | ------- | ---------------------------------------------------- |
+| `mcp[cli]` | >= 1.0  | MCP server for AI coding assistants                  |
+| MinGW      | latest  | Cross-compile C / Rust output from Linux             |
+| Nim        | >= 2.0  | Compile NIM output                                   |
+| Rust       | latest  | Compile Rust output (`x86_64-pc-windows-gnu` target) |
+
+!!! note
+The MCP server dependency is **optional** and only needed if you plan to expose SysPlant through a Model Context Protocol server. See [MCP Server usage](../usage/mcp.md) for details.

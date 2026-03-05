@@ -52,6 +52,20 @@ SysPlant has been developped for Linux users, some stuff might be broken within 
 | C        | :white_check_mark: Stable | `x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel`                 |
 | Rust     | :white_check_mark: Stable | `cargo build --release --target x86_64-pc-windows-gnu`                |
 
+### MCP Server
+
+SysPlant ships with a built-in **[Model Context Protocol (MCP)](https://modelcontextprotocol.io/)** server, allowing AI coding assistants (Claude Code, Cursor, Windsurf, etc.) to generate syscall code directly from their chat interface.
+
+```bash
+# stdio (default — plug into your AI client)
+python bridge_mcp_sysplant.py
+
+# SSE or Streamable HTTP for web-based clients
+python bridge_mcp_sysplant.py --transport sse --port 9090
+```
+
+See the full guide: **[Sysplant as a MCP server](http://sysplant.readthedocs.io/en/main/usage/mcp)**
+
 ### General usage
 
 ```
@@ -154,7 +168,7 @@ If you want to go further in the explanations of _what is a syscall ?_ you shoul
 
 ## What is `method` option ?
 
-One your `iterator` has been choosen you can then specify a `method` option based on the existing way to call syscalls. All the iterator are supported which let you select whatever you want as a final syscall stub.
+Once your `iterator` has been choosen you can then specify a `method` option based on the existing way to call syscalls. All the iterator are supported which let you select whatever you want as a final syscall stub.
 
 1. **Direct:** the syscall is made directly in the Sysplant ASM call. You only need the syscall number but AV/EDR might see you...
 2. **Indirect:** the Sysplant ASM call jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions
@@ -171,6 +185,7 @@ Some specifics usages are described:
 
 - [Sysplant as a CLI tool](http://sysplant.readthedocs.io/en/main/usage/cli)
 - [Sysplant as a Python's module](http://sysplant.readthedocs.io/en/main/usage/lib)
+- [Sysplant as a MCP server](http://sysplant.readthedocs.io/en/main/usage/mcp)
 
 ## Credits
 
