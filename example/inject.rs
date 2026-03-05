@@ -23,6 +23,14 @@
             "Win32_Foundation",
         ]}
 
+    Recommended release profile in Cargo.toml:
+        [profile.release]
+        strip = true
+        lto = true
+        codegen-units = 1
+        panic = "abort"
+        overflow-checks = false
+
     Compile on linux using:
         cargo build --release --target x86_64-pc-windows-gnu
 */

@@ -37,11 +37,11 @@ SysPlant has been developped for Linux users, some stuff might be broken within 
 
 ### Supported Languages
 
-| Language | Status                    | Cross-compile from Linux                     |
-| -------- | ------------------------- | -------------------------------------------- |
-| NIM      | :white_check_mark: Stable | `nim c -d=mingw --cpu=amd64`                 |
-| C        | :white_check_mark: Stable | `x86_64-w64-mingw32-gcc`                     |
-| Rust     | :white_check_mark: Stable | `cargo build --target x86_64-pc-windows-gnu` |
+| Language | Status                    | Cross-compile from Linux                                              |
+| -------- | ------------------------- | --------------------------------------------------------------------- |
+| NIM      | :white_check_mark: Stable | `nim c -d=release -d=danger -d=strip --opt=size -d=mingw --cpu=amd64` |
+| C        | :white_check_mark: Stable | `x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel`                 |
+| Rust     | :white_check_mark: Stable | `cargo build --release --target x86_64-pc-windows-gnu`                |
 
 ## What is `iterator` option ?
 
