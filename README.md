@@ -52,6 +52,101 @@ SysPlant has been developped for Linux users, some stuff might be broken within 
 | C        | :white_check_mark: Stable | `x86_64-w64-mingw32-gcc`                     |
 | Rust     | :white_check_mark: Stable | `cargo build --target x86_64-pc-windows-gnu` |
 
+### General usage
+
+```
+$ sysplant -h
+
+usage: main.py [-h] [--debug | --verbose | --quiet] {list,generate} ...
+
+..:: SysPlant - Your Syscall Factory ::..
+
+positional arguments:
+  {list,generate}
+
+options:
+  -h, --help       show this help message and exit
+
+Output options:
+  --debug          Display all DEBUG messages upon execution
+  --verbose        Display all INFO messages upon execution
+  --quiet          Remove all messages upon execution
+```
+
+```sh
+$ sysplant generate -h
+
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c | -rust]
+                        [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT
+                        {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
+                        ...
+
+options:
+  -h, --help            show this help message and exit
+  -x, --scramble        Randomize internal function names to evade static analysis
+  -o OUTPUT, --output OUTPUT
+                        Output path for generated file
+
+Architecture options:
+  -x86                  Set mode to 32bits
+  -wow                  Set mode to WoW64 (execution of 32bits on 64bits)
+  -x64                  Set mode to 64bits (Default True)
+
+Language options:
+  -nim                  Generate NIM code (Default: true)
+  -c                    Generate C code
+  -rust                 Generate Rust code
+
+Syscall options:
+  -p {all,donut,common}, --preset {all,donut,common}
+                        Preset functions to generate (Default: common)
+  -f FUNCTIONS, --functions FUNCTIONS
+                        Comma-separated functions
+```
+
+### Example output
+
+Here is an example of C syscall generation using **Canterlot's Gate** iterator:
+
+```sh
+$ sysplant generate -c -o syscalls.c canterlot
+
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠶⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢀⣀⡀⠀⢀⣠⣤⣴⣶⣶⡦⠤⢤⣤⣀⣀⣼⠀⠀⡽⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠈⠫⣯⠙⡟⢿⣿⣿⡿⠁⠀⢠⣾⣿⣿⣿⡿⠀⠀⢹⠘⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⣼⣿⣷⣧⡀⢱⠈⠀⠀⠀⣿⣿⣿⣿⣿⡀⠀⠀⢸⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠀..:: SysPlant - Your Syscall Factory ::..
+⠀⣼⣿⣿⣿⣿⣿⣿⡄⢀⣀⣠⣿⣿⣿⠿⢿⣷⣤⡀⠈⠀⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢠⣿⣿⣿⣿⣿⣿⠿⠛⠉⠉⠀⡇⣾⣿⣦⣀⣿⡄⠀⠀⢰⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀              Sysplant (2023) - 0x42en
+⢸⣿⣿⣿⠿⢯⣷⢄⠀⠀⠀⠀⡄⢻⣿⣯⣻⣿⡧⠄⠀⢸⠀
+⠘⣿⠟⠁⠀⠚⢻⣦⣱⣄⠀⠀⢣⠈⠛⣽⣿⠿⠭⠀⣠⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡤⠶⠶⠶⠶⢤⣄⡀⠀⠀⠀⠀⠀ Canterlot's Gate (2022) - @MDSecLabs
+⠀⠁⠀⠀⠀⠀⠀⠻⣿⣿⠀⠀⠈⠂⠀⠀⢀⣄⣠⣴⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠶⠋⠁⠀⠀⠀⠀⠀⠀⠀⠉⠳⢦⡀⠀                            @0x42en
+⠀⠀⠀⠀⠀⠀⠀⠀⣸⠋⠄⢠⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⡴⠃⠀⣠⣤⣶⣶⣾⣶⣶⣦⣄⠀⠀⠀⠹⣆⠀⠀⠀⠀  Syswhispers3 (2022) - @klezVirus
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⠲⠴⠯⠤⠤⢶⢾⣿⣿⣿⣿⣿⠏⠷⣄⢀⣀⣀⣀⡀⣼⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠸⣧⠀⠀   Syswhispers2 (2021) - @Jackson_T
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠏⠈⠉⣡⣾⣿⠏⠀⢰⣿⠉⣩⠀⠉⢙⣿⡿⠛⠉⠉⠙⠛⢿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⢻⣇⠀                         @modexpblog
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⣿⣿⡿⠋⠀⢀⣾⡿⠀⣉⣀⣇⠘⠋⣿⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⡆⠀⠀⢸⣿⡆ Tartarus' Gate (2021) - @trickster0
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠃⠀⠀⠘⢯⡀⠀⢀⣾⣿⠇⣴⠨⣿⣿⡯⠀⢸⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⡇⠀⠀⢸⣿⣷    Halo's Gate (2021) - @Sektor7net
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡆⠀⠀⠀⠈⠻⢦⣾⣿⠏⠀⠈⢈⣝⡟⠁⣶⣾⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⡇⠀⠀⢸⣿⣿⡀   FreshyCalls (2020) - @crummie5
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡀⢄⣀⡀⠀⠀⠉⠁⠀⠰⣄⠀⠁⠀⠀⢀⡏⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⠃⠀⠀⣸⣿⣿⡇   Hell's Gate (2020) - @RtlMateusz
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⡀⢹⠁⠀⢠⠶⠤⠤⢴⡾⢦⡀⠀⠀⣼⠦⡄⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⣿⣿⣿⠇                        @am0nsec
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣷⠇⠀⠀⢸⡄⠀⠀⠀⠙⢆⠙⢦⡀⠀⠀⠙⣦⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⢰⣿⡿⠋⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⠀⡟⢻⡀⠀⠀⠀⠈⢳⡀⢳⡀⠀⠀⠈⢧⡀⠀⠀⠀⠀⠀⣿⣿⣿⠁⠀⢀⣼⠟⠁⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⡇⠀⢧⠀⠀⠀⠀⠀⢷⠀⢳⠀⠀⠀⠈⢧⠀⠀⠀⠀⢀⣿⣿⡏⢀⣴⠟⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⢸⠇⠀⠸⡆⠀⠀⠀⠀⢸⠀⢸⡇⠀⠀⠀⠘⣧⠀⠀⠀⢸⣿⣿⡷⠛⠁⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⠀⣾⠀⠀⠀⣧⠀⠀⠀⠀⢸⠀⠀⡇⠀⠀⠀⠀⢸⡆⠀⠀⣿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠎⠀⠀⠀⠀⠀⣰⠇⠀⠀⠀⣿⠀⠀⠀⠀⣏⣀⣸⠇⠀⠀⠀⠀⠀⣷⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⠤⣤⣤⣤⡤⠴⠛⠛⠛⠛⠉⠁⠀⠀⠀⠀⠈⠉⢿⣄⣀⣠⣤⡤⠶⠋⠀⠀⠀⠀⠀⠀⠀⠀
+
+
+[+] Summary of params used
+        . Language: C
+        . Architecture: x64
+        . Selected syscall iterator: canterlot
+        . Selected syscall caller stub: random
+        . Common supported functions selected
+        . Randomize internal function: False
+[+] Syscall file written to syscalls.c.h
+```
+
 ## What is `iterator` option ?
 
 Sysplant is based on existing mechanisms for syscall number and addresses retrieval. I do not claim any of their discovery, I just harmonize all this methods in a single tool to be able to generate them easily using templates. These mechanisms are called `iterator`, if you look at the code you'll probably understand why :wink:  
