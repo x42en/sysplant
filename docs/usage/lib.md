@@ -54,6 +54,17 @@ bot.scramble()
 bot.output("/tmp/syscall")
 ```
 
+#### C++
+
+```python
+from sysplant.sysplant import Sysplant
+
+bot = Sysplant(arch="x64", language="cpp")
+bot.generate(iterator="canterlot", method="random", syscalls="common")
+bot.scramble()
+bot.output("/tmp/syscall")
+```
+
 #### Rust
 
 ```python
@@ -109,7 +120,7 @@ print(f"Found {len(found)} NtFunctions: {', '.join(sorted(found))}")
 | Parameter  | Values                                                                           | Default    |
 | ---------- | -------------------------------------------------------------------------------- | ---------- |
 | `arch`     | `x64`, `x86`, `wow`                                                              | `x64`      |
-| `language` | `nim`, `c`, `rust`                                                               | `nim`      |
+| `language` | `nim`, `c`, `cpp`, `rust`                                                        | `nim`      |
 | `iterator` | `hell`, `halo`, `tartarus`, `freshy`, `syswhispers`, `syswhispers3`, `canterlot` | —          |
 | `method`   | `direct`, `indirect`, `random`, `egg_hunter`                                     | —          |
 | `syscalls` | `"common"`, `"donut"`, `"all"`, or a list of NtFunction names                    | `"common"` |

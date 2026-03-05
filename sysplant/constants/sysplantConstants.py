@@ -7,14 +7,15 @@ class SysPlantConstants:
 
     """
 
-    SEARCH_EXT = (".h", ".c", ".cpp", ".nim", ".rs")
+    SEARCH_EXT = (".h", ".hpp", ".c", ".cpp", ".nim", ".rs")
     NIM_TAB = "    "
     C_TAB = "    "
+    CPP_TAB = "    "
     RUST_TAB = "    "
     TAG_START = "##__"
     TAG_END = "__##"
-    LANG_EXT = {"nim": "nim", "c": "c", "rust": "rs"}
-    OUTPUT_EXT = {"nim": "nim", "c": "h", "rust": "rs"}
+    LANG_EXT = {"nim": "nim", "c": "c", "cpp": "cpp", "rust": "rs"}
+    OUTPUT_EXT = {"nim": "nim", "c": "h", "cpp": "hpp", "rust": "rs"}
     RANDOM_WORD_SIZE = 8
     INTERNAL_FUNCTIONS = [
         "SPT_HEADER_H_",

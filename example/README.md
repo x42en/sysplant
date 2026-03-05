@@ -55,7 +55,40 @@ inject.exe
 
 ---
 
-## 2. Nim Example
+## 2. C++ Example
+
+### Environment Setup
+
+Install the MinGW cross-compiler for Windows targeting (same as C):
+
+```bash
+sudo apt install mingw-w64
+```
+
+### Generate Syscall File
+
+```bash
+# Generate syscall.hpp next to inject.cpp
+python -m sysplant generate -cpp -o example/syscall.hpp canterlot
+```
+
+### Compile
+
+```bash
+x86_64-w64-mingw32-g++ -Wall -s -static -masm=intel example/inject.cpp -o example/inject.exe
+```
+
+### Run
+
+Transfer `inject.exe` to a Windows machine and execute it:
+
+```cmd
+inject.exe
+```
+
+---
+
+## 3. Nim Example
 
 ### Environment Setup
 
@@ -95,7 +128,7 @@ inject.exe
 
 ---
 
-## 3. Rust Example
+## 4. Rust Example
 
 ### Environment Setup
 
@@ -223,6 +256,7 @@ After generating all examples, the directory should look like:
 example/
 ├── README.md           # This file
 ├── inject.c            # C injection example
+├── inject.cpp          # C++ injection example
 ├── inject.nim          # Nim injection example
 ├── inject.rs           # Rust injection example (copy to rust-inject/src/main.rs)
 └── rust-inject/        # Cargo project (created by user)

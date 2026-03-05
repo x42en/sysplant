@@ -91,6 +91,9 @@ if __name__ == "__main__":
         "-c", action="store_true", help="Generate C code", default=False
     )
     language.add_argument(
+        "-cpp", action="store_true", help="Generate C++ code", default=False
+    )
+    language.add_argument(
         "-rust", action="store_true", help="Generate Rust code", default=False
     )
 
@@ -203,8 +206,8 @@ if __name__ == "__main__":
             lang_set = "nim"  # Default option
             if args.c:
                 lang_set = "c"
-            elif args.rust:
-                lang_set = "rust"
+            elif args.cpp:
+                lang_set = "cpp"
             elif args.rust:
                 lang_set = "rust"
 
