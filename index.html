@@ -1,0 +1,1357 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/x42en/sysplant/">
+      
+      
+      
+        <link rel="next" href="install/prerequise/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>SysPlant</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="SysPlant" class="md-header__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SysPlant
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="SysPlant" class="md-nav__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SysPlant
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Languages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-iterator-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is iterator option ?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-method-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is method option ?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#construction-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :construction: TODO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Install
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="install/prerequise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="install/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="install/uninstall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Uninstall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Tool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage/lib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="documentation" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contribute
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contribute
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contribute/prerequise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contribute/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contribute/code_rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contribute/tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contribute/poetry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Poetry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Languages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-iterator-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is iterator option ?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-method-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is method option ?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#construction-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :construction: TODO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<!-- markdownlint-disable MD033 MD041 -->
+<h1 align="center">
+..:: SysPlant ::..
+</h1>
+
+<p align="center">
+  <strong>Your Syscall Factory</strong> <i>(feat. Canterlot's Gate)</i>
+</p>
+
+<p align="center">
+  <img src="http://sysplant.readthedocs.io/en/main/assets/canterlot.jpeg" alt="Canterlot's Gate"/>
+</p>
+
+<p><a href="https://pypi.org/project/sysplant/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/sysplant.svg?logo=pypi&amp;logoColor=FFE873" /></a>
+<a href="https://pypi.org/project/sysplant/"><img alt="Supported Python versions" src="https://img.shields.io/pypi/pyversions/sysplant.svg?logo=python&amp;logoColor=FFE873" /></a>
+<a href="https://github.com/x42en/sysplant"><img alt="Build Status" src="https://github.com/x42en/sysplant/actions/workflows/build.yml/badge.svg" /></a>
+<a href="https://github.com/x42en/sysplant/blob/main/LICENSE"><img alt="Project Licence" src="https://img.shields.io/github/license/x42en/sysplant.svg" /></a>
+<a href="https://pypistats.org/packages/sysplant"><img alt="PyPI downloads" src="https://img.shields.io/pypi/dm/sysplant.svg" /></a>
+<a href="https://www.codefactor.io/repository/github/x42en/sysplant"><img alt="Code Quality" src="https://www.codefactor.io/repository/github/x42en/sysplant/badge" /></a>
+<a href="https://modelcontextprotocol.io"><img alt="MCP Server" src="https://img.shields.io/badge/MCP-Server-blueviolet" /></a>
+<a href="https://github.com/psf/black"><img alt="Code style: Black" src="https://img.shields.io/badge/code%20style-Black-000000.svg" /></a>
+<a href="https://sysplant.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/sysplant/badge/?version=latest" /></a></p>
+<p>SysPlant is a python generation tool of the currently known syscall hooking methods. It currently supports following gates (aka: iterators):</p>
+<ul>
+<li><a href="https://github.com/am0nsec/HellsGate">Hell's Gate</a> : Lookup syscall by first opcodes</li>
+<li><a href="https://blog.sektor7.net/#!res/2021/halosgate.md">Halos's Gate</a> : Lookup syscall by first opcodes and search nearby if first instruction is a JMP</li>
+<li><a href="https://github.com/trickster0/TartarusGate">Tartarus' Gate</a> : Lookup syscall by first opcodes and search nearby if first or third instruction is a JMP</li>
+<li><a href="https://github.com/crummie5/FreshyCalls">FreshyCalls</a> : Lookup syscall by name (start with Nt and not Ntdll), sort addresses to retrieve syscall number</li>
+<li><a href="https://github.com/jthuraisamy/SysWhispers2">SysWhispers2</a> : Lookup syscall by name (start with Zw), sort addresses to retrieve syscall number</li>
+<li><a href="https://github.com/klezVirus/SysWhispers3">SysWhispers3</a> : SysWhispers2 style but introduce direct/indirect/random jump with static offset</li>
+<li><strong>Canterlot's Gate ! :unicorn: :rainbow:</strong> <em>(from an initial idea of <a href="https://www.mdsec.co.uk/2022/04/resolving-system-service-numbers-using-the-exception-directory/">MDSEC article</a>) but who was missing a pony name</em> : Lookup syscall using Runtime Exception Table (sorted by syscall number) and detect offset to syscall instruction for random jumps.</li>
+<li><strong>Custom</strong> Allows you to choose an iterator and a syscall stub method (direct / indirect / random / egg_hunter) which describe the way your NtFunctions will be effectively called.</li>
+</ul>
+<blockquote>
+<p>:warning: <strong>DISCLAIMER</strong><br />
+Please only use this tool on systems you have permission to access.<br />
+Usage is restricted to Pentesting or Education only.<br />
+All credits are based on my own research, please feel free to claim any method if I made mistakes...</p>
+</blockquote>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>This personal project aims to be a simple tool to better understand &amp; generate different syscall retrieval methods, and being able to play with direct / indirect / egg_hunter syscall stub. The first goal was to get my hands into NIM and then it overflow to C, C++ and Rust :wink: ...<br />
+SysPlant has been developped for Linux users, some stuff might be broken within Windows or Mac. PR are welcome if you found anything that does not work as expected.</p>
+<h3 id="supported-languages">Supported Languages</h3>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Status</th>
+<th>Cross-compile from Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NIM</td>
+<td>:white_check_mark: Stable</td>
+<td><code>nim c -d=release -d=danger -d=strip --opt=size -d=mingw --cpu=amd64</code></td>
+</tr>
+<tr>
+<td>C</td>
+<td>:white_check_mark: Stable</td>
+<td><code>x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel</code></td>
+</tr>
+<tr>
+<td>C++</td>
+<td>:white_check_mark: Stable</td>
+<td><code>x86_64-w64-mingw32-g++ -Wall -s -static -masm=intel</code></td>
+</tr>
+<tr>
+<td>Rust</td>
+<td>:white_check_mark: Stable</td>
+<td><code>cargo build --release --target x86_64-pc-windows-gnu</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="mcp-server">MCP Server</h3>
+<p>SysPlant ships with a built-in <strong><a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a></strong> server, allowing AI coding assistants (Claude Code, Cursor, Windsurf, etc.) to generate syscall code directly from their chat interface.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># stdio (default — plug into your AI client)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>bridge_mcp_sysplant.py
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># SSE or Streamable HTTP for web-based clients</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>python<span class="w"> </span>bridge_mcp_sysplant.py<span class="w"> </span>--transport<span class="w"> </span>sse<span class="w"> </span>--port<span class="w"> </span><span class="m">9090</span>
+</code></pre></div>
+<p>See the full guide: <strong><a href="usage/mcp/">Sysplant as a MCP server</a></strong></p>
+<h3 id="general-usage">General usage</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ sysplant -h
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>usage: main.py [-h] [--debug | --verbose | --quiet] {list,generate} ...
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>..:: SysPlant - Your Syscall Factory ::..
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>positional arguments:
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  {list,generate}
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>options:
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  -h, --help       show this help message and exit
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Output options:
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  --debug          Display all DEBUG messages upon execution
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>  --verbose        Display all INFO messages upon execution
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>  --quiet          Remove all messages upon execution
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>sysplant<span class="w"> </span>generate<span class="w"> </span>-h
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>usage:<span class="w"> </span>main.py<span class="w"> </span>generate<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>-x86<span class="w"> </span><span class="p">|</span><span class="w"> </span>-wow<span class="w"> </span><span class="p">|</span><span class="w"> </span>-x64<span class="o">]</span><span class="w"> </span><span class="o">[</span>-nim<span class="w"> </span><span class="p">|</span><span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>-cpp<span class="w"> </span><span class="p">|</span><span class="w"> </span>-rust<span class="o">]</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">                        </span><span class="o">[</span>-p<span class="w"> </span><span class="o">{</span>all,donut,common<span class="o">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>-f<span class="w"> </span>FUNCTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>-x<span class="o">]</span><span class="w"> </span>-o<span class="w"> </span>OUTPUT
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">                        </span><span class="o">{</span>hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom<span class="o">}</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">                        </span>...
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>options:
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">            </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span>-x,<span class="w"> </span>--scramble<span class="w">        </span>Randomize<span class="w"> </span>internal<span class="w"> </span><span class="k">function</span><span class="w"> </span>names<span class="w"> </span>to<span class="w"> </span>evade<span class="w"> </span>static<span class="w"> </span>analysis
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span>-o<span class="w"> </span>OUTPUT,<span class="w"> </span>--output<span class="w"> </span>OUTPUT
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">                        </span>Output<span class="w"> </span>path<span class="w"> </span><span class="k">for</span><span class="w"> </span>generated<span class="w"> </span>file
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>Architecture<span class="w"> </span>options:
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">  </span>-x86<span class="w">                  </span>Set<span class="w"> </span>mode<span class="w"> </span>to<span class="w"> </span>32bits
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">  </span>-wow<span class="w">                  </span>Set<span class="w"> </span>mode<span class="w"> </span>to<span class="w"> </span>WoW64<span class="w"> </span><span class="o">(</span>execution<span class="w"> </span>of<span class="w"> </span>32bits<span class="w"> </span>on<span class="w"> </span>64bits<span class="o">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">  </span>-x64<span class="w">                  </span>Set<span class="w"> </span>mode<span class="w"> </span>to<span class="w"> </span>64bits<span class="w"> </span><span class="o">(</span>Default<span class="w"> </span>True<span class="o">)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>Language<span class="w"> </span>options:
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">  </span>-nim<span class="w">                  </span>Generate<span class="w"> </span>NIM<span class="w"> </span>code<span class="w"> </span><span class="o">(</span>Default:<span class="w"> </span><span class="nb">true</span><span class="o">)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">  </span>-c<span class="w">                    </span>Generate<span class="w"> </span>C<span class="w"> </span>code
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">  </span>-cpp<span class="w">                  </span>Generate<span class="w"> </span>C++<span class="w"> </span>code
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">  </span>-rust<span class="w">                 </span>Generate<span class="w"> </span>Rust<span class="w"> </span>code
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>Syscall<span class="w"> </span>options:
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">  </span>-p<span class="w"> </span><span class="o">{</span>all,donut,common<span class="o">}</span>,<span class="w"> </span>--preset<span class="w"> </span><span class="o">{</span>all,donut,common<span class="o">}</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">                        </span>Preset<span class="w"> </span>functions<span class="w"> </span>to<span class="w"> </span>generate<span class="w"> </span><span class="o">(</span>Default:<span class="w"> </span>common<span class="o">)</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">  </span>-f<span class="w"> </span>FUNCTIONS,<span class="w"> </span>--functions<span class="w"> </span>FUNCTIONS
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">                        </span>Comma-separated<span class="w"> </span>functions
+</code></pre></div>
+<h3 id="example-output">Example output</h3>
+<p>Here is an example of C syscall generation using <strong>Canterlot's Gate</strong> iterator:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>sysplant<span class="w"> </span>generate<span class="w"> </span>-c<span class="w"> </span>-o<span class="w"> </span>syscalls.c<span class="w"> </span>canterlot
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠶⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>⠀⢀⣀⡀⠀⢀⣠⣤⣴⣶⣶⡦⠤⢤⣤⣀⣀⣼⠀⠀⡽⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>⠀⠈⠫⣯⠙⡟⢿⣿⣿⡿⠁⠀⢠⣾⣿⣿⣿⡿⠀⠀⢹⠘⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>⠀⠀⣼⣿⣷⣧⡀⢱⠈⠀⠀⠀⣿⣿⣿⣿⣿⡀⠀⠀⢸⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<span class="w">  </span>⠀⠀..::<span class="w"> </span>SysPlant<span class="w"> </span>-<span class="w"> </span>Your<span class="w"> </span>Syscall<span class="w"> </span>Factory<span class="w"> </span>::..
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>⠀⣼⣿⣿⣿⣿⣿⣿⡄⢀⣀⣠⣿⣿⣿⠿⢿⣷⣤⡀⠈⠀⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>⢠⣿⣿⣿⣿⣿⣿⠿⠛⠉⠉⠀⡇⣾⣿⣦⣀⣿⡄⠀⠀⢰⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<span class="w"> </span>⠀⠀⠀⠀⠀⠀⠀⠀⠀<span class="w">              </span>Sysplant<span class="w"> </span><span class="o">(</span><span class="m">2023</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>0x42en
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>⢸⣿⣿⣿⠿⢯⣷⢄⠀⠀⠀⠀⡄⢻⣿⣯⣻⣿⡧⠄⠀⢸⠀
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>⠘⣿⠟⠁⠀⠚⢻⣦⣱⣄⠀⠀⢣⠈⠛⣽⣿⠿⠭⠀⣠⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡤⠶⠶⠶⠶⢤⣄⡀⠀⠀⠀⠀⠀<span class="w"> </span>Canterlot<span class="s1">&#39;s Gate (2022) - @MDSecLabs</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="s1">⠀⠁⠀⠀⠀⠀⠀⠻⣿⣿⠀⠀⠈⠂⠀⠀⢀⣄⣠⣴⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠶⠋⠁⠀⠀⠀⠀⠀⠀⠀⠉⠳⢦⡀⠀                            @0x42en</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="s1">⠀⠀⠀⠀⠀⠀⠀⠀⣸⠋⠄⢠⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⡴⠃⠀⣠⣤⣶⣶⣾⣶⣶⣦⣄⠀⠀⠀⠹⣆⠀⠀⠀⠀  Syswhispers3 (2022) - @klezVirus</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="s1">⠀⠀⠀⠀⠀⠀⠀⠀⠈⠲⠴⠯⠤⠤⢶⢾⣿⣿⣿⣿⣿⠏⠷⣄⢀⣀⣀⣀⡀⣼⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠸⣧⠀⠀   Syswhispers2 (2021) - @Jackson_T</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="s1">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠏⠈⠉⣡⣾⣿⠏⠀⢰⣿⠉⣩⠀⠉⢙⣿⡿⠛⠉⠉⠙⠛⢿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⢻⣇⠀                         @modexpblog</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="s1">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⣿⣿⡿⠋⠀⢀⣾⡿⠀⣉⣀⣇⠘⠋⣿⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⡆⠀⠀⢸⣿⡆ Tartarus&#39;</span><span class="w"> </span>Gate<span class="w"> </span><span class="o">(</span><span class="m">2021</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>@trickster0
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠃⠀⠀⠘⢯⡀⠀⢀⣾⣿⠇⣴⠨⣿⣿⡯⠀⢸⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⡇⠀⠀⢸⣿⣷<span class="w">    </span>Halo<span class="s1">&#39;s Gate (2021) - @Sektor7net</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="s1">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡆⠀⠀⠀⠈⠻⢦⣾⣿⠏⠀⠈⢈⣝⡟⠁⣶⣾⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⡇⠀⠀⢸⣿⣿⡀   FreshyCalls (2020) - @crummie5</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="s1">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡀⢄⣀⡀⠀⠀⠉⠁⠀⠰⣄⠀⠁⠀⠀⢀⡏⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⠃⠀⠀⣸⣿⣿⡇   Hell&#39;</span>s<span class="w"> </span>Gate<span class="w"> </span><span class="o">(</span><span class="m">2020</span><span class="o">)</span><span class="w"> </span>-<span class="w"> </span>@RtlMateusz
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⡀⢹⠁⠀⢠⠶⠤⠤⢴⡾⢦⡀⠀⠀⣼⠦⡄⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⣿⣿⣿⠇<span class="w">                        </span>@am0nsec
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣷⠇⠀⠀⢸⡄⠀⠀⠀⠙⢆⠙⢦⡀⠀⠀⠙⣦⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⢰⣿⡿⠋⠀
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⠀⡟⢻⡀⠀⠀⠀⠈⢳⡀⢳⡀⠀⠀⠈⢧⡀⠀⠀⠀⠀⠀⣿⣿⣿⠁⠀⢀⣼⠟⠁⠀⠀
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⡇⠀⢧⠀⠀⠀⠀⠀⢷⠀⢳⠀⠀⠀⠈⢧⠀⠀⠀⠀⢀⣿⣿⡏⢀⣴⠟⠁⠀⠀⠀⠀
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⢸⠇⠀⠸⡆⠀⠀⠀⠀⢸⠀⢸⡇⠀⠀⠀⠘⣧⠀⠀⠀⢸⣿⣿⡷⠛⠁⠀⠀⠀⠀⠀⠀
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡞⠀⠀⠀⠀⠀⣾⠀⠀⠀⣧⠀⠀⠀⠀⢸⠀⠀⡇⠀⠀⠀⠀⢸⡆⠀⠀⣿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠎⠀⠀⠀⠀⠀⣰⠇⠀⠀⠀⣿⠀⠀⠀⠀⣏⣀⣸⠇⠀⠀⠀⠀⠀⣷⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⠤⣤⣤⣤⡤⠴⠛⠛⠛⠛⠉⠁⠀⠀⠀⠀⠈⠉⢿⣄⣀⣠⣤⡤⠶⠋⠀⠀⠀⠀⠀⠀⠀⠀
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="o">[</span>+<span class="o">]</span><span class="w"> </span>Summary<span class="w"> </span>of<span class="w"> </span>params<span class="w"> </span>used
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">        </span>.<span class="w"> </span>Language:<span class="w"> </span>C
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">        </span>.<span class="w"> </span>Architecture:<span class="w"> </span>x64
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">        </span>.<span class="w"> </span>Selected<span class="w"> </span>syscall<span class="w"> </span>iterator:<span class="w"> </span>canterlot
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">        </span>.<span class="w"> </span>Selected<span class="w"> </span>syscall<span class="w"> </span><span class="nb">caller</span><span class="w"> </span>stub:<span class="w"> </span>random
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">        </span>.<span class="w"> </span>Common<span class="w"> </span>supported<span class="w"> </span>functions<span class="w"> </span>selected
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="w">        </span>.<span class="w"> </span>Randomize<span class="w"> </span>internal<span class="w"> </span><span class="k">function</span>:<span class="w"> </span>False
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="o">[</span>+<span class="o">]</span><span class="w"> </span>Syscall<span class="w"> </span>file<span class="w"> </span>written<span class="w"> </span>to<span class="w"> </span>syscalls.c.h
+</code></pre></div>
+<h2 id="what-is-iterator-option">What is <code>iterator</code> option ?</h2>
+<p>Sysplant is based on existing mechanisms for syscall number and addresses retrieval. I do not claim any of their discovery, I just harmonize all this methods in a single tool to be able to generate them easily using templates. These mechanisms are called <code>iterator</code>, if you look at the code you'll probably understand why :wink:<br />
+If you want to go further in the explanations of <em>what is a syscall ?</em> you should check <a href="https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/">@Alice Climent blogpost about syscalls techniques</a></p>
+<h2 id="what-is-method-option">What is <code>method</code> option ?</h2>
+<p>Once your <code>iterator</code> has been choosen you can then specify a <code>method</code> option based on the existing way to call syscalls. All the iterator are supported which let you select whatever you want as a final syscall stub.</p>
+<ol>
+<li><strong>Direct:</strong> the syscall is made directly in the Sysplant ASM call. You only need the syscall number but AV/EDR might see you...</li>
+<li><strong>Indirect:</strong> the Sysplant ASM call jump to the begining of Ntdll stub. You only need syscall address and no longer call syscall in your code but AV/EDR might hook these functions</li>
+<li><strong>Random:</strong> the Sysplant ASM call jump to a random syscall instruction of Ntdll stubs. You need the syscall number and 1 syscall instruction address. You then no longer call syscall in your code and can avoid hooked functions.</li>
+<li><strong>Egg Hunter:</strong> the inline <code>syscall</code> instruction is replaced by a random 8-byte marker (the <em>egg</em>). At runtime, call <code>SPT_SanitizeSyscalls()</code> <strong>before any Nt* function</strong> to scan the <code>.text</code> section and patch every egg back to <code>syscall; ret</code>. This avoids static signatures on the <code>0F 05</code> opcode while keeping direct-call performance.</li>
+</ol>
+<p><a href="http://sysplant.readthedocs.io/en/main/assets/sysplant_stubs.png"><img alt="Sysplant Stubs" src="http://sysplant.readthedocs.io/en/main/assets/sysplant_stubs.png" /></a></p>
+<h2 id="documentation">Documentation</h2>
+<p>I've tried to keep an up to date documentation, so please <strong><a href="http://sysplant.readthedocs.io/en/main/">READ THE DOC</a></strong>. You will find there many information about the tool's usages and a complete description of the classes and methods.</p>
+<p>Some specifics usages are described:</p>
+<ul>
+<li><a href="usage/cli/">Sysplant as a CLI tool</a></li>
+<li><a href="usage/lib/">Sysplant as a Python's module</a></li>
+<li><a href="usage/mcp/">Sysplant as a MCP server</a></li>
+</ul>
+<h2 id="credits">Credits</h2>
+<p>Massive shout-out to these useful projects that helps me during this journey, or individuals for their reviews</p>
+<ul>
+<li><a href="https://alice.climent-pommeret.red/posts/direct-syscalls-hells-halos-syswhispers2/">@alice blogpost about syscalls techniques</a></li>
+<li><a href="https://redops.at/en/blog/direct-syscalls-a-journey-from-high-to-low">@redops blogpost about direct vs indirect syscalls</a></li>
+<li><a href="https://github.com/jthuraisamy/SysWhispers2">@Jackson_T &amp; @modexpblog for Syswhispers2</a></li>
+<li><a href="https://github.com/klezVirus/SysWhispers3">@klezvirus for syswhispers3</a></li>
+</ul>
+<h2 id="construction-todo">:construction: TODO</h2>
+<p>This project is in WIP state...<br />
+Some PR &amp; reviews are more than welcome :tada: !</p>
+<ul>
+<li>[x] Add internal names randomization</li>
+<li>[x] Setup documentation</li>
+<li>[x] Setup tests</li>
+<li>[ ] Add x86 support</li>
+<li>[ ] Add WoW64 support</li>
+<li>[x] Setup NIM templates</li>
+<li>[x] Setup C templates</li>
+<li>[x] Setup Rust templates</li>
+<li>[x] Setup C++ templates</li>
+<li>[ ] Setup Go / C# / Whatever templates</li>
+</ul>
+<h2 id="license">License</h2>
+<p>This project is licensed under the <a href="https://www.gnu.org/licenses/quick-guide-gplv3.en.html">GPLv3 License</a>, for individuals only. If you want to integrate this work in your commercial project please contact me through <code>0x42en[at]gmail.com</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.expand", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

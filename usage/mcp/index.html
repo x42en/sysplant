@@ -1,0 +1,1620 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/x42en/sysplant/usage/mcp/">
+      
+      
+        <link rel="prev" href="../lib/">
+      
+      
+        <link rel="next" href="../../contribute/prerequise/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>MCP Server - SysPlant</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-sysplant-as-a-mcp-server" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SysPlant" class="md-header__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SysPlant
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MCP Server
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SysPlant" class="md-nav__button md-logo" aria-label="SysPlant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SysPlant
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Install
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/prerequise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/uninstall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Uninstall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Tool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Server
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-sysplant-as-a-mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Sysplant as a MCP Server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Sysplant as a MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stdio-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stdio (default)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sse-server-sent-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSE (Server-Sent Events)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streamable-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Streamable HTTP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Available Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate_syscalls-main-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        generate_syscalls — Main tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Resource
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iterators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iterators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilation-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compilation Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compilation Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NIM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rust
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contribute
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contribute
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/prerequise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/code_rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/poetry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Poetry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-sysplant-as-a-mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Sysplant as a MCP Server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Sysplant as a MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stdio-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stdio (default)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sse-server-sent-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSE (Server-Sent Events)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streamable-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Streamable HTTP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Available Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate_syscalls-main-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        generate_syscalls — Main tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Resource
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iterators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iterators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilation-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compilation Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compilation Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NIM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rust
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>MCP Server</h1>
+
+<h2 id="using-sysplant-as-a-mcp-server">Using Sysplant as a MCP Server</h2>
+<p>SysPlant exposes its full syscall generation engine through a <strong><a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a></strong> server. This allows AI coding assistants — Claude Code, Cursor, Windsurf, VS Code Copilot, and others — to generate, inspect and manipulate syscall code directly from their chat interface.</p>
+<blockquote>
+<p>:sparkles: No copy-paste, no CLI flags to remember — just ask your AI assistant to generate the syscalls you need.</p>
+</blockquote>
+<hr />
+<h3 id="installation">Installation</h3>
+<p>The MCP server requires the optional <code>mcp</code> dependency group:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># From a Poetry-managed clone</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>poetry<span class="w"> </span>install<span class="w"> </span>--with<span class="w"> </span>mcp
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Or via pip</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>pip<span class="w"> </span>install<span class="w"> </span>sysplant<span class="o">[</span>mcp<span class="o">]</span>
+</code></pre></div>
+<hr />
+<h3 id="quick-start">Quick Start</h3>
+<h4 id="stdio-default">stdio (default)</h4>
+<p>Most AI clients (Claude Code, Cursor, VS Code Copilot Chat) communicate over <strong>stdio</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>bridge_mcp_sysplant.py
+</code></pre></div>
+<p>Configure your AI client to launch this command. For example, in Claude Code's <code>mcp.json</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;sysplant&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;bridge_mcp_sysplant.py&quot;</span><span class="p">],</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/sysplant&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="sse-server-sent-events">SSE (Server-Sent Events)</h4>
+<p>For web-based clients or remote access:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>bridge_mcp_sysplant.py<span class="w"> </span>--transport<span class="w"> </span>sse<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">9090</span>
+</code></pre></div>
+<h4 id="streamable-http">Streamable HTTP</h4>
+<p>Bidirectional HTTP transport (recommended for web integrations):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>bridge_mcp_sysplant.py<span class="w"> </span>--transport<span class="w"> </span>streamable-http<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">9090</span>
+</code></pre></div>
+<hr />
+<h3 id="available-tools">Available Tools</h3>
+<p>The MCP server exposes <strong>9 tools</strong> that cover the full pentesting workflow:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>generate_syscalls</code></td>
+<td>Generate a complete syscall source file (C / NIM / Rust)</td>
+</tr>
+<tr>
+<td><code>scan_ntfunctions</code></td>
+<td>Scan source files to detect which Nt/Zw functions are referenced</td>
+</tr>
+<tr>
+<td><code>list_supported_syscalls</code></td>
+<td>List all ~483 supported NtFunction names</td>
+</tr>
+<tr>
+<td><code>list_common_syscalls</code></td>
+<td>List the 31 most-used NtFunctions for injection / evasion</td>
+</tr>
+<tr>
+<td><code>list_donut_syscalls</code></td>
+<td>List the 14 NtFunctions used by the Donut shellcode loader</td>
+</tr>
+<tr>
+<td><code>get_function_prototype</code></td>
+<td>Look up the full prototype (params, types, direction) of any NtFunction</td>
+</tr>
+<tr>
+<td><code>list_iterators</code></td>
+<td>List all 7 syscall iterators with origin and technique description</td>
+</tr>
+<tr>
+<td><code>list_methods</code></td>
+<td>List all 4 caller stub methods with evasion trade-offs</td>
+</tr>
+<tr>
+<td><code>list_languages</code></td>
+<td>List supported languages with file extensions and compilation instructions</td>
+</tr>
+</tbody>
+</table>
+<h4 id="generate_syscalls-main-tool"><code>generate_syscalls</code> — Main tool</h4>
+<p>This is the primary tool. It produces a self-contained source file with syscall stubs, resolver, iterator and caller.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>language</code></td>
+<td>string</td>
+<td><code>nim</code></td>
+<td>Target language: <code>nim</code>, <code>c</code>, or <code>rust</code></td>
+</tr>
+<tr>
+<td><code>arch</code></td>
+<td>string</td>
+<td><code>x64</code></td>
+<td>Architecture: <code>x64</code>, <code>x86</code>, or <code>wow</code></td>
+</tr>
+<tr>
+<td><code>iterator</code></td>
+<td>string</td>
+<td><code>canterlot</code></td>
+<td>Syscall resolution strategy (see <code>list_iterators</code>)</td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td>string</td>
+<td><code>direct</code></td>
+<td>Caller stub type (see <code>list_methods</code>)</td>
+</tr>
+<tr>
+<td><code>preset</code></td>
+<td>string</td>
+<td><code>common</code></td>
+<td>Predefined set: <code>common</code> (31), <code>donut</code> (14), or <code>all</code> (~483)</td>
+</tr>
+<tr>
+<td><code>functions</code></td>
+<td>list[str]</td>
+<td><em>None</em></td>
+<td>Custom list of NtFunction names — overrides <code>preset</code></td>
+</tr>
+<tr>
+<td><code>scramble</code></td>
+<td>bool</td>
+<td><code>false</code></td>
+<td>Randomize internal symbol names to evade static signatures</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example conversation with your AI assistant:</strong></p>
+<blockquote>
+<p><em>"Generate a C syscall file using Canterlot's Gate with egg_hunter method, common preset, and scramble enabled."</em></p>
+</blockquote>
+<p>The assistant will call <code>generate_syscalls(language="c", iterator="canterlot", method="egg_hunter", scramble=True)</code> and return the complete source code.</p>
+<hr />
+<h3 id="available-resource">Available Resource</h3>
+<p>The server also exposes one <strong>MCP resource</strong> for comprehensive documentation:</p>
+<table>
+<thead>
+<tr>
+<th>URI</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sysplant://docs/guide</code></td>
+<td>Full reference: iterators, methods, languages, presets, workflow</td>
+</tr>
+</tbody>
+</table>
+<p>AI clients can read this resource to understand SysPlant capabilities without any tool call.</p>
+<hr />
+<h3 id="iterators">Iterators</h3>
+<p>Each iterator implements a different strategy for resolving syscall numbers at runtime from the in-memory <code>ntdll.dll</code> image:</p>
+<table>
+<thead>
+<tr>
+<th>Iterator</th>
+<th>Origin</th>
+<th>Technique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hell</code></td>
+<td>Hell's Gate (2020)</td>
+<td>Reads syscall number from ntdll in-memory stubs</td>
+</tr>
+<tr>
+<td><code>halo</code></td>
+<td>Halo's Gate (2021)</td>
+<td>Walks neighbours when target stub is hooked</td>
+</tr>
+<tr>
+<td><code>tartarus</code></td>
+<td>Tartarus' Gate (2021)</td>
+<td>Deeper neighbour walk to bypass aggressive hooks</td>
+</tr>
+<tr>
+<td><code>freshy</code></td>
+<td>FreshyCalls (2020)</td>
+<td>Uses exception directory to resolve numbers</td>
+</tr>
+<tr>
+<td><code>syswhispers</code></td>
+<td>SysWhispers2 (2021)</td>
+<td>Sorts Zw exports by address for syscall numbers</td>
+</tr>
+<tr>
+<td><code>syswhispers3</code></td>
+<td>SysWhispers3 (2022)</td>
+<td>SysWhispers2 + egg_hunter / random jump support</td>
+</tr>
+<tr>
+<td><code>canterlot</code></td>
+<td>Canterlot's Gate (2022)</td>
+<td>PE exception directory (RUNTIME_FUNCTION) parsing</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>:bulb: <strong>Recommendation:</strong> <code>canterlot</code> is the most robust for modern environments.</p>
+</blockquote>
+<hr />
+<h3 id="methods">Methods</h3>
+<p>Each method defines how the resolved syscall is actually executed:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Technique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>direct</code></td>
+<td>Inline <code>syscall</code> instruction — simple but visible from outside ntdll</td>
+</tr>
+<tr>
+<td><code>indirect</code></td>
+<td>Jump into real ntdll stub — return address inside ntdll, evades call-stack</td>
+</tr>
+<tr>
+<td><code>random</code></td>
+<td>Like indirect, but picks a random ntdll stub each time</td>
+</tr>
+<tr>
+<td><code>egg_hunter</code></td>
+<td>Egg marker in stubs, patched at runtime by a sanitizer before <code>main()</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="compilation-reference">Compilation Reference</h3>
+<p>Once you have the generated source file, compile with the recommended flags:</p>
+<h4 id="c">C</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>x86_64-w64-mingw32-gcc<span class="w"> </span>-Wall<span class="w"> </span>-s<span class="w"> </span>-static<span class="w"> </span>-masm<span class="o">=</span>intel<span class="w"> </span>inject.c<span class="w"> </span>-o<span class="w"> </span>inject.exe
+</code></pre></div>
+<h4 id="nim">NIM</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>nim<span class="w"> </span>c<span class="w"> </span>-d<span class="o">=</span>release<span class="w"> </span>-d<span class="o">=</span>danger<span class="w"> </span>-d<span class="o">=</span>strip<span class="w"> </span>--opt<span class="o">=</span>size<span class="w"> </span>-d<span class="o">=</span>mingw<span class="w"> </span>--cpu<span class="o">=</span>amd64<span class="w"> </span>--out<span class="o">=</span>inject.exe<span class="w"> </span>inject.nim
+</code></pre></div>
+<h4 id="rust">Rust</h4>
+<p>Add a release profile to your <code>Cargo.toml</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">[profile.release]</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">strip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w">             </span><span class="c1"># Strip all symbols</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">lto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w">               </span><span class="c1"># Link-time optimization</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">codegen-units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">        </span><span class="c1"># Single codegen unit for better optimization</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">panic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;abort&quot;</span><span class="w">          </span><span class="c1"># No unwinding overhead</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">overflow-checks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w">  </span><span class="c1"># Disable runtime overflow checks</span>
+</code></pre></div>
+<p>Then build:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--target<span class="w"> </span>x86_64-pc-windows-gnu
+</code></pre></div>
+<hr />
+<h3 id="typical-workflow">Typical Workflow</h3>
+<ol>
+<li><strong>Discover</strong> — Ask your AI assistant what iterators and methods are available (<code>list_iterators</code>, <code>list_methods</code>)</li>
+<li><strong>Scan</strong> — Point <code>scan_ntfunctions</code> at your existing injection code to detect which Nt functions you use</li>
+<li><strong>Generate</strong> — Call <code>generate_syscalls</code> with your choices (language, iterator, method, functions or preset)</li>
+<li><strong>Inspect</strong> — Use <code>get_function_prototype</code> to check parameter details for specific functions</li>
+<li><strong>Compile</strong> — Save the output and compile with the recommended flags above</li>
+</ol>
+<hr />
+<h3 id="troubleshooting">Troubleshooting</h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ModuleNotFoundError: mcp</code></td>
+<td>Install the mcp dependency: <code>poetry install --with mcp</code> or <code>pip install sysplant[mcp]</code></td>
+</tr>
+<tr>
+<td>SSE/HTTP transport fails to bind</td>
+<td>Check that the port is available: <code>--port 9090</code></td>
+</tr>
+<tr>
+<td><code>DBusError</code> during install</td>
+<td>Set <code>PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring</code> before <code>poetry install</code></td>
+</tr>
+<tr>
+<td>Generated code doesn't compile</td>
+<td>Verify you are using the recommended compilation flags for your language</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
