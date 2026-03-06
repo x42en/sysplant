@@ -15,6 +15,7 @@ from sysplant.constants.sysplantConstants import SysPlantConstants
 from sysplant.abstracts.abstractFactory import AbstractFactory
 from sysplant.managers.nimGenerator import NIMGenerator
 from sysplant.managers.cGenerator import CGenerator
+from sysplant.managers.cppGenerator import CppGenerator
 from sysplant.managers.rustGenerator import RustGenerator
 
 
@@ -67,6 +68,8 @@ class TemplateManager(AbstractFactory):
             self.__coder = NIMGenerator()
         elif self.__lang == "c":
             self.__coder = CGenerator()
+        elif self.__lang == "cpp":
+            self.__coder = CppGenerator()
         elif self.__lang == "rust":
             self.__coder = RustGenerator()
 
@@ -111,8 +114,16 @@ class TemplateManager(AbstractFactory):
             raise ValueError("Invalid template name")
 
         # Use the new files() API instead of open_text
-        with pkg_resources.files(pkg_module).joinpath(name).open("r") as f:
-            return f.read()
+        try:
+            with pkg_resources.files(pkg_module).joinpath(name).open("r") as f:
+                return f.read()
+        except FileNotFoundError:
+            # Fallback: cpp templates reuse .c files when no .cpp override exists
+            if name.endswith(".cpp"):
+                fallback = name[:-4] + ".c"
+                with pkg_resources.files(pkg_module).joinpath(fallback).open("r") as f:
+                    return f.read()
+            raise
 
     def __load_prototypes(self) -> None:
         """
@@ -309,7 +320,7 @@ class TemplateManager(AbstractFactory):
         """
         # Egg is repeated twice to form an 8-byte marker
         full_egg = self.__egg + self.__egg
-        if self.__lang == "c":
+        if self.__lang == "c" or self.__lang == "cpp":
             return ", ".join(f"0x{b:02x}" for b in full_egg)
         elif self.__lang == "nim":
             return ", ".join(f"0x{b:02X}'u8" for b in full_egg)
@@ -376,7 +387,7 @@ class TemplateManager(AbstractFactory):
             str: Assembly bytes directive for the egg marker
         """
         full_egg = self.__egg + self.__egg
-        if self.__lang == "c":
+        if self.__lang == "c" or self.__lang == "cpp":
             # GCC inline asm: .byte directives
             byte_lines = " \\n\\\n    ".join(f".byte 0x{b:02x}" for b in full_egg)
             return byte_lines

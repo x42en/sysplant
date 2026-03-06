@@ -6,7 +6,7 @@ This project can be used as a simple command line tool.
 
 > _Requirements: Python 3.10+_
 
-SysPlant is a Python project that generates NIM, C and Rust source code for Windows syscall hooking. You can use it inside your Python project as an external module or directly as a standalone tool.
+SysPlant is a Python project that generates NIM, C, C++ and Rust source code for Windows syscall hooking. You can use it inside your Python project as an external module or directly as a standalone tool.
 
 ```sh
 git clone https://github.com/x42en/sysplant && cd sysplant
@@ -41,7 +41,7 @@ Two actions are supported:
 - **`list`** — Parse a file or directory to find NtFunction usage
 - **`generate`** — Generate a syscall hooking source file to import into your project
 
-Supported output languages are **NIM** (default), **C** and **Rust**.
+Supported output languages are **NIM** (default), **C**, **C++** and **Rust**.
 
 #### List action
 
@@ -60,7 +60,7 @@ options:
 
 ```bash
 $ ./main.py generate -h
-usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c | -rust]
+usage: main.py generate [-h] [-x86 | -wow | -x64] [-nim | -c | -cpp | -rust]
                         [-p {all,donut,common} | -f FUNCTIONS] [-x] -o OUTPUT
                         {hell,halo,tartarus,freshy,syswhispers,syswhispers3,canterlot,custom}
                         ...
@@ -79,6 +79,7 @@ Architecture options:
 Language options:
   -nim                  Generate NIM code (Default: true)
   -c                    Generate C code
+  -cpp                  Generate C++ code
   -rust                 Generate Rust code
 
 Syscall options:
@@ -145,6 +146,9 @@ $ ./main.py generate -c -o syscall custom -i canterlot -m egg_hunter
 # Generate C code for Donut shellcode functions
 $ ./main.py generate -c -o syscall -p donut canterlot
 
+# Generate C++ code
+$ ./main.py generate -cpp -o syscall canterlot
+
 # Generate Rust code
 $ ./main.py generate -rust -o syscall.rs canterlot
 
@@ -169,6 +173,13 @@ See the [examples README](https://github.com/x42en/sysplant/tree/main/example) f
 1. Install `mingw-w64`: `sudo apt install mingw-w64`
 2. Generate: `./main.py generate -c -o example/syscall canterlot`
 3. Compile: `x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel example/inject.c -o inject.exe`
+4. Transfer `inject.exe` to your Windows target.
+
+#### C++
+
+1. Install `mingw-w64`: `sudo apt install mingw-w64`
+2. Generate: `./main.py generate -cpp -o example/syscall canterlot`
+3. Compile: `x86_64-w64-mingw32-g++ -Wall -s -static -masm=intel example/inject.cpp -o inject.exe`
 4. Transfer `inject.exe` to your Windows target.
 
 #### Rust

@@ -41,7 +41,7 @@ from sysplant import data as pkg_data
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-VALID_LANGUAGES = {"nim", "c", "rust"}
+VALID_LANGUAGES = {"nim", "c", "cpp", "rust"}
 VALID_ARCHS = {"x86", "x64", "wow"}
 VALID_ITERATORS = {
     "hell",
@@ -92,7 +92,7 @@ METHOD_DESCRIPTIONS = {
 # ---------------------------------------------------------------------------
 SYSPLANT_INSTRUCTIONS = """\
 SysPlant is a Syscall Factory that generates Windows syscall hooking code \
-for C, NIM and Rust. It supports 7 gate iterators (syscall resolution \
+for C, C++, NIM and Rust. It supports 7 gate iterators (syscall resolution \
 strategies) and 4 caller stub methods.
 
 Quick start:
@@ -103,7 +103,7 @@ Quick start:
 5. Use `scan_ntfunctions` to detect which Nt functions a source file uses.
 
 Typical pentesting workflow:
-    a) Pick a language: nim (default), c, or rust.
+    a) Pick a language: nim (default), c, cpp, or rust.
     b) Pick an iterator: canterlot (recommended), hell, halo, tartarus, \
 freshy, syswhispers, syswhispers3.
     c) Pick a method: direct, indirect, random, or egg_hunter.
@@ -112,7 +112,7 @@ freshy, syswhispers, syswhispers3.
 (common, donut, all) or a custom list of NtFunction names.
 
 The generated code is returned as a string — save it as syscall.h (C), \
-syscall.nim (NIM) or syscall.rs (Rust) next to your injection code.
+syscall.hpp (C++), syscall.nim (NIM) or syscall.rs (Rust) next to your injection code.
 
 For egg_hunter method: the generated file includes an auto-init mechanism \
 that patches egg markers before main(). No manual call required.
@@ -213,7 +213,7 @@ Each method answers: *"How do we execute the resolved syscall?"*
 **`egg_hunter` details:**
 - A unique 8-byte marker (4 random bytes repeated twice) replaces `syscall; ret`
 - `SPT_SanitizeSyscalls()` scans the PE .text section and patches all markers
-- Auto-initialization runs before `main()` via CRT init (C), module-scope call \
+- Auto-initialization runs before `main()` via CRT init (C/C++), module-scope call \
 (NIM), or explicit call (Rust)
 
 ---
@@ -223,6 +223,7 @@ Each method answers: *"How do we execute the resolved syscall?"*
 | Language | Output file | Compiler / toolchain                                  |
 | -------- | ----------- | --------------------------------------------------------------------------------- |
 | `c`      | `.h`        | MinGW: `x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel`                      |
+| `cpp`    | `.hpp`      | MinGW: `x86_64-w64-mingw32-g++ -Wall -s -static -masm=intel`                      |
 | `nim`    | `.nim`      | `nim c -d=release -d=mingw -d=danger -d=strip -d=static --opt=size --cpu=amd64`   |
 | `rust`   | `.rs`       | `cargo build --release --target x86_64-pc-windows-gnu` |
 **Rust release profile** — add to `Cargo.toml` for size-optimized, stripped PIC output:
@@ -310,7 +311,7 @@ def generate_syscalls(
     syscall stubs, resolver, iterator and caller for the specified language.
 
     Args:
-        language: Target language — nim (default), c, or rust.
+        language: Target language — nim (default), c, cpp, or rust.
         arch: Target architecture — x64 (default), x86, or wow.
         iterator: Syscall resolution strategy — canterlot (default), hell,
             halo, tartarus, freshy, syswhispers, syswhispers3.
@@ -325,7 +326,7 @@ def generate_syscalls(
         scramble: Randomize internal symbol names to evade static signatures.
 
     Returns:
-        Complete source code as a string (C header, NIM module, or Rust module).
+        Complete source code as a string (C header, C++ header, NIM module, or Rust module).
     """
     _validate_language(language)
     _validate_arch(arch)
@@ -509,7 +510,7 @@ def list_methods() -> str:
 
 @mcp.tool()
 def list_languages() -> str:
-    """List the 3 supported output languages with file extensions and toolchains.
+    """List the 4 supported output languages with file extensions and toolchains.
 
     Returns:
         Formatted list of languages with compilation instructions.
@@ -519,6 +520,11 @@ def list_languages() -> str:
             "ext": ".h",
             "compiler": "x86_64-w64-mingw32-gcc -Wall -s -static -masm=intel",
             "note": "Include the generated .h file in your C injection code.",
+        },
+        "cpp": {
+            "ext": ".hpp",
+            "compiler": "x86_64-w64-mingw32-g++ -Wall -s -static -masm=intel",
+            "note": "Include the generated .hpp file in your C++ injection code.",
         },
         "nim": {
             "ext": ".nim",
