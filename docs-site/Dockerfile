@@ -1,28 +1,24 @@
-FROM node:24-alpine AS base
-
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+FROM node:24-alpine AS builder
 
 WORKDIR /app
-
-COPY package.json ./
-RUN pnpm install --frozen-lockfile --ignore-scripts
-
-COPY . .
 
 ARG NUXT_APP_BASE_URL=/sysplant/
 ARG NUXT_SITE_URL=https://docs.circle-cyber.com/sysplant
 
-RUN NUXT_APP_BASE_URL=${NUXT_APP_BASE_URL} \
-    NUXT_SITE_URL=${NUXT_SITE_URL} \
-    pnpm run generate
+ENV NUXT_APP_BASE_URL=${NUXT_APP_BASE_URL}
+ENV NUXT_SITE_URL=${NUXT_SITE_URL}
 
-FROM node:24-alpine AS release
+COPY package.json ./
+RUN npm install
+
+COPY . .
+RUN npx nuxt build
+
+FROM node:24-alpine
 
 WORKDIR /app
 
-COPY --from=base /app/.output ./.output
+COPY --from=builder /app/.output ./.output
 
 EXPOSE 3000
 
