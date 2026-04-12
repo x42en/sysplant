@@ -1,4 +1,0 @@
-mkdocs>=1.6.0
-mkdocs-material>=9.5.0
-mkdocs-awesome-pages-plugin>=2.9.1
-mkdocstrings[python]>=1.0.0

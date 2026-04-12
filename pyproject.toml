@@ -14,10 +14,6 @@ mcp = ["mcp[cli]>=1.0"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.0"
-mkdocs = "^1.6.0"
-mkdocs-awesome-pages-plugin = "^2.9.1"
-mkdocstrings = {version = "^1.0.0", extras = ["python"]}
-mkdocs-material = "^9.5.0"
 poetry-bumpversion = "^0.3.3"
 pytest-cov = "^6.0.0"
 
