@@ -1,6 +1,6 @@
 [project]
 name = "sysplant"
-version = "0.5.0"
+version = "0.5.1"
 description = "SysPlant - Your syscall factory"
 authors = [
     {name = "Ben Mz", email = "x42en@users.noreply.github.com"}
