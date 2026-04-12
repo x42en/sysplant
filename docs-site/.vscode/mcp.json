@@ -1,0 +1,10 @@
+{
+    "servers": {
+        "sysplant": {
+            "type": "stdio",
+            "command": "python",
+            "args": ["../bridge_mcp_sysplant.py"],
+            "env": {}
+        }
+    }
+}
