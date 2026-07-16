@@ -21,7 +21,7 @@ pytest-cov = "^6.0.0"
 optional = true
 
 [tool.poetry.group.mcp.dependencies]
-mcp = {version = ">=1.0", extras = ["cli"]}
+mcp = {version = ">=1.27.2", extras = ["cli"]}
 
 [build-system]
 requires = ["poetry-core"]
