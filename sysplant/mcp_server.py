@@ -16,13 +16,16 @@ Transports
 Usage
 -----
     # stdio (default)
-    python bridge_mcp_sysplant.py
+    sysplant-mcp
 
     # SSE on custom host/port
-    python bridge_mcp_sysplant.py --transport sse --host 0.0.0.0 --port 9090
+    sysplant-mcp --transport sse --host 0.0.0.0 --port 9090
 
     # Streamable HTTP
-    python bridge_mcp_sysplant.py --transport streamable-http --host 0.0.0.0 --port 9090
+    sysplant-mcp --transport streamable-http --host 0.0.0.0 --port 9090
+
+    # Or via module (equivalent)
+    python -m sysplant.mcp_server
 """
 
 import os
