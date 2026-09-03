@@ -51,5 +51,8 @@ addopts = [
 ]
 
 [tool.coverage.run]
-omit = ["tests"]
+# mcp_server.py depends on the optional `mcp` extra; it is not installed in the
+# default test environment and cannot be imported there, so it is excluded from
+# the coverage gate (measured separately when the `mcp` group is installed).
+omit = ["tests", "sysplant/mcp_server.py"]
 source = ["sysplant"]
